@@ -7,7 +7,7 @@
     "start": "nodemon index.js",
     "test": "node tests/test.js"
   },
-  "author": "Brea Chaney Alyssa Williams Jessica Gar(..) Sarah Barnes Erika (..)",
+  "author": "Brea Chaney Alyssa Williams Jessica Gardner Sarah Barnes Erika Sadsad",
   "license": "ISC",
   "dependencies": {
     "db-migrate-pg": "^1.5.2",
