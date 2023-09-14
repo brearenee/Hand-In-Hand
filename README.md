@@ -28,7 +28,7 @@ if this returns without a version, please go to https://docs.docker.com/compose/
 - POSTGRES_URL
 - PGADMIN_DEFAULT_EMAIL
 - PGADMIN_DEFAULT_PASSWORD
->TEAM: Please see our Teams channel for the ".env" file and place it into the root folder. This will handle all of the values listed. 
+>TEAM: Please see our Teams channel for the ".env", ".dockerignore", and ".gitignore" files and place them into the root folder. This will handle all of the values listed. 
 
 
 ### To Start Application:
