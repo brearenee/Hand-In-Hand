@@ -4,7 +4,7 @@
 
 -insert project vision statement here-    
   
-Created as a project for MSU Denver's Fall 2023 Senior Experience Course.  Authors are Sarah Barnes, Brea Chaney, Erika fdsfd, Jessica dsfd, Alyssa Williams 
+Created as a project for MSU Denver's Fall 2023 Senior Experience Course.  Authors are Sarah Barnes, Brea Chaney, Erika Sadsad Jessica Gardner, Alyssa Williams 
 
 
 
