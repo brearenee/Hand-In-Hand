@@ -17,7 +17,7 @@ run this command in your command line to check if Docker Compose is installed:
 
 ```docker compose version```  
 
-if this returns without a version, please go to https://docs.docker.com/compose/install/ to install 
+if this returns without a version, please go to https://docs.docker.com/compose/install/ to install Docker Desktop (follow the download for "Scenario one").
 
 **Environment Variables**:  
 - POSTGRES_PORT
@@ -28,7 +28,7 @@ if this returns without a version, please go to https://docs.docker.com/compose/
 - POSTGRES_URL
 - PGADMIN_DEFAULT_EMAIL
 - PGADMIN_DEFAULT_PASSWORD
->TEAM: Please see our Teams channel for the ".env", file and place them into the root folder. This will handle all of the values listed. 
+>TEAM: Please see our Teams channel for the "env.txt" file and follow the instructions in the comment section at the top to add a .env to the root folder. This will handle all of the values listed. 
 
 
 ### To Start Application:
@@ -38,12 +38,12 @@ run the command:
 
 This will build the images (if needed) and run the container and application. 
 
-once container has started, head to http://localhost:3000/ in your browser. And that's it!  
+once the container has started, head to http://localhost:3000/ in your browser. And that's it!  
 
 Note: nodemon has been installed with this program, so once any changes to a .js file are saved, the server will automatically refresh with the updates, allowing for easier development. 
 
 ### Useful Commands
-if any changes to the Dockerfile or Compose file are pulled in/made, you will need to manually rebuilt the containers. This is done with   
+if any changes to the Dockerfile or Compose file are pulled in/made, you will need to manually rebuild the containers. This is done with   
 ```docker compose up --build```  
 
 To stop the containers: (ctrl+C also works)
