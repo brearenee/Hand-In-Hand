@@ -6,14 +6,14 @@ services:
             # Our app does not work without our database
             # so this ensures our database is loaded first
             - postgres
-        environment:
-            - .env
         ports:
             - "3000:3000"
         volumes:
             # Maps our current project directory `.` to
             # our working directory in the container
             - ./:/usr/src/app/
+            - /usr/src/app/node_modules
+
 
     # This is the configuration for our PostgreSQL database container
     # Note the `postgres` name is important, in out Node app when we refer
