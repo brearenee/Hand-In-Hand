@@ -28,7 +28,7 @@ if this returns without a version, please go to https://docs.docker.com/compose/
 - POSTGRES_URL
 - PGADMIN_DEFAULT_EMAIL
 - PGADMIN_DEFAULT_PASSWORD
->TEAM: Please see our Teams channel for the "env.txt" file and follow the instructions in the comment section at the top to add a .env to the root folder. This will handle all of the values listed. 
+>TEAM: Please see our Teams channel for the "env.txt" file and follow the instructions in the comment section at the top to add a .env file to the root folder. This will handle all of the values listed. 
 
 
 ### To Start Application:
