@@ -1,0 +1,48 @@
+version: '3.8'
+services:
+    app:
+        build: .
+        depends_on:
+            # Our app does not work without our database
+            # so this ensures our database is loaded first
+            - postgres
+        ports:
+            - "3000:3000"
+        volumes:
+            # Maps our current project directory `.` to
+            # our working directory in the container
+            - ./:/usr/src/app/
+            - /usr/src/app/node_modules
+
+
+    # This is the configuration for our PostgreSQL database container
+    # Note the `postgres` name is important, in out Node app when we refer
+    # to  `host: "postgres"` that value is mapped on the network to the 
+    # address of this container.
+    postgres:
+        image: postgres:14.1-alpine
+        restart: always
+        ports:
+            # Standard port for PostgreSQL databases
+            - "5432:5432"
+        environment:
+            POSTGRES_DB:       ${POSTGRES_DB}
+            POSTGRES_USER:     ${POSTGRES_USR}
+            POSTGRES_PASSWORD: ${POSTGRES_PWD}
+
+        volumes:
+            # When the PostgresSQL container is started it will run any scripts
+            # provided in the `docker-entrypoint-initdb.d` directory, this connects
+            # our seed file to that directory so that it gets run
+            - ./db/000-db.sql:/docker-entrypoint-initdb.d/000-db.sql
+
+    pgadmin-compose:
+        image: dpage/pgadmin4
+        ports:
+            - "16543:80"
+        depends_on:
+            - postgres
+        environment:
+            PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+            PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+
