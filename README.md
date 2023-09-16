@@ -100,4 +100,5 @@ Now if you explore Servers > HiH > postgres > Schemas > public > Tables, you wil
 >Right click on any item in the list to find "Query Tool" option. Here you can query your local DB and test out any SQL logic before implementing it in the code base. 
 
 
-
+# Linter Run Command #
+To run the linter, run> npx eslint yourfile.js
