@@ -15,7 +15,16 @@ fetch("/posts")
       card.querySelector('p').innerText = users.created_at;
       card.querySelector('p1').innerText = users.body;
 
-      // Append the card as a child with the employee data to the <body> element on our page
-      document.body.appendChild(card);
+      // Create a new column div to wrap the card
+      const colDiv = document.createElement('div');
+      colDiv.classList.add('col');
+
+      // Append the card to the new column div
+      colDiv.appendChild(card);
+
+      // Append the new column div to the row
+      document.querySelector('.row').appendChild(colDiv);
     });
   });
+
+
