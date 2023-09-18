@@ -99,5 +99,37 @@ Now if you explore Servers > HiH > postgres > Schemas > public > Tables, you wil
 ### Query Tool: ###
 >Right click on any item in the list to find "Query Tool" option. Here you can query your local DB and test out any SQL logic before implementing it in the code base. 
 
+# ESLint #
+### Linter Purpose and Instructions ###
+>A linter ensures that code conforms to best coding practices. We are using ESLint, which is a customizable linter for JavaScript.
 
+_**PLEASE LINT YOUR CODE BEFORE EVERY PULL REQUEST!**_
 
+### To Run the Linter ###
+_Please ensure that npm is installed on your local machine._
+
+>You can check by running npx -version. If you have a version, it is already installed on your machine.
+(This is tested and set up by a local environment running npm version 9.6.7)
+
+If not, please refer to [npm install](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+
+ run
+> npx eslint yourfile.js
+
+You should then see the linter's response to your code. It will tell you about problematic portions of code or that your code is good to go.
+
+#### To fix code ####
+run 
+> npx eslint yourfile.js --fix
+
+### Linter config file ###
+The linter config file is called **.eslintrc.js**
+
+Current code standards:
+* Indentation must be 4 spaces, not tabs
+* We are using unix linebreak style
+* Strings must be in double quotes
+* There must always be a following semicolon
+
+  
+*See config file [documentation](https://eslint.org/docs/latest/use/configure/rules) to add new coding standards.*
