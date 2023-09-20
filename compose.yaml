@@ -34,7 +34,8 @@ services:
             PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
         volumes:
             - pgadmin_data:/var/lib/pgadmin
-
+        logging:
+            driver: none
 volumes:
     pg_data:
     pgadmin_data:
