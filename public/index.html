@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<!-- SOME OF THESE ITEMS WILL HAVE TO BE EDITED ONCE WE GET USER PROFILES SET UP AND MORE INFO IN THE DB-->
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -13,11 +13,40 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" href="/css/styles.css" />
 
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
   <title>HandInHand</title>
+  <style>
+    /* Add margin to the Navbar elements for spacing */
+    .navbar-brand,
+    .user-image,
+    .btn {
+      margin-right: 10px; /* Adjust the margin as needed */
+    }
+  </style>
 </head>
 
 <body>
-  <h1 class="text-center">Hello, HandInHand!</h1>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <img src="user-image.jpg" alt="User Image" class="user-image img-fluid rounded-circle mx-2" width="40"
+        height="40">
+        <!-- Obviously welcome, user will be replaced by actual user's name stored in le database when we get that far-->
+      <span class="navbar-brand">Welcome, User!</span>
+      <ul class="navbar-nav ms-auto">
+        <!-- Add in the Calendar page link for when we eventually get there, too-->
+        <li class="nav-item">
+          <a class="nav-link" href="#">Calendar</a>
+        </li>
+      </ul>
+      <!-- Sign out button for when we get there, also -->
+      <button class="btn btn-outline-danger">Sign Out</button>
+    </div>
+  </nav>
+
+  <!-- Community Feed, sidebar, etc -->
   <hr><br>
 
   <div class="container">
@@ -34,11 +63,29 @@
       </div>
   </div>
 
+  <!-- Footer -->
+  <footer class="bg-light text-center py-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 text-left">
+          HandInHand &copy; 2023
+        </div>
+        <div class="col-md-6 text-right">
+          <div>Contact Us!</div>
+          <div>
+            <a href="mailto:communityfirst.handinhand@gmail.com" class="btn btn-link">
+              <i class="bi bi-envelope"></i>
+            </a>
+            <a href="https://github.com/msu-denver/senior-experience-group-project-community-first"
+              class="btn btn-link" target="_blank">
+              <i class="bi bi-github"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
 
-
-
-
-  <!-- Popper and Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
     integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
     crossorigin="anonymous"></script>
@@ -48,7 +95,6 @@
 
   <!-- Custom JS -->
   <script src="/scripts/script.js"></script>
-
 </body>
 
 </html>
