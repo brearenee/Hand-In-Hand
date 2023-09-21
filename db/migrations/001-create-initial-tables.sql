@@ -1,6 +1,11 @@
-CREATE EXTENSION pgcrypto;
-create extension cube;
-create extension earthdistance;
+
+create extension if not exists pgcrypto;
+create extension if not exists cube;
+create extension if not exists earthdistance;
+
+DROP TABLE IF EXISTS POSTS;
+DROP TABLE IF EXISTS USERS;
+DROP TABLE IF EXISTS LOCATIONS;
 
 CREATE TABLE users
 (

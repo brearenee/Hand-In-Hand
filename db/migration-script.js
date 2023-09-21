@@ -1,13 +1,14 @@
-//TODO: https://www.antoniovdlc.me/a-look-at-postgresql-migrations-in-node/
-import {migrate} from "postgres-migrations";
+const {migrate} = require("postgres-migrations");
+require('dotenv').config(); 
 
-async function migrateConfig() {
-  const dbConfig = {
+async function migration(){
+
+const dbConfig = {
     database: process.env.POSTGRES_DB,
     user: process.env.POSTGRES_USR,
     password: process.env.POSTGRES_PWD,
     host: process.env.POSTGRES_HOST,
-    port: POSTGRES_PORT,
+    port: parseInt(process.env.POSTGRES_PORT),
 
     // Default: false for backwards-compatibility
     // This might change!
@@ -16,7 +17,14 @@ async function migrateConfig() {
     // Default: "postgres"
     // Used when checking/creating "database-name"
     defaultDatabase: "postgres"
-  }
+};
 
-  await migrate(dbConfig, ".")
+try {
+    await migrate(dbConfig, "./db/migrations");
+    console.log("Migrations successfully applied");
+} catch (error) {
+    console.error("Error applying migrations:", error);
 }
+}
+
+migration(); 

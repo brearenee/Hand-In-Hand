@@ -4,6 +4,7 @@
   "description": "Web Application for CS4360",
   "main": "index.js",
   "scripts": {
+    "migrate": "node db/migration-script.js",
     "start": "nodemon index.js",
     "test": "node tests/test.js"
   },
