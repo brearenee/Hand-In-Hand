@@ -53,30 +53,29 @@ ALTER TABLE users ADD FOREIGN KEY (last_location) REFERENCES locations(id);
 ALTER TABLE locations ADD CONSTRAINT lat_long_unique UNIQUE (lat, long);
 
 
-
- INSERT INTO locations
- (lat,long, street_number, street_name, city, zip, state_long, state_short) 
- VALUES
- (39.798770010686965,-105.07207748323874, '6815', 'W 56th Ave','Arvada', '80002','Colorado', 'CO');
+INSERT INTO locations
+    (lat,long, street_number, street_name, city, zip, state_long, state_short) 
+VALUES
+    (39.798770010686965,-105.07207748323874, '6815', 'W 56th Ave','Arvada', '80002','Colorado', 'CO');
 
 INSERT INTO users
- (username, created_at, last_location) 
- VALUES
- ('testUser1', CURRENT_TIMESTAMP, (SELECT id FROM locations WHERE lat = 39.798770010686965 AND long = -105.07207748323874)),
- ('testUser2', CURRENT_TIMESTAMP, (SELECT id FROM locations WHERE lat = 39.798770010686965 AND long = -105.07207748323874));
+    (username, created_at, last_location) 
+VALUES
+    ('testUser1', CURRENT_TIMESTAMP, (SELECT id FROM locations WHERE lat = 39.798770010686965 AND long = -105.07207748323874)),
+    ('testUser2', CURRENT_TIMESTAMP, (SELECT id FROM locations WHERE lat = 39.798770010686965 AND long = -105.07207748323874));
 
  INSERT INTO posts
- (user_id, location_id, title, body, type) 
+    (user_id, location_id, title, body, type) 
  VALUES
- ((SELECT id FROM users WHERE username = 'testUser1'),
- (SELECT id FROM locations WHERE lat = 39.798770010686965 AND long = -105.07207748323874),
- 'TEST: Help Moving Desk', 'Test: I could use some help with moving a desk from one room to another in my apartment', 'request'),
- ((SELECT id FROM users WHERE username = 'testUser2'),
- (SELECT id FROM locations WHERE lat = 39.798770010686965 AND long = -105.07207748323874 ),
- 'TEST: Free Vaccuum', 'Test: I have a free vaccuum Id like to donate to whoever needs it', 'gift'),
-  ((SELECT id FROM users WHERE username = 'testUser1'),
- (SELECT id FROM locations WHERE lat = 39.798770010686965 AND long = -105.07207748323874 ),
- 'TEST: Ride to Doctors', 'Test: Im requesting a ride to the doctors', 'request'),
- ((SELECT id FROM users WHERE username = 'testUser2'),
- (SELECT id FROM locations WHERE lat = 39.798770010686965 AND long = -105.07207748323874 ),
- 'TEST: Free Halloween Event', 'Test: My neighborhood is hosting a Halloween block party', 'request');
+    ((SELECT id FROM users WHERE username = 'testUser1'),
+    (SELECT id FROM locations WHERE lat = 39.798770010686965 AND long = -105.07207748323874),
+        'TEST: Help Moving Desk', 'Test: I could use some help with moving a desk from one room to another in my apartment', 'request'),
+    ((SELECT id FROM users WHERE username = 'testUser2'),
+    (SELECT id FROM locations WHERE lat = 39.798770010686965 AND long = -105.07207748323874 ),
+        'TEST: Free Vaccuum', 'Test: I have a free vaccuum Id like to donate to whoever needs it', 'gift'),
+    ((SELECT id FROM users WHERE username = 'testUser1'),
+    (SELECT id FROM locations WHERE lat = 39.798770010686965 AND long = -105.07207748323874 ),
+        'TEST: Ride to Doctors', 'Test: Im requesting a ride to the doctors', 'request'),
+    ((SELECT id FROM users WHERE username = 'testUser2'),
+    (SELECT id FROM locations WHERE lat = 39.798770010686965 AND long = -105.07207748323874 ),
+        'TEST: Free Halloween Event', 'Test: My neighborhood is hosting a Halloween block party', 'request');
