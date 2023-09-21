@@ -3,7 +3,11 @@ create extension if not exists pgcrypto;
 create extension if not exists cube;
 create extension if not exists earthdistance;
 
-CREATE TABLE IF NOT EXISTS users
+DROP TABLE IF EXISTS POSTS;
+DROP TABLE IF EXISTS USERS;
+DROP TABLE IF EXISTS LOCATIONS;
+
+CREATE TABLE users
 (
     id UUID DEFAULT gen_random_uuid(),
     username text NOT NULL UNIQUE,
@@ -13,7 +17,7 @@ CREATE TABLE IF NOT EXISTS users
     CONSTRAINT userid_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS locations
+CREATE TABLE locations
 (
     id UUID DEFAULT gen_random_uuid(),
     lat FLOAT8 NOT NULL,
@@ -29,7 +33,7 @@ CREATE TABLE IF NOT EXISTS locations
     CONSTRAINT locid_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS posts
+CREATE TABLE posts
 (
     id UUID DEFAULT gen_random_uuid(),
     title text NOT NULL, 
