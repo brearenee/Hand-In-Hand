@@ -52,7 +52,7 @@ _**PLEASE LINT YOUR CODE BEFORE EVERY PULL REQUEST!**_
  ## To run ##
     in a new terminal, access the containers command-line by running:
     
- ```docker exec -t senior-experience-group-project-community-first-app-1 ssh ```
+ ```docker exec -it senior-experience-group-project-community-first-app-1 ssh ```
 
     then while inside the container, run the linter: 
  
