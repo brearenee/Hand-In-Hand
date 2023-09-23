@@ -60,7 +60,7 @@ _**PLEASE LINT YOUR CODE BEFORE EVERY PULL REQUEST!**_
 
 You should then see the linter's response to your code in the terminal. It will tell you about problematic portions of code or that your code is good to go.
 
-if running into issues with "ssh" being unavailble, please see documentation in Teams on how to install npm locally. 
+if running into issues with "sh" being unavailble, please see documentation in Teams on how to install npm locally. 
 
 #### To auto-fix code ####
  
