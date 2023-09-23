@@ -50,13 +50,21 @@ http://localhost:16543/
 _**PLEASE LINT YOUR CODE BEFORE EVERY PULL REQUEST!**_
 
  ## To run ##
-> npx eslint yourfile.js
+    in a new terminal, access the containers command-line by running:
+    
+ ```docker exec -t senior-experience-group-project-community-first-app-1 ssh ```
+
+    then while inside the container, run the linter: 
+ 
+`````` npx eslint yourfile.js ``````
 
 You should then see the linter's response to your code in the terminal. It will tell you about problematic portions of code or that your code is good to go.
 
-#### To fix code ####
-run 
-> npx eslint yourfile.js --fix
+if running into issues with "ssh" being unavailble, please see documentation in Teams on how to install npm locally. 
+
+#### To auto-fix code ####
+ 
+```npx eslint yourfile.js --fix```
 
 
 *Current code standards:*
