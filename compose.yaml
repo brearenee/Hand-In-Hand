@@ -20,7 +20,6 @@ services:
             POSTGRES_USER:     ${POSTGRES_USR}
             POSTGRES_PASSWORD: ${POSTGRES_PWD}
         volumes:
-            - ./db/000-db.sql:/docker-entrypoint-initdb.d/000-db.sql
             - pg_data:/var/lib/postgresql/data
 
     pgadmin-compose:
