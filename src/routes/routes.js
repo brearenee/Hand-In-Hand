@@ -7,12 +7,10 @@
  * 
  * 
  * PLEASE NOTE: THIS IS A VERY ROUGH DRAFT, used mainly to understand more of the API process,
- * and to figure out the curren http response format. 
+ * and to figure out the curren http response format. See Teams for more documentation.
  * 
  * The Swagger documentation on this branch is currently working.  
- * It will only run when app-1 container is not running due to port usage.
  * 
- * TODO: Figure out how app-1 container can be included in this api.
  * TODO: create schemas for api.
  * 
  * 
@@ -28,6 +26,7 @@ const pool = new Pool({
     password: process.env.POSTGRES_PWD,
     database: process.env.POSTGRES_DB
 });
+
 /** 
  * @swagger
  * /users:
@@ -51,27 +50,13 @@ module.exports = function(app){
     app.get("/users", (request, response) => {
         pool.query("SELECT * from users", (error, result) => {
             if (error) {
-                console.log("throwing error");
+                console.log("throwing error; unable to get users from postgres");
                 throw error;
             }
               response.status(200).json(result.rows);
         });
     });
 
-/*app.post("/users", (req, res) => {
-    res.send("Create a new user");
-});
-
-app.get("/", function(req, res) {
-  console.log("INITIAL REQUEST");
-  res.sendFile(path.join(__dirname, "../../public/index.html"));
-});
-
-app.get("/posts", (request, response) => {
-        console.log("POST ROUTE CALLED");
-
-    
-    });*/
 };
 
 /** 

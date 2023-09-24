@@ -75,5 +75,10 @@ if running into issues with "sh" being unavailble, please see documentation in T
 
 
 ## Swagger Documentation ##
+You may need to run following command inside the app-1 Docker container.
+```npm install swagger-ui-express swagger-jsdoc```
 
-See Swagger API docs in http://localhost:3000/api-docs/ 
+Inside app-1 Docker container, run
+```npm run start```
+
+Go to Swagger API docs in http://localhost:3000/api-docs/ 
