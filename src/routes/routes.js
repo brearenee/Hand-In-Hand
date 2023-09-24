@@ -6,54 +6,17 @@
  *    https://reintech.io/blog/using-node-js-with-a-rest-api-the-best-libraries-for-developers 
  * 
  * 
- * Instructions:
- * install ThunderClient(TC) extension to VSCode to see http requests
- * change .env file to export each line
- * enter ". .env" in VSCode editor. 
- * copy .env file into dev.env file
- * set TC to use dev.env as environment variables
- * start server: npm run start
- * select new request in TC
- * view http://localhost:3000/users in TC with GET function to make GET requests.
+ * PLEASE NOTE: THIS IS A VERY ROUGH DRAFT, used mainly to understand more of the API process,
+ * and to figure out the curren http response format. 
  * 
- * Current response format:
- * [
-  {
-    "id": "fd46d14a-f382-44cf-ac30-ce1eaf485eaa",
-    "username": "testUser1",
-    "last_location": "b35cd847-42eb-496f-b23a-de5ce41ac754",
-    "created_at": "2023-09-20T21:01:31.583Z",
-    "updated_at": "2023-09-20T21:01:31.583Z"
-  },
-  {
-    "id": "9e88ef9f-7d9b-4286-baa8-0b37d7a0940e",
-    "username": "testUser2",
-    "last_location": "b35cd847-42eb-496f-b23a-de5ce41ac754",
-    "created_at": "2023-09-20T21:01:31.583Z",
-    "updated_at": "2023-09-20T21:01:31.583Z"
-  },
-  {
-    "id": "eafeab76-a8b8-4a73-a076-f4466c2e824b",
-    "username": "testUser3",
-    "last_location": "b35cd847-42eb-496f-b23a-de5ce41ac754",
-    "created_at": "2023-09-20T21:04:31.159Z",
-    "updated_at": "2023-09-20T21:04:31.159Z"
-  },
-  {
-    "id": "f94a7e7e-eafd-48c8-b4e9-12f0ee7064bf",
-    "username": "testUser4",
-    "last_location": "b35cd847-42eb-496f-b23a-de5ce41ac754",
-    "created_at": "2023-09-20T21:04:31.159Z",
-    "updated_at": "2023-09-20T21:04:31.159Z"
-  }
-];
+ * The Swagger documentation on this branch is currently working.  
+ * It will only run when app-1 container is not running due to port usage.
+ * 
+ * TODO: Figure out how app-1 container can be included in this api.
+ * TODO: create schemas for api.
+ * 
+ * 
  */
-
-//const path = require("path");
-//const users = require("../controllers/users.js");
-//const express = require('express')
-//const router = express.Router()
-//const users = require('/Users/jess/projects/senior-experience-group-project-community-first/src/controllers/users.js')
 
 require("dotenv").config();
 
@@ -65,6 +28,23 @@ const pool = new Pool({
     password: process.env.POSTGRES_PWD,
     database: process.env.POSTGRES_DB
 });
+/** 
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Retrieve a list of users
+ *     description: Get a list of all users from the database
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+
 
 module.exports = function(app){
 
@@ -93,3 +73,266 @@ app.get("/posts", (request, response) => {
     
     });*/
 };
+
+/** 
+ * @swagger
+ * /users:
+ *   post:
+ *     summary: Add a user
+ *     description: Add a user
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+
+/** 
+ * @swagger
+ * /users:
+ *   delete:
+ *     summary: Delete a user
+ *     description: Delete a user based off of their api id. 
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+
+/** 
+ * @swagger
+ * /users {id}:
+ *   get:
+ *     summary: get a user based on id
+ *     description: Get a user based off of their id.
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+
+/** 
+ * @swagger
+ * /users {id}:
+ *   get:
+ *     summary: get a user based on id
+ *     description: Get a user based off of their id.
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+
+/** 
+ * @swagger
+ * /users {id}:
+ *   put:
+ *     summary: Update a user based on id
+ *     description: Update user
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+
+
+
+
+
+//Posts
+
+/** 
+ * @swagger
+ * /posts {id}:
+ *   get:
+ *     summary: Get a post based off of its id
+ *     description: Get a specific post
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+/** 
+ * @swagger
+ * /posts {id}:
+ *   delete:
+ *     summary: Delete a posts based off of its id
+ *     description: Delete a specific post
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+/** 
+ * @swagger
+ * /posts:
+ *   delete:
+ *     summary: Delete all posts 
+ *     description: Delete a post
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+
+/** 
+ * @swagger
+ * /posts:
+ *   get:
+ *     summary: get all posts 
+ *     description: Get all posts
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+
+/** 
+ * @swagger
+ * /posts {id }:
+ *    put :
+ *     summary: Update a user based on id
+ *     description: Update a user based off of their id.
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+
+
+//free items
+
+
+/** 
+ * @swagger
+ * /freeItem {name}:
+ *   get:
+ *     summary: Get a freeItem based off of its name
+ *     description: Get a specific freeItem
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+/** 
+ * @swagger
+ * /freeItem {id}:
+ *   delete:
+ *     summary: Delete a freeItem based off of its id
+ *     description: Delete a specific freeItem
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+/** 
+ * @swagger
+ * /freeItem:
+ *   delete:
+ *     summary: Delete all freeItem
+ *     description: Delete a freeItem
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+
+/** 
+ * @swagger
+ * /freeItem:
+ *   get:
+ *     summary: get all freeItems
+ *     description: Get all freeItem
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+
+
+
+/** 
+ * @swagger
+ * /freeItem :
+ *   post:
+ *     summary: create new freeItem
+ *     description: create freeItem
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
