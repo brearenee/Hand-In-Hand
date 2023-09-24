@@ -71,4 +71,4 @@ if running into issues with "sh" being unavailble, please see documentation in T
 * Indentation must be 4 spaces, not tabs
 * We are using unix linebreak style
 * Strings must be in double quotes
-* There must always be a following semicolon
+* There must always be a following semicolon 
