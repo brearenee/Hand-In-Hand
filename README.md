@@ -72,3 +72,8 @@ if running into issues with "sh" being unavailble, please see documentation in T
 * We are using unix linebreak style
 * Strings must be in double quotes
 * There must always be a following semicolon
+
+
+## Swagger Documentation ##
+
+See Swagger API docs in http://localhost:3000/api-docs/ 

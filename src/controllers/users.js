@@ -1,11 +1,14 @@
 //TODO:  logic for the routes // queries. 
 /*const express = require('express');
 const app = express();
-const port = 3000;
+const port = 3000; 
 
 
 
 app.use(express.json());*/
+const swagger = require('swagger.js'); 
+// Swagger Documentation
+swagger(app); // Integrate Swagger for API documentation
 
 app.get('/users', (req, res) => {
     it = pool.query('SELECT * FROM posts', (error, result) => {
