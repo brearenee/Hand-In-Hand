@@ -2,6 +2,9 @@ console.log("script.js")
 fetch("/posts")
   .then((response) => {return response.json()})
   .then((data) => {
+
+    const feedContent = document.getElementById('feed-content');
+
     data.forEach((users) => {
       // Select the <template> we created in index.html
       const cardTemplate = document.querySelector('template');
@@ -23,7 +26,7 @@ fetch("/posts")
       colDiv.appendChild(card);
 
       // Append the new column div to the row
-      document.querySelector('.row').appendChild(colDiv);
+      feedContent.appendChild(colDiv);
     });
   });
 

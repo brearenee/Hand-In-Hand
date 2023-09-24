@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- SOME OF THESE ITEMS WILL HAVE TO BE EDITED ONCE WE GET USER PROFILES SET UP AND MORE INFO IN THE DB-->
+
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -22,7 +23,8 @@
     .navbar-brand,
     .user-image,
     .btn {
-      margin-right: 10px; /* Adjust the margin as needed */
+      margin-right: 10px;
+      /* Adjust the margin as needed */
     }
   </style>
 </head>
@@ -33,7 +35,7 @@
     <div class="container-fluid">
       <img src="user-image.jpg" alt="User Image" class="user-image img-fluid rounded-circle mx-2" width="40"
         height="40">
-        <!-- Obviously welcome, user will be replaced by actual user's name stored in le database when we get that far-->
+      <!-- Obviously welcome, user will be replaced by actual user's name stored in le database when we get that far-->
       <span class="navbar-brand">Welcome, User!</span>
       <ul class="navbar-nav ms-auto">
         <!-- Add in the Calendar page link for when we eventually get there, too-->
@@ -49,8 +51,70 @@
   <!-- Community Feed, sidebar, etc -->
   <hr><br>
 
-  <div class="container">
-    <div class="row">
+  <!-- FORM - Communit Feed Post -->
+  <div class="container m-3">
+    <form class=" containter g-3">
+      <fieldset class="row g-3">
+        <legend>Submit new Help Opportunity, Free Item, or Community Event</legend>
+        <div class="col-6">
+          <div class="mb-2">
+            <label for="post-summary" class="form-label">Summary of Request/Event/Item</label>
+            <input type="email" class="form-control" id="post-summary" required>
+          </div>
+
+          <div class="mb-2">
+            <label for="post-description" class="form-label">Detailed Description</label>
+            <textarea class="form-control" id="post-description" rows="4" required></textarea>
+          </div>
+          <div class="mb-2">
+            <label for="post-location" class="form-label">Location of Request/Event</label>
+            <input type="text" class="form-control" id="post-location" placeholder="Address or approximate location">
+          </div>
+          <div class="col-8">
+            <label for="form-file-multiple" class="form-label">Upload image</label>
+            <input class="form-control" type="file" id="form-file-multiple" multiple>
+          </div>
+        </div>
+        <div class="col-6 d-flex flex-column">
+
+          <div class="mb-2">
+            <label for="post-type-select" class="form-label">Type of Request</label>
+            <select class="form-select" aria-label="Default select example">
+              <option value="1">Community Help</option>
+              <option value="2">Free Marketplace Item</option>
+              <option value="3">Community Event</option>
+            </select>
+          </div>
+          <div >
+            <label for="post-date-range" class="form-label">Request Date(s)</label>
+            <div id="post-date-range" >
+              <div class="input-group mb-3">
+                <span class="input-group-text w-25">From</span>
+                <input type="date" class="form-control" aria-label="Beginning date">
+              </div>
+
+              <div class="input-group mb-3">
+                <span class="input-group-text w-25">To</span>
+                <input type="date" class="form-control" aria-label="Ending date">
+
+              </div>
+            </div>
+          </div>
+          <div class="d-flex mt-auto justify-content-end">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+
+        </div>
+
+      </fieldset>
+    </form>
+
+
+
+    <!-- Placeholder Content: COULD BE USEFUL IN BUILDING FEED!!! -->
+    <div class="container g-3 mt-4">
+      <h2 class="h2 text-center"> Items and Events from DB</h2>
+      <div class="row" id="feed-content">
         <template>
           <div class="card h-100">
             <div class="container">
@@ -61,7 +125,10 @@
           </div>
         </template>
       </div>
+    </div>
   </div>
+
+
 
   <!-- Footer -->
   <footer class="bg-light text-center py-3">
@@ -76,8 +143,8 @@
             <a href="mailto:communityfirst.handinhand@gmail.com" class="btn btn-link">
               <i class="bi bi-envelope"></i>
             </a>
-            <a href="https://github.com/msu-denver/senior-experience-group-project-community-first"
-              class="btn btn-link" target="_blank">
+            <a href="https://github.com/msu-denver/senior-experience-group-project-community-first" class="btn btn-link"
+              target="_blank">
               <i class="bi bi-github"></i>
             </a>
           </div>
