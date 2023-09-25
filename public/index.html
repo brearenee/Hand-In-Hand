@@ -68,7 +68,7 @@
           </div>
           <div class="mb-2">
             <label for="post-location" class="form-label">Location of Request/Event</label>
-            <input type="text" class="form-control" id="post-location" placeholder="Address or approximate location">
+            <input type="text" class="form-control" id="post-location" placeholder="Address or approximate location" required>
           </div>
           <div class="col-8">
             <label for="form-file-multiple" class="form-label">Upload image</label>
@@ -79,7 +79,7 @@
 
           <div class="mb-2">
             <label for="post-type-select" class="form-label">Type of Request</label>
-            <select class="form-select" aria-label="Default select example">
+            <select class="form-select" aria-label="Default select example" required>
               <option value="1">Community Help</option>
               <option value="2">Free Marketplace Item</option>
               <option value="3">Community Event</option>
@@ -90,12 +90,12 @@
             <div id="post-date-range" >
               <div class="input-group mb-3">
                 <span class="input-group-text w-25">From</span>
-                <input type="date" class="form-control" aria-label="Beginning date">
+                <input type="date" class="form-control" aria-label="Beginning date" required>
               </div>
 
               <div class="input-group mb-3">
                 <span class="input-group-text w-25">To</span>
-                <input type="date" class="form-control" aria-label="Ending date">
+                <input type="date" class="form-control" aria-label="Ending date" required>
 
               </div>
             </div>
