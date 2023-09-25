@@ -48,9 +48,10 @@
     </div>
   </nav>
 
-  <!-- Community Feed, sidebar, etc -->
+  <!-- Community Feed, etc -->
   <hr><br>
 
+<<<<<<< HEAD
   <!-- FORM - Communit Feed Post -->
   <div class="container m-3">
     <form class=" containter g-3">
@@ -125,9 +126,32 @@
           </div>
         </template>
       </div>
+=======
+  <div class="container">
+    <div class="row">
+      <template>
+        <div class="card h-100">
+          <div class="container">
+            <h4>Placeholder</h4>
+            <p>Placeholder</p>
+            <p1 class="mb-0"></p1>Placeholder</p1>
+          </div>
+        </div>
+      </template>
+>>>>>>> 836cde5b77d07e0674c32230fe266e47645350a9
     </div>
   </div>
+  <!-- Sidebar -->
+  <div class="d-flex" id="wrapper">
+    <nav id="sidebar">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link p-0" data-toggle="collapse" href="#communityGuidelines" role="button" aria-expanded="false"
+            aria-controls="communityGuidelines">
+            Community Guidelines
+          </a>
 
+<<<<<<< HEAD
 
 
   <!-- Footer -->
@@ -147,21 +171,120 @@
               target="_blank">
               <i class="bi bi-github"></i>
             </a>
+=======
+          <!-- Content Box Under Community Guidelines -->
+        <li class="nav-item">
+          <div class="nav-link">
+            <!-- Content Box -->
+            <div class="p-1">
+              <ul>
+                <li>Be respectful to all those with whom you interact within our community.</li>
+                <li>Share comments and ideas thoughtfully, with the consideration you would expect to be afforded.</li>
+                <li>Refrain from inappropriate, off-topic, abusive, harassing, or profane comments.</li>
+                <li>Do not post information that would be considered spam.</li>
+                <li>We reserve the right to reject or remove comments that are not in keeping with our policy, values,
+                  and principles; and to block or ban users/followers who do not follow these guidelines.</li>
+                <li>Original posts are to be auto-deleted one week after the requested date on the form.</li>
+              </ul>
+            </div>
+>>>>>>> 836cde5b77d07e0674c32230fe266e47645350a9
           </div>
+          <!-- "Report Misuse" Button -->
+          <button id="reportMisuseButton" class="btn btn-danger">Report Misuse</button>
+        </li>
+
+        <!-- HandInHand Mission Section -->
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="collapse" href="#handInHandMission" role="button" aria-expanded="false"
+            aria-controls="handInHandMission">
+            HandInHand Mission
+          </a>
+          <div class="" id="handInHandMission">
+            <div class="p-3">
+              <!-- HandInHand Mission Text -->
+              <p>
+                HandInHand is a web-based application that allows communities to come together to engage in acts of
+                service, volunteer-based opportunities, and community events.
+              </p>
+              <p>
+                We're committed to promoting positivity, mental well-being, and meaningful connections in the digital
+                world.
+              </p>
+            </div>
+          </div>
+        </li>
+        <!-- Additional Sidebar Features (Placeholder) -->
+        <li class="nav-item">
+          <a class="nav-link" href="#additionalFeature1">
+            Additional Feature 1
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#additionalFeature2">
+            Additional Feature 2
+          </a>
+        </li>
+        <!-- Add more features here (as needed) -->
+      </ul>
+    </nav>
+
+    <!-- Page Content -->
+    <div id="page-content">
+      <header>
+        <!-- Remove the "Toggle Sidebar" button (if not needed) -->
+      </header>
+      <main>
+      </main>
+    </div>
+  </div>
+
+  <!-- Add Bootstrap JS Script Link Here if Required -->
+</body>
+
+</html>
+
+<!-- Footer -->
+<footer class="bg-light text-center py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 text-left">
+        HandInHand &copy; 2023
+      </div>
+      <div class="col-md-6 text-right">
+        <div>Contact Us!</div>
+        <div>
+          <a href="mailto:communityfirst.handinhand@gmail.com" class="btn btn-link">
+            <i class="bi bi-envelope"></i>
+          </a>
+          <a href="https://github.com/msu-denver/senior-experience-group-project-community-first" class="btn btn-link"
+            target="_blank">
+            <i class="bi bi-github"></i>
+          </a>
         </div>
       </div>
     </div>
-  </footer>
+  </div>
+</footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-    integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
-    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+  integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+  integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
-  <!-- Custom JS -->
-  <script src="/scripts/script.js"></script>
+<!-- Custom JS -->
+<script src="/scripts/script.js"></script>
+
+<script>
+  // Get a reference to the "Report Misuse" button by its id
+  const reportMisuseButton = document.getElementById('reportMisuseButton');
+
+  // Add a click event listener to the button
+  reportMisuseButton.addEventListener('click', function () {
+    // Perform the desired action when the button is clicked
+    alert('Report Misuse button clicked!'); // You can replace this with your actual functionality
+  });
+</script>
+
 </body>
 
 </html>
