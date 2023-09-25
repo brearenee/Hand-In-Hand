@@ -33,6 +33,13 @@ const pool = new Pool({
  *   get:
  *     summary: Retrieve a list of users
  *     description: Get a list of all users from the database
+*     parameters:
+ *     - in: query
+ *       name: param1
+ *       required: false
+ *       description: Enter in location_id
+ *       schema:
+ *         type: string
  *     responses:
  *       200:
  *         description: Successful operation
@@ -41,7 +48,7 @@ const pool = new Pool({
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/User'
+ *                 
  */
 
 
@@ -73,15 +80,22 @@ module.exports = function(app){
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/User'
+ *                
  */
 
 /** 
  * @swagger
- * /users:
+ * /users/{id}:
  *   delete:
  *     summary: Delete a user
  *     description: Delete a user based off of their api id. 
+ *     parameters:
+ *     - in: query
+ *       name: id
+ *       required: true
+ *       description: Enter in user_id
+ *       schema:
+ *         type: string
  *     responses:
  *       200:
  *         description: Successful operation
@@ -90,15 +104,22 @@ module.exports = function(app){
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/User'
+ *             
  */
 
 /** 
  * @swagger
- * /users {id}:
+ * /users/{id}:
  *   get:
  *     summary: get a user based on id
  *     description: Get a user based off of their id.
+ *     parameters:
+ *     - in: query
+ *       name: id
+ *       required: true
+ *       description: Enter in user_id
+ *       schema:
+ *         type: string
  *     responses:
  *       200:
  *         description: Successful operation
@@ -107,32 +128,22 @@ module.exports = function(app){
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/User'
+ *              
  */
 
 /** 
  * @swagger
- * /users {id}:
- *   get:
- *     summary: get a user based on id
- *     description: Get a user based off of their id.
- *     responses:
- *       200:
- *         description: Successful operation
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
- */
-
-/** 
- * @swagger
- * /users {id}:
+ * /users/{id}:
  *   put:
  *     summary: Update a user based on id
  *     description: Update user
+ *     parameters:
+ *     - in: query
+ *       name: id
+ *       required: true
+ *       description: Enter in user_id
+ *       schema:
+ *         type: string
  *     responses:
  *       200:
  *         description: Successful operation
@@ -141,7 +152,7 @@ module.exports = function(app){
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/User'
+ *       
  */
 
 
@@ -152,10 +163,17 @@ module.exports = function(app){
 
 /** 
  * @swagger
- * /posts {id}:
+ * /posts/{id}:
  *   get:
  *     summary: Get a post based off of its id
  *     description: Get a specific post
+ *     parameters:
+ *     - in: query
+ *       name: id
+ *       required: false
+ *       description: Enter in post_id
+ *       schema:
+ *         type: string
  *     responses:
  *       200:
  *         description: Successful operation
@@ -164,14 +182,21 @@ module.exports = function(app){
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/User'
+ *         
  */
 /** 
  * @swagger
- * /posts {id}:
+ * /posts/{id}:
  *   delete:
  *     summary: Delete a posts based off of its id
  *     description: Delete a specific post
+ *     parameters:
+ *     - in: query
+ *       name: id
+ *       required: false
+ *       description: Enter in post_id
+ *       schema:
+ *         type: string
  *     responses:
  *       200:
  *         description: Successful operation
@@ -180,23 +205,7 @@ module.exports = function(app){
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/User'
- */
-/** 
- * @swagger
- * /posts:
- *   delete:
- *     summary: Delete all posts 
- *     description: Delete a post
- *     responses:
- *       200:
- *         description: Successful operation
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
+ *         
  */
 
 /** 
@@ -213,15 +222,16 @@ module.exports = function(app){
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/User'
+ *            
  */
+
 
 /** 
  * @swagger
- * /posts {id }:
- *    put :
- *     summary: Update a user based on id
- *     description: Update a user based off of their id.
+ * /posts:
+ *    post :
+ *     summary: Create new user
+ *     description: Create new user
  *     responses:
  *       200:
  *         description: Successful operation
@@ -230,8 +240,99 @@ module.exports = function(app){
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/User'
+ *         
  */
+
+/** 
+ * @swagger
+ * /posts/{id}:
+ *    put :
+ *     summary: Update a user based on id
+ *     description: Update a user based off of their id.
+ *     parameters:
+ *     - in: query
+ *       name: param1
+ *       required: true
+ *       description: Enter in post_id
+ *       schema:
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *              
+ */
+
+/** 
+ * @swagger
+ * /posts/{id}:
+ *    Delete :
+ *     summary: Delete a user based on id
+ *     description: Delete a user based off of their id.
+ *     parameters:
+ *     - in: query
+ *       name: id
+ *       required: true
+ *       description: Enter in post_id
+ *       schema:
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *          
+ */
+//locations
+/** 
+ * @swagger
+ * /location :
+ *   post:
+ *     summary: create new location
+ *     description: create location.
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *
+ */
+
+/** 
+ * @swagger
+ * /location/{location_id} :
+ *   post:
+ *     summary: create new location
+ *     description: create location. Design TBD
+*     parameters:
+ *     - in: query
+ *       name: id
+ *       required: true
+ *       description: Enter in location_id
+ *       schema:
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *        
+ */
+
+
 
 
 //free items
@@ -241,8 +342,8 @@ module.exports = function(app){
  * @swagger
  * /freeItem {name}:
  *   get:
- *     summary: Get a freeItem based off of its name
- *     description: Get a specific freeItem
+ *     summary: Get a freeItem based off of its name. 
+ *     description: Get a specific freeItem. More Design TBD
  *     responses:
  *       200:
  *         description: Successful operation
@@ -251,73 +352,5 @@ module.exports = function(app){
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/User'
- */
-/** 
- * @swagger
- * /freeItem {id}:
- *   delete:
- *     summary: Delete a freeItem based off of its id
- *     description: Delete a specific freeItem
- *     responses:
- *       200:
- *         description: Successful operation
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
- */
-/** 
- * @swagger
- * /freeItem:
- *   delete:
- *     summary: Delete all freeItem
- *     description: Delete a freeItem
- *     responses:
- *       200:
- *         description: Successful operation
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
- */
-
-/** 
- * @swagger
- * /freeItem:
- *   get:
- *     summary: get all freeItems
- *     description: Get all freeItem
- *     responses:
- *       200:
- *         description: Successful operation
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
- */
-
-
-
-/** 
- * @swagger
- * /freeItem :
- *   post:
- *     summary: create new freeItem
- *     description: create freeItem
- *     responses:
- *       200:
- *         description: Successful operation
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
+ *        
  */
