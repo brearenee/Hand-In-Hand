@@ -41,7 +41,7 @@ describe("Migration Setup Tests", function() {
         }catch(error)
         {console.error("migration 01 error",error);}
 
-        assert.equal(id.username, "testUser1", `${id.uesrname} does not equal testUser1`);
+        assert.equal(id.username, "testUser1", `${id.username} does not equal testUser1`);
 
     });
 
