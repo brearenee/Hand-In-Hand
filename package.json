@@ -6,7 +6,7 @@
   "scripts": {
     "migrate": "node db/migration-script.js",
     "start": "nodemon index.js",
-    "test": "mocha tests/*.js"
+    "test": "mocha tests/*.js --exit"
   },
   "author": "Brea Chaney Alyssa Williams Jessica Gardner Sarah Barnes Erika Sadsad",
   "license": "ISC",
