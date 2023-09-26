@@ -51,194 +51,205 @@
 
 
   <!-- Community Feed, sidebar, etc -->
+  <div class="container">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-3 d-flex mt-3" id="wrapper">
+        <nav id="sidebar">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link p-0" data-toggle="collapse" href="#communityGuidelines" role="button"
+                aria-expanded="false" aria-controls="communityGuidelines">
+                Community Guidelines
+              </a>
 
-  <!-- Sidebar -->
-  <div class="d-flex" id="wrapper">
-    <nav id="sidebar">
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a class="nav-link p-0" data-toggle="collapse" href="#communityGuidelines" role="button" aria-expanded="false"
-            aria-controls="communityGuidelines">
-            Community Guidelines
-          </a>
+              <!-- Content Box Under Community Guidelines -->
+              <div class="p-1">
+                <ul class="list-unstyled mb-3">
+                  <li class="mb-1">Be respectful to all those with whom you interact within our community.</li>
+                  <li class="mb-1">Share comments and ideas thoughtfully, with the consideration you would expect to
+                    be afforded.
+                  </li>
+                  <li class="mb-1">Refrain from inappropriate, off-topic, abusive, harassing, or profane comments.
+                  </li>
+                  <li class="mb-1">Do not post information that would be considered spam.</li>
+                  <li class="mb-1">We reserve the right to reject or remove comments that are not in keeping with
+                    our policy, values, and principles; and to block or ban users/followers who do not follow these
+                    guidelines.</li>
+                  <li class="mb-1">Original posts are to be auto-deleted one week after the requested date on the
+                    form.</li>
+                </ul>
+              </div>
+            </li>
 
-          <!-- Content Box Under Community Guidelines -->
-        <li class="nav-item">
-          <div class="nav-link">
-            <!-- Content Box -->
-            <div class="p-1">
-              <ul>
-                <li>Be respectful to all those with whom you interact within our community.</li>
-                <li>Share comments and ideas thoughtfully, with the consideration you would expect to be afforded.</li>
-                <li>Refrain from inappropriate, off-topic, abusive, harassing, or profane comments.</li>
-                <li>Do not post information that would be considered spam.</li>
-                <li>We reserve the right to reject or remove comments that are not in keeping with our policy, values,
-                  and principles; and to block or ban users/followers who do not follow these guidelines.</li>
-                <li>Original posts are to be auto-deleted one week after the requested date on the form.</li>
-              </ul>
-            </div>
-          </div>
-          <!-- "Report Misuse" Button -->
-          <button id="reportMisuseButton" class="btn btn-danger">Report Misuse</button>
-        </li>
+            <!-- "Report Misuse" Button -->
+            <li class="nav-item align-self-center">
+              <button id="reportMisuseButton" class="btn btn-danger">Report Misuse</button>
+            </li>
 
-        <!-- HandInHand Mission Section -->
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="collapse" href="#handInHandMission" role="button" aria-expanded="false"
-            aria-controls="handInHandMission">
-            HandInHand Mission
-          </a>
-          <div class="" id="handInHandMission">
-            <div class="p-3">
+            <!-- HandInHand Mission Section -->
+            <li class="nav-item mt-5">
+              <a class="nav-link p-0" data-toggle="collapse" href="#handInHandMission" role="button"
+                aria-expanded="false" aria-controls="handInHandMission">
+                HandInHand Mission
+              </a>
+
               <!-- HandInHand Mission Text -->
-              <p>
-                HandInHand is a web-based application that allows communities to come together to engage in acts of
-                service, volunteer-based opportunities, and community events.
-              </p>
-              <p>
-                We're committed to promoting positivity, mental well-being, and meaningful connections in the digital
-                world.
-              </p>
-            </div>
-          </div>
-        </li>
-        <!-- Additional Sidebar Features (Placeholder) -->
-        <li class="nav-item">
-          <a class="nav-link" href="#additionalFeature1">
-            Additional Feature 1
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#additionalFeature2">
-            Additional Feature 2
-          </a>
-        </li>
-        <!-- Add more features here (as needed) -->
-      </ul>
-    </nav>
+              <div class="p-1">
+                <ul class="list-unstyled mb-3">
+                  <li class="mb-3">HandInHand is a web-based application that allows communities to come together to
+                    engage in acts of service, volunteer-based opportunities, and community events.</li>
+                  <li class="mb-3"> We're committed to promoting positivity, mental well-being, and meaningful
+                    connections in the digital world.</li>
+                </ul>
+              </div>
+            </li>
+            <!-- Additional Sidebar Features (Placeholder) -->
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="#additionalFeature1">
+                  Additional Feature 1
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#additionalFeature2">
+                  Additional Feature 2
+                </a>
+              </li> -->
+            <!-- Add more features here (as needed) -->
+          </ul>
+        </nav>
+      </div>
 
-  <hr><br>
+      <!--Form and Community Feed -->
+      <div class="col-9">
+        <!-- FORM - Community Feed Post -->
+        <div class="container mt-3">
+          <form class=" containter g-3">
+            <fieldset class="row g-3">
+              <legend>Submit new Help Opportunity, Free Item, or Community Event</legend>
+              <div class="col-6">
+                <div class="mb-2">
+                  <label for="post-summary" class="form-label">Summary of Request/Event/Item</label>
+                  <input type="email" class="form-control" id="post-summary" required>
+                </div>
 
-  <!-- FORM - Communit Feed Post -->
-  <div class="container m-3">
-    <form class=" containter g-3">
-      <fieldset class="row g-3">
-        <legend>Submit new Help Opportunity, Free Item, or Community Event</legend>
-        <div class="col-6">
-          <div class="mb-2">
-            <label for="post-summary" class="form-label">Summary of Request/Event/Item</label>
-            <input type="email" class="form-control" id="post-summary" required>
-          </div>
+                <div class="mb-2">
+                  <label for="post-description" class="form-label">Detailed Description</label>
+                  <textarea class="form-control" id="post-description" rows="4" required></textarea>
+                </div>
+                <div class="mb-2">
+                  <label for="post-location" class="form-label">Location of Request/Event</label>
+                  <input type="text" class="form-control" id="post-location"
+                    placeholder="Address or approximate location" required>
+                </div>
+                <div class="col-8">
+                  <label for="form-file-multiple" class="form-label">Upload image</label>
+                  <input class="form-control" type="file" id="form-file-multiple" multiple>
+                </div>
+              </div>
+              <div class="col-6 d-flex flex-column">
 
-          <div class="mb-2">
-            <label for="post-description" class="form-label">Detailed Description</label>
-            <textarea class="form-control" id="post-description" rows="4" required></textarea>
-          </div>
-          <div class="mb-2">
-            <label for="post-location" class="form-label">Location of Request/Event</label>
-            <input type="text" class="form-control" id="post-location" placeholder="Address or approximate location" required>
-          </div>
-          <div class="col-8">
-            <label for="form-file-multiple" class="form-label">Upload image</label>
-            <input class="form-control" type="file" id="form-file-multiple" multiple>
-          </div>
-        </div>
-        <div class="col-6 d-flex flex-column">
+                <div class="mb-2">
+                  <label for="post-type-select" class="form-label">Type of Request</label>
+                  <select class="form-select" aria-label="Default select example" required>
+                    <option value="1">Community Help</option>
+                    <option value="2">Free Marketplace Item</option>
+                    <option value="3">Community Event</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="post-date-range" class="form-label">Request Date(s)</label>
+                  <div id="post-date-range">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text w-25">From</span>
+                      <input type="date" class="form-control" aria-label="Beginning date" required>
+                    </div>
 
-          <div class="mb-2">
-            <label for="post-type-select" class="form-label">Type of Request</label>
-            <select class="form-select" aria-label="Default select example" required>
-              <option value="1">Community Help</option>
-              <option value="2">Free Marketplace Item</option>
-              <option value="3">Community Event</option>
-            </select>
-          </div>
-          <div >
-            <label for="post-date-range" class="form-label">Request Date(s)</label>
-            <div id="post-date-range" >
-              <div class="input-group mb-3">
-                <span class="input-group-text w-25">From</span>
-                <input type="date" class="form-control" aria-label="Beginning date" required>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text w-25">To</span>
+                      <input type="date" class="form-control" aria-label="Ending date" required>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex mt-auto justify-content-end">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+
               </div>
 
-              <div class="input-group mb-3">
-                <span class="input-group-text w-25">To</span>
-                <input type="date" class="form-control" aria-label="Ending date" required>
+            </fieldset>
+          </form>
 
-              </div>
+          <br>
+          <hr>
+          <br>
+
+          <!-- Placeholder Content: COULD BE USEFUL IN BUILDING FEED!!! -->
+          <div class="container g-3 mt-4">
+            <h2 class="h2 text-center"> Items and Events from DB</h2>
+            <div class="row" id="feed-content">
+              <template>
+                <div class="card h-100">
+                  <div class="container">
+                    <h4>Placeholder</h4>
+                    <p>Placeholder</p>
+                    <p1 class="mb-0"></p1>Placeholder</p1>
+                  </div>
+                </div>
+              </template>
             </div>
           </div>
-          <div class="d-flex mt-auto justify-content-end">
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-
         </div>
 
-      </fieldset>
-    </form>
-
-
-
-    <!-- Placeholder Content: COULD BE USEFUL IN BUILDING FEED!!! -->
-    <div class="container g-3 mt-4">
-      <h2 class="h2 text-center"> Items and Events from DB</h2>
-      <div class="row" id="feed-content">
-        <template>
-          <div class="card h-100">
-            <div class="container">
-              <h4>Placeholder</h4>
-              <p>Placeholder</p>
-              <p1 class="mb-0"></p1>Placeholder</p1>
-            </div>
-          </div>
-        </template>
       </div>
     </div>
-  </div>
 
 
 
-  <!-- Footer -->
-  <footer class="bg-light text-center py-3">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 text-left">
-          HandInHand &copy; 2023
-        </div>
-        <div class="col-md-6 text-right">
-          <div>Contact Us!</div>
-          <div>
-            <a href="mailto:communityfirst.handinhand@gmail.com" class="btn btn-link">
-              <i class="bi bi-envelope"></i>
-            </a>
-            <a href="https://github.com/msu-denver/senior-experience-group-project-community-first" class="btn btn-link"
-              target="_blank">
-              <i class="bi bi-github"></i>
-            </a>
+    <!-- Footer -->
+    <footer class="bg-light text-center py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 text-left">
+            HandInHand &copy; 2023
+          </div>
+          <div class="col-md-6 text-right">
+            <div>Contact Us!</div>
+            <div>
+              <a href="mailto:communityfirst.handinhand@gmail.com" class="btn btn-link">
+                <i class="bi bi-envelope"></i>
+              </a>
+              <a href="https://github.com/msu-denver/senior-experience-group-project-community-first"
+                class="btn btn-link" target="_blank">
+                <i class="bi bi-github"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </footer>
+    </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-  integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-  integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+      integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+      integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+      crossorigin="anonymous"></script>
 
-<!-- Custom JS -->
-<script src="/scripts/script.js"></script>
+    <!-- Custom JS -->
+    <script src="/scripts/script.js"></script>
 
-<script>
-  // Get a reference to the "Report Misuse" button by its id
-  const reportMisuseButton = document.getElementById('reportMisuseButton');
+    <script>
+      // Get a reference to the "Report Misuse" button by its id
+      const reportMisuseButton = document.getElementById('reportMisuseButton');
 
-  // Add a click event listener to the button
-  reportMisuseButton.addEventListener('click', function () {
-    // Perform the desired action when the button is clicked
-    alert('Report Misuse button clicked!'); // You can replace this with your actual functionality
-  });
-</script>
+      // Add a click event listener to the button
+      reportMisuseButton.addEventListener('click', function () {
+        // Perform the desired action when the button is clicked
+        alert('Report Misuse button clicked!'); // You can replace this with your actual functionality
+      });
+    </script>
 
 </body>
 
