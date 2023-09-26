@@ -1,6 +1,5 @@
 const {migrate} = require("postgres-migrations");
 require("dotenv").config(); 
-const db = require('../src/utils/db');
 
 
 async function migration(){
@@ -18,12 +17,12 @@ async function migration(){
         // Default: "postgres"
         // Used when checking/creating "database-name"
         defaultDatabase: "postgres"
-    }
+    };
     try {
-       await migrate(dbConfig, "./db/migrations");
-    console.log("Migrations successfully applied");
+        await migrate(dbConfig, "./db/migrations");
+        console.log("Migrations successfully applied");
     } catch (error) {
-     console.error("Error applying migrations:", error);
+        console.error("Error applying migrations:", error);
     }
 
 }
@@ -31,4 +30,4 @@ async function migration(){
 
 migration(); 
 
-module.exports = {migration}
+module.exports = {migration};

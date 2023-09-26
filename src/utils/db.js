@@ -1,4 +1,3 @@
-const { Pool } = require('pg');
 
 const dbConfig = {
     database: process.env.POSTGRES_DB,

@@ -27,7 +27,7 @@ describe("Migration Setup Tests", function() {
     });
 
     after(async function() {
-      await pgp.end()
+        await pgp.end();
 
 
     });
@@ -38,7 +38,6 @@ describe("Migration Setup Tests", function() {
         try{
             migration.migration(); 
             id = await db.one("SELECT username FROM users where username = $1;", "testUser1");
-            console.log(id);
         }catch(error)
         {console.error("migration 01 error",error);}
 
@@ -50,7 +49,7 @@ describe("Migration Setup Tests", function() {
 
         //rolls back the last migration and applies new migration.  
         assert.doesNotThrow(function() {
-            async function backForward(a, b) {
+            async function backForward() {
                 id= await db.one("SELECT id FROM migrations ORDER BY id DESC LIMIT 1;");
                 await db.none ("delete from migrations where id = $1", id.id);
                 await migration.migration();
