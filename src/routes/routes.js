@@ -60,7 +60,7 @@ module.exports = function(app){
                 console.log("throwing error; unable to get users from postgres");
                 throw error;
             }
-              response.status(200).json(result.rows);
+            response.status(200).json(result.rows);
         });
     });
 
