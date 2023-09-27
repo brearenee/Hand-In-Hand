@@ -19,6 +19,7 @@
 require("dotenv").config();
 
 const Pool = require("pg").Pool;
+const path = require('path');
 
 const pool = new Pool({
     user: process.env.POSTGRES_USR,
