@@ -64,8 +64,14 @@ module.exports = function(app){
         });
     });
 
-};
 
+
+    app.get('/', function(req, res) {
+      console.log("INITIAL REQUEST")
+      res.sendFile(path.join(__dirname, '../../public/index.html'));
+    });
+
+    
 /** 
  * @swagger
  * /users:
@@ -224,6 +230,17 @@ module.exports = function(app){
  *               items:
  *            
  */
+app.get('/posts', (request, response) => {
+    console.log('POST ROUTE CALLED')
+
+    pool.query('SELECT * FROM posts', (error, result) => {
+        if (error) {
+        console.log("throwing error") 
+        throw error;}
+        console.log(result)
+        response.send(result.rows);
+    });
+  });
 
 
 /** 
@@ -355,3 +372,5 @@ module.exports = function(app){
  *               items:
  *        
  */
+
+};
