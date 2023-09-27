@@ -182,74 +182,54 @@
 
             </fieldset>
           </form>
+        </div>
 
-          <br>
-          <hr>
-          <br>
+        <br>
+        <hr>
+        <br>
 
-          <!-- Updated Community Feed Block with Larger Container and Scrollbar -->
-          <div class="container mt-4" style="max-height: 600px; overflow-y: auto;">
-            <h2 class="h2 text-center">Items and Events from DB</h2>
-            <div class="row" id="feed-content">
-              <div class="row" id="feed-content">
-                <!-- Example feed item template -->
-                <template>
-                  <div class="col-md-15 mb-15">
-                    <div class="card h-100">
-                      <div class="container">
-                        <h4>Title</h4>
-                        <p>Created Date</p>
-                        <p1 class="mb-0">Body Content</p1>
-                      </div>
-                    </div>
-                  </div>
-                </template>
+        <!-- Updated Community Feed Block with Larger Container and Scrollbar -->
+        <div class="container g-3 mt-4">
+          <h2 class="h2 text-center">Items and Events from DB</h2>
+          <div class="row" id="feed-content">
+            <!-- Example feed item template -->
+            <template>
+              <div class="card h-100">
+                <div class="container">
+                  <h4>Title</h4>
+                  <p>Created Date</p>
+                  <p1 class="mb-0">Body Content</p1>
+                </div>
               </div>
-            </div>
-          </div>
-          </div>
-            <!-- Placeholder Content: COULD BE USEFUL IN BUILDING COMMUNITY FEED!!! -->
-            <!--<div class="container g-3 mt-4">
-              <h2 class="h2 text-center"> Items and Events from DB</h2>
-              <div class="row" id="feed-content">
-                <template>
-                  <div class="card h-100">
-                    <div class="container">
-                      <h4>Placeholder</h4>
-                      <p>Placeholder</p>
-                      <p1 class="mb-0"></p1>Placeholder</p1>
-                    </div>
-                  </div>
-                </template>
-              </div>
-            </div>
-          </div>
-
-          </div>
-          </div>-->
-          
-    <!-- Footer -->
-    <footer class="bg-light text-center py-3">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 text-left">
-            HandInHand &copy; 2023
-          </div>
-          <div class="col-md-6 text-right">
-            <div>Contact Us!</div>
-            <div>
-              <a href="mailto:communityfirst.handinhand@gmail.com" class="btn btn-link">
-                <i class="bi bi-envelope"></i>
-              </a>
-              <a href="https://github.com/msu-denver/senior-experience-group-project-community-first"
-                class="btn btn-link" target="_blank">
-                <i class="bi bi-github"></i>
-              </a>
-            </div>
+            </template>
           </div>
         </div>
       </div>
-    </footer>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-light text-center py-3 mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 text-left">
+          HandInHand &copy; 2023
+        </div>
+        <div class="col-md-6 text-right">
+          <div>Contact Us!</div>
+          <div>
+            <a href="mailto:communityfirst.handinhand@gmail.com" class="btn btn-link">
+              <i class="bi bi-envelope"></i>
+            </a>
+            <a href="https://github.com/msu-denver/senior-experience-group-project-community-first" class="btn btn-link"
+              target="_blank">
+              <i class="bi bi-github"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
 
     <!-- Commenting for now, once we have a stable package dependency we will just delete
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
@@ -263,16 +243,16 @@
     <!-- Custom JS -->
     <script src="/scripts/script.js"></script>
 
-    <script>
-      // Get a reference to the "Report Misuse" button by its id
-      const reportMisuseButton = document.getElementById('reportMisuseButton');
+  <script>
+    // Get a reference to the "Report Misuse" button by its id
+    const reportMisuseButton = document.getElementById('reportMisuseButton');
 
-      // Add a click event listener to the button
-      reportMisuseButton.addEventListener('click', function () {
-        // Perform the desired action when the button is clicked
-        alert('Report Misuse button clicked!'); // You can replace this with your actual functionality
-      });
-    </script>
+    // Add a click event listener to the button
+    reportMisuseButton.addEventListener('click', function () {
+      // Perform the desired action when the button is clicked
+      alert('Report Misuse button clicked!'); // You can replace this with your actual functionality
+    });
+  </script>
 
 
 </body>

@@ -21,12 +21,13 @@ async function fetchAndPopulateFeed() {
                     card.querySelector("p").innerText = users.created_at;
                     card.querySelector("p1").innerText = users.body;
 
-                    // Create a new column div to wrap the card
-                    const colDiv = document.createElement("div");
-                    colDiv.classList.add("col");
+            // Create a new row div to wrap the card
+            const colDiv = document.createElement("div");
+            colDiv.classList.add("row");
+            colDiv.classList.add("g-3");
 
-                    // Append the card to the new column div
-                    colDiv.appendChild(card);
+            // Append the card to the new row div
+            colDiv.appendChild(card);
 
                     // Append the new column div to the row
                     feedContent.appendChild(colDiv);
