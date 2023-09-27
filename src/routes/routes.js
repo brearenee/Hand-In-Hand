@@ -88,7 +88,7 @@ module.exports = function(app){
  * /users/{id}:
  *   delete:
  *     summary: Delete a user
- *     description: Delete a user based off of their api id. 
+ *     description: Delete a user based off of their id. 
  *     parameters:
  *     - in: query
  *       name: id
@@ -111,7 +111,7 @@ module.exports = function(app){
  * @swagger
  * /users/{id}:
  *   get:
- *     summary: get a user based on id
+ *     summary: Get a user based on id
  *     description: Get a user based off of their id.
  *     parameters:
  *     - in: query
@@ -212,7 +212,7 @@ module.exports = function(app){
  * @swagger
  * /posts:
  *   get:
- *     summary: get all posts 
+ *     summary: Get all posts 
  *     description: Get all posts
  *     responses:
  *       200:
@@ -230,8 +230,8 @@ module.exports = function(app){
  * @swagger
  * /posts:
  *    post :
- *     summary: Create new user
- *     description: Create new user
+ *     summary: Create new post
+ *     description: Create new post
  *     responses:
  *       200:
  *         description: Successful operation
@@ -247,11 +247,11 @@ module.exports = function(app){
  * @swagger
  * /posts/{id}:
  *    put :
- *     summary: Update a user based on id
- *     description: Update a user based off of their id.
+ *     summary: Update a post based on id
+ *     description: Update a post based off of their id.
  *     parameters:
  *     - in: query
- *       name: param1
+ *       name: id
  *       required: true
  *       description: Enter in post_id
  *       schema:
@@ -271,8 +271,8 @@ module.exports = function(app){
  * @swagger
  * /posts/{id}:
  *    Delete :
- *     summary: Delete a user based on id
- *     description: Delete a user based off of their id.
+ *     summary: Delete a post based on id
+ *     description: Delete a post based off of their id.
  *     parameters:
  *     - in: query
  *       name: id
@@ -290,13 +290,14 @@ module.exports = function(app){
  *               items:
  *          
  */
+
 //locations
 /** 
  * @swagger
  * /location :
  *   post:
- *     summary: create new location
- *     description: create location.
+ *     summary: Create new location
+ *     description: Create location.
  *     responses:
  *       200:
  *         description: Successful operation
@@ -312,8 +313,8 @@ module.exports = function(app){
  * @swagger
  * /location/{location_id} :
  *   post:
- *     summary: create new location
- *     description: create location. Design TBD
+ *     summary: Create new location
+ *     description: Create location. Design TBD
 *     parameters:
  *     - in: query
  *       name: id
@@ -340,7 +341,7 @@ module.exports = function(app){
 
 /** 
  * @swagger
- * /freeItem {name}:
+ * /freeItem/{name}:
  *   get:
  *     summary: Get a freeItem based off of its name. 
  *     description: Get a specific freeItem. More Design TBD
