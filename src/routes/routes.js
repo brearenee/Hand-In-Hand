@@ -138,6 +138,23 @@ module.exports = function(app){
  *              
  */
 
+app.get("/users/:userId", (request, response) => {
+    const userId = request.params.userId;
+
+    pool.query("SELECT * FROM users WHERE id = $1", [userId], (error, result) => {
+        if (error) {
+            console.log("throwing error; unable to get user from postgres");
+            throw error;
+        }
+        response.status(200).json(result.rows[0]);
+    });
+});
+
+
+
+
+
+
 /** 
  * @swagger
  * /users/{id}:
