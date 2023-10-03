@@ -17,8 +17,7 @@ async function fetchAndPopulateFeed() {
 
                     // Update the content of the cloned template with the employee data we queried from the backend
                     card.querySelector("h4").innerText = users.title;
-
-                    // Parse and format the date in MM/DD/YY format
+                    
                     // Parse and format the date in MM/DD/YY format
                     const createdAt = new Date(users.created_at);
                     const formattedDate = createdAt.toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' });
