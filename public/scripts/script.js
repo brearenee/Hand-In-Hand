@@ -19,11 +19,22 @@ async function fetchAndPopulateFeed() {
                     card.querySelector("h4").innerText = users.title;
 
                     // Parse and format the date in MM/DD/YY format
+                    // Parse and format the date in MM/DD/YY format
                     const createdAt = new Date(users.created_at);
                     const formattedDate = createdAt.toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' });
-                    card.querySelector("p").innerText = formattedDate;
+
+                    // Get the time in Hour:Minutes AM/PM format
+                    const formattedTime = createdAt.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+
+                    // Combine the date and time
+                    const dateTimeString = `${formattedDate} ${formattedTime}`;
+
+                    // Set the text of the <p> element to the combined date and time
+                    card.querySelector("p").innerText = dateTimeString;
 
                     card.querySelector("p1").innerText = users.body;
+                    
+                    card.querySelector("p2").innerText = users.request_type;
 
                     // Create a new row div to wrap the card
                     const colDiv = document.createElement("div");
