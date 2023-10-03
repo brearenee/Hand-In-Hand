@@ -18,19 +18,11 @@ async function fetchAndPopulateFeed() {
                     // Update the content of the cloned template with the employee data we queried from the backend
                     card.querySelector("h4").innerText = users.title;
 
-                    // Parse the date from users.created_at
+                    // Parse and format the date in MM/DD/YY format
                     const createdAt = new Date(users.created_at);
-
-                    // Format the date in MM/DD/YY format
                     const formattedDate = createdAt.toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' });
+                    card.querySelector("p").innerText = formattedDate;
 
-                    // Format the time in HOUR:MINUTES AM/PM format
-                    const formattedTime = createdAt.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-
-                    // Combine date and time with a space in between
-                    const dateTime = `${formattedDate} ${formattedTime}`;
-
-                    card.querySelector("p").innerText = dateTime;
                     card.querySelector("p1").innerText = users.body;
 
                     // Create a new row div to wrap the card
