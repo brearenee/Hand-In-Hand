@@ -34,7 +34,7 @@ async function fetchAndPopulateFeed() {
 
                     card.querySelector("p1").innerText = users.body;
                     
-                    card.querySelector("p2").innerText = users.request_type;
+                    card.querySelector("p2").innerText = users.requestType;
 
                     // Create a new row div to wrap the card
                     const colDiv = document.createElement("div");
