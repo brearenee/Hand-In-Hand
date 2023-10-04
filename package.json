@@ -26,6 +26,7 @@
     "swagger-ui-express": "^5.0.0"
   },
   "devDependencies": {
+    "axe-core": "^4.8.2",
     "chai": "^4.3.8",
     "eslint": "^8.49.0",
     "eslint-config-standard": "^17.1.0",
