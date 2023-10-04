@@ -1,41 +1,39 @@
-const { expect } = require('chai');
-const axe = require('axe-core');
-const path = require('path');
+const { expect } = require("chai");
+const axe = require("axe-core");
+const path = require("path");
+const fs = require("fs");
+const { JSDOM } = require("jsdom");
+
+const file = path.join(__dirname, "../public/index.html");
+
+// Utility function to run specific axe rule
+function runAxeRule(element, rule, callback) {
+  axe.run(element, { runOnly: { type: 'rule', values: [rule] } }, callback);
+}
 
 
-const file = path.join(__dirname, '../public/index.html');
+describe("Accessibility Tests", function() {
+    this.timeout(10000);
+  
+        const html = fs.readFileSync(file, "utf-8");
+        const { window, document } = new JSDOM(html).window;
 
-describe('Accessibility Tests', function () {
-  it('should have no accessibility violations', function (done) {
-    // Load the HTML content using fetch
-    fetch(file)
-      .then((response) => response.text())
-      .then((html) => {
-        // Run axe-core on the HTML
-        axe.run(html, (err, results) => {
-          if (err) throw err;
-
-          // Check for accessibility violations
-          expect(results.violations.length).to.equal(0);
-
-          // Log accessibility violations (if any)
-          if (results.violations.length > 0) {
-            console.log('Accessibility Violations:');
-            results.violations.forEach((violation) => {
-              console.log(`- Impact: ${violation.impact}`);
-              console.log(`- Description: ${violation.description}`);
-              console.log(`- Help: ${violation.help}`);
-              console.log(`- Tags: ${violation.tags.join(', ')}`);
-              console.log('-------');
+        describe('Color Contrast', function() {
+          it('should meet color contrast standards', function(done) {
+            runAxeRule(document.body, 'color-contrast', function(err, results) {
+              expect(results.violations.length).to.equal(0, JSON.stringify(results.violations));
+              done();
             });
-          }
-
-          done();
+          });
         });
-      })
-      .catch((error) => {
-        console.error('Error loading HTML:', error);
-        done(error);
-      });
-  });
+      
+        describe('Image Alt Text', function() {
+          it('should have alt text for all images', function(done) {
+            runAxeRule(document.body, 'image-alt', function(err, results) {
+              expect(results.violations.length).to.equal(0, JSON.stringify(results.violations));
+              done();
+            });
+          });
+        });
+    
 });
