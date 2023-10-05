@@ -68,18 +68,18 @@ async function getPostsByUserId(req, res) {
 async function deletePostById(req, res) {
     const postId = req.params.postId;
     console.log(postId)
-    try{
-        const result = await pool.query('DELETE FROM posts where id = $1', [postId]);
-        res.json(result.rows);
-        if (result.rows.length === 0) {
-            return res.status(404).json({ error: 'No posts found with this id' });
+    try {
+        const result = await pool.query('DELETE FROM posts WHERE id = $1', [postId]);
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: 'Post not found' });
         }
-    }catch(error){
-        console.error('ERROR: getPostById', error)
-        res.status(500).json({error: 'Internal Server Error'});
-    };
-
+        return res.status(204).send();
+    } catch (error) {
+        console.error('ERROR: DeletePostById', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
 }
+
 
 //having issues with body parsing. :-(
 async function createPost(req, res){
