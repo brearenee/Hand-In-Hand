@@ -1,8 +1,8 @@
 const pool = require('../utils/db')
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
+//const bodyParser = require('body-parser');
+//app.use(bodyParser.json());
 
 //postid is path parameter
 async function getPostById(req, res) {
@@ -80,9 +80,44 @@ async function deletePostById(req, res) {
 
 }
 
+//having issues with body parsing. :-(
+async function createPost(req, res){
+    console.log('request0', req)
+    console.log(req.body)
+    /*const { title, body, user_id, location_id, type } = req.body;
+    //default userIds for beginning implementation
+    const defaultUserId = '5bc4f097-8924-4873-9e85-a0f1de817e18'; 
+    const defaultLocationId = '08f0cdeb-adcd-4382-98ab-920b4926fd67'; 
+
+    const userId = user_id || defaultUserId;
+    const locationId = location_id || defaultLocationId;
+
+    if (!title || !body || !type) {
+        return res.status(400).json({ error: 'Title, body, and post type are required fields.' });
+      }
+
+      try {
+        const client = await pool.connect();
+        const result = await client.query(
+          'INSERT INTO posts (title, body, user_id, location_id, type, created_at) VALUES ($1, $2, $3, $4, $5, now()) RETURNING *',
+          [title, body, userId, locationId, type]
+        );
+    
+        client.release();
+        res.status(201).json(result.rows[0]); // Respond with the created post
+      } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }*/
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+
+
 module.exports = {
     getPostById, 
     getPosts, 
     getPostsByUserId, 
-    deletePostById
+    deletePostById,
+    createPost
 };
