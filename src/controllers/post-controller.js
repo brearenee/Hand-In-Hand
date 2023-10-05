@@ -40,7 +40,6 @@ async function getPosts(req, res) {
         queryParams.push(locationId)
     }
     try{
-        console.log("QUERY", query)
         const result = await pool.query(query, queryParams);
         res.json(result.rows);
     }catch(error){
