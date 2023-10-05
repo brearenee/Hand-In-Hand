@@ -64,8 +64,25 @@ async function getPostsByUserId(req, res) {
     };
 };
 
+async function deletePostById(req, res) {
+    const postId = req.params.postId;
+    console.log(postId)
+    try{
+        const result = await pool.query('DELETE FROM posts where id = $1', [postId]);
+        res.json(result.rows);
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'No posts found with this id' });
+        }
+    }catch(error){
+        console.error('ERROR: getPostById', error)
+        res.status(500).json({error: 'Internal Server Error'});
+    };
+
+}
+
 module.exports = {
     getPostById, 
     getPosts, 
-    getPostsByUserId
+    getPostsByUserId, 
+    deletePostById
 };
