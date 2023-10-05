@@ -85,7 +85,7 @@ async function deletePostById(req, res) {
 async function createPost(req, res){
     request = await req
     console.log('request0', req)
-    console.log(req.body)
+    console.log('request.body', req.body)
     /*const { title, body, user_id, location_id, type } = req.body;
     //default userIds for beginning implementation
     const defaultUserId = '5bc4f097-8924-4873-9e85-a0f1de817e18'; 
