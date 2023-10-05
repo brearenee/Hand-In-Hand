@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const app = express();
 const postsController = require('../controllers/post-controller.js')
-const jsonParser = express.json()
-app.use(jsonParser);
+//const jsonParser = express.json()
 //const bodyParser = require('body-parser');
 //app.use(bodyParser.json());
 

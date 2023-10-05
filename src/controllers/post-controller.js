@@ -1,6 +1,7 @@
 const pool = require('../utils/db')
 const express = require('express');
 const app = express();
+app.use(express.json());
 //const bodyParser = require('body-parser');
 //app.use(bodyParser.json());
 
@@ -82,6 +83,7 @@ async function deletePostById(req, res) {
 
 //having issues with body parsing. :-(
 async function createPost(req, res){
+    request = await req
     console.log('request0', req)
     console.log(req.body)
     /*const { title, body, user_id, location_id, type } = req.body;
