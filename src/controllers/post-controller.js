@@ -2,9 +2,9 @@ const pool = require('../utils/db')
 const express = require('express');
 const app = express();
 app.use(express.json());
+
 //const bodyParser = require('body-parser');
 //app.use(bodyParser.json());
-
 //postid is path parameter
 async function getPostById(req, res) {
     const postId = req.params.postId;
@@ -86,7 +86,7 @@ async function createPost(req, res){
     request = await req
     console.log('request0', req)
     console.log('request.body', req.body)
-    /*const { title, body, user_id, location_id, type } = req.body;
+    const { title, body, user_id, location_id, type } = req.body;
     //default userIds for beginning implementation
     const defaultUserId = '5bc4f097-8924-4873-9e85-a0f1de817e18'; 
     const defaultLocationId = '08f0cdeb-adcd-4382-98ab-920b4926fd67'; 
@@ -110,8 +110,7 @@ async function createPost(req, res){
       } catch (error) {
         console.error('Error:', error);
         res.status(500).json({ error: 'Internal Server Error' });
-      }*/
-      res.status(500).json({ error: 'Internal Server Error' });
+      }
     }
 
 

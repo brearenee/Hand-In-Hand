@@ -9,8 +9,10 @@ const swaggerDocument = require('./src/routes/swagger.json');
 
 
 // Serve Swagger documentation
+app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/posts', postsRoutes);
+
 
 
 app.use(express.static('public'));
