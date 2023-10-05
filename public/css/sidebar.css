@@ -7,7 +7,7 @@
 }
 
 .guidelines-container{
-    border: 2px solid #000;
+    border: 1.5px solid #dcdcdc;
     padding: 1em 1em 1em 1em;
 }
 
@@ -17,14 +17,18 @@
 
 .mission-container{
     margin-top: 3em;
-    border: 2px solid #000;
+    border: 1.5px solid #dcdcdc;
     padding: 1em 1em 1em 1em;
-    background-color: aquamarine;
 }
 
 .space-between-sections{
     height: 2em
 }
+
+.montserrat-font {
+    font-family: 'Montserrat', sans-serif;
+  }
+  
 
 
 
