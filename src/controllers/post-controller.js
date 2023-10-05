@@ -22,8 +22,6 @@ async function getPostById(req, res) {
 //get all by default. Filter by parmeters when passed. 
 //needs BOTH to and from dates in the form YYY-MM-DD
 async function getPosts(req, res) {
-    const date = new Date();
-    const formattedTimestamp = date.toISOString().replace('T', ' ').replace('Z', '');
     const fromDate = req.query.fromDate;
     const toDate = req.query.toDate;
 
@@ -42,6 +40,7 @@ async function getPosts(req, res) {
         queryParams.push(locationId)
     }
     try{
+        console.log("QUERY", query)
         const result = await pool.query(query, queryParams);
         res.json(result.rows);
     }catch(error){
