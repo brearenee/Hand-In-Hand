@@ -7,6 +7,8 @@ const { swaggerUi, specs } = require('./swagger.js'); // Path to your swagger op
 
 // Serve Swagger documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+app.use('/posts', postsRoutes);
+
 
 
 
