@@ -88,12 +88,24 @@ async function deletePostById(req, res) {
     }
 }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> bc3e049 (swagger documentation in full force)
 async function createPost(req, res){
     request = await req
     const { title, body, user_id, location_id, type } = req.body;
+<<<<<<< HEAD
     //default user/location Ids for beginning implementation
     const defaultUserId = await getDefaultUserId('testUser1');
     const defaultLocationId = await getDefaultLocation(39.798770010686965, -105.07207748323874)
+=======
+    //default userIds for beginning implementation
+    //TODO: query method to get the userid since theyre unique across machines
+    const defaultUserId = '5bc4f097-8924-4873-9e85-a0f1de817e18'; 
+    const defaultLocationId = '08f0cdeb-adcd-4382-98ab-920b4926fd67'; 
+>>>>>>> bc3e049 (swagger documentation in full force)
 
     const userId = user_id || defaultUserId;
     const locationId = location_id || defaultLocationId;

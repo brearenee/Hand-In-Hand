@@ -1,0 +1,41 @@
+get:
+  summary: Get posts by user ID
+  description: Retrieve all posts created by a specific user based on user ID.
+  parameters:
+    - name: userId
+      in: path
+      description: ID of the user whose posts are retrieved.
+      required: true
+      schema:
+        type: integer
+    - name: postId
+      in: query
+      description: ID of the post to retrieve.
+      schema:
+        type: integer
+    - name: toDate
+      in: query
+      description: End date for posts format- YYYY-MM-DD).
+      schema:
+        type: string
+        format: date
+    - name: fromDate
+      in: query
+      description: Start date for posts format -  YYYY-MM-DD).
+      schema:
+        type: string
+        format: date
+    - name: locationId
+      in: query
+      description: ID of the location associated with the post.
+      schema:
+        type: integer
+  responses:
+    '200':
+    description: Successful operation. Returns a list of posts.
+    content:
+      application/json:
+        schema:
+            type: array
+            items:
+

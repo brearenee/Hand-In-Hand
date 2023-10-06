@@ -1,14 +1,72 @@
+<<<<<<< HEAD:swagger/posts/posts-postId.yaml
 put:
   summary: Update an existing post
   description: Update an existing post by postId.
+=======
+post:
+  summary: Create a new post
+  description: Create a new post with title, body, post-type, locationId, and userId.
+  requestBody:
+    description: All fields required. LocationId and UserId must be an existing uuid string. 
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            title:
+              type: string
+            body:
+              type: string
+            type:
+              type: string
+            locationId:
+              type: string
+              format: uuid
+            userId:
+              type: string
+              format: uuid
+          required:
+            - title
+            - body
+            - type
+            - locationId
+            - userId
+  responses:
+    '201':
+      description: Post created successfully. Returns the created post.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              postId:
+                type: string
+                format: uuid
+              title:
+                type: string
+              body:
+                type: string
+              postType:
+                type: string
+              locationId:
+                type: string
+                foramt: uuid
+              userId:
+                type: string
+                format: uuid
+    '400':
+      description: id for location and/or userid not found
+get:
+  summary: Get posts based on filters
+>>>>>>> bc3e049 (swagger documentation in full force):swagger/posts.yaml
   parameters:
-    - name: postId
-      in: path
-      description: ID of the post to update.
-      required: true
+    - name: userId
+      in: query
       schema:
         type: string
         format: uuid
+<<<<<<< HEAD:swagger/posts/posts-postId.yaml
   requestBody:
     description: Post data to update. postId required. 
     required: true
@@ -29,12 +87,34 @@ put:
             userId:
               type: string
               format: uuid
+=======
+      description: Filter posts by userId
+    - name: locationId
+      in: query
+      schema:
+        type: string
+        format: uuid
+      description: Filter posts by location ID
+    - name: fromDate
+      in: query
+      schema:
+        type: string
+        format: date
+      description: Filter posts from a specific date (YYYY-MM-DD). Required with toDate.
+    - name: toDate
+      in: query
+      schema:
+        type: string
+        format: date
+      description: Filter posts until a specific date (YYYY-MM-DD). Required with fromDate.
+>>>>>>> bc3e049 (swagger documentation in full force):swagger/posts.yaml
   responses:
     '200':
-      description: Post updated successfully. Returns the updated post.
+      description: Successful response
       content:
         application/json:
           schema:
+<<<<<<< HEAD:swagger/posts/posts-postId.yaml
             type: object
             properties:
               postId:
@@ -105,3 +185,53 @@ get:
                 format: date-time
     '404':
       description: Post not found
+=======
+            type: array
+            items:
+              type: object
+              properties:
+                postId:
+                  type: integer
+                title:
+                  type: string
+                locationId:
+                  type: integer
+                createdAt:
+                  type: string
+                  format: date-time
+    '400':
+      description: Bad request
+
+/{userId}:
+  get:
+    summary: Get all posts by  User ID
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: ID of the user to retrieve posts
+    responses:
+      '200':
+        description: Successful response
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                postId:
+                  type: string
+                  format: uuid
+                title:
+                  type: string
+                locationId:
+                  type: string
+                  format: uuid
+                createdAt:
+                  type: string
+                  format: date-time
+      '404':
+        description: Post not found
+>>>>>>> bc3e049 (swagger documentation in full force):swagger/posts.yaml

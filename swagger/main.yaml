@@ -5,9 +5,15 @@ info:
   version: 1.0.0
 paths:
   /posts:
+<<<<<<< HEAD
     $ref: './posts/posts.yaml'
   /posts/{postId}:
     $ref: './posts/posts-postId.yaml'
+=======
+    $ref: 'posts.yaml'
+  /posts/{postId}:
+    $ref: 'posts-postId.yaml'
+>>>>>>> bc3e049 (swagger documentation in full force)
   /users:
     get: 'test'
   /locations:
