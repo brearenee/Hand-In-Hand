@@ -1,13 +1,13 @@
 openapi: 3.0.0
 info:
-  title: My API12345
-  description: API documentation for My API123
+  title: Hand in Hand
+  description: API documentation for Hand in Hand
   version: 1.0.0
 paths:
   /posts:
-    $ref: 'posts.yaml'
+    $ref: './posts/posts.yaml'
   /posts/{postId}:
-    $ref: 'posts-postId.yaml'
+    $ref: './posts/posts-postId.yaml'
   /users:
     get: 'test'
   /locations:

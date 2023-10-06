@@ -9,3 +9,5 @@ router.delete('/:postId', postsController.deletePostById);
 router.post('/', postsController.createPost)
 
 module.exports = router;
+
+
