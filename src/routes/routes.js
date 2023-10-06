@@ -90,6 +90,25 @@ module.exports = function(app){
  *                
  */
 
+app.post("/users", (request, response) => {
+    const {content} = request.body;
+    pool.query("INSERT INTO users (id, username, last_location, created_at, updated_at) VALUES($1, $2, $3, $4, $5) RETURNING *", [id, username, last_location, created_at, updated_at], (error, result) => {
+        if (error) {
+            console.log("throwing error; unable to create new user");
+            throw error;
+        }
+        response.status(201);
+    });
+});
+
+
+
+app.get('/', function(req, res) {
+  console.log("INITIAL REQUEST")
+  res.sendFile(path.join(__dirname, '../../public/index.html'));
+});
+
+
 /** 
  * @swagger
  * /users/{id}:
