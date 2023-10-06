@@ -11,7 +11,7 @@ const swaggerDocument = require('./swagger/swagger.json');
 // Serve Swagger documentation
 app.use(express.json());
 app.use(express.static('/api-docs'));
-//app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/posts', postsRoutes);
 
 
