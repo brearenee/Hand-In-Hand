@@ -1,12 +1,7 @@
 openapi: 3.0.0
 info:
-<<<<<<< HEAD
   title: Hand in Hand
   description: API documentation for Hand in Hand
-=======
-  title: My API12345
-  description: API documentation for My API123
->>>>>>> bc3e049 (swagger documentation in full force)
   version: 1.0.0
 paths:
   /posts:
@@ -112,41 +107,6 @@ paths:
                       format: date-time
         '400':
           description: Bad request
-<<<<<<< HEAD
-=======
-    '/{userId}':
-      get:
-        summary: Get all posts by  User ID
-        parameters:
-          - name: userId
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-            description: ID of the user to retrieve posts
-        responses:
-          '200':
-            description: Successful response
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    postId:
-                      type: string
-                      format: uuid
-                    title:
-                      type: string
-                    locationId:
-                      type: string
-                      format: uuid
-                    createdAt:
-                      type: string
-                      format: date-time
-          '404':
-            description: Post not found
->>>>>>> bc3e049 (swagger documentation in full force)
   '/posts/{postId}':
     put:
       summary: Update an existing post
