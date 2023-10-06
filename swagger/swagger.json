@@ -1,0 +1,15 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "HandInHand API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/posts": {
+      "$ref": "./posts-swagger.json"
+    }
+  },
+  "definitions": {
+
+  }
+}

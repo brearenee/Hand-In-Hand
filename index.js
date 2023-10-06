@@ -5,12 +5,13 @@ const postsRoutes = require('./src/routes/post-routes.js');
 const port = process.env.PORT || 3000;
 
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./src/routes/swagger.json');
+const swaggerDocument = require('./swagger/swagger.json');
 
 
 // Serve Swagger documentation
 app.use(express.json());
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(express.static('/api-docs'));
+//app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/posts', postsRoutes);
 
 
