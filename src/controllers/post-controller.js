@@ -1,7 +1,9 @@
 const pool = require('../utils/db')
+const pgp = require('pg-promise')();
 const express = require('express');
 const app = express();
 app.use(express.json());
+const db = pgp({ pool });
 
 //const bodyParser = require('body-parser');
 //app.use(bodyParser.json());
@@ -86,41 +88,65 @@ async function deletePostById(req, res) {
     }
 }
 
-
-
 async function createPost(req, res){
     request = await req
-    console.log('request0', req)
-    console.log('request.body', req.body)
     const { title, body, user_id, location_id, type } = req.body;
-    //default userIds for beginning implementation
-    //TODO: query method to get the userid since theyre unique across machines
-    const defaultUserId = '5bc4f097-8924-4873-9e85-a0f1de817e18'; 
-    const defaultLocationId = '08f0cdeb-adcd-4382-98ab-920b4926fd67'; 
+    //default user/location Ids for beginning implementation
+    const defaultUserId = await getDefaultUserId('testUser1');
+    const defaultLocationId = await getDefaultLocation(39.798770010686965, -105.07207748323874)
 
     const userId = user_id || defaultUserId;
     const locationId = location_id || defaultLocationId;
 
     if (!title || !body || !type) {
         return res.status(400).json({ error: 'Title, body, and post type are required fields.' });
-      }
-
-      try {
-        const client = await pool.connect();
-        const result = await client.query(
-          'INSERT INTO posts (title, body, user_id, location_id, type, created_at) VALUES ($1, $2, $3, $4, $5, now()) RETURNING *',
-          [title, body, userId, locationId, type]
-        );
-    
-        client.release();
-        res.status(201).json(result.rows[0]); // Respond with the created post
-      } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-      }
     }
 
+    try {
+        const result = await pool.query(
+            'INSERT INTO posts (title, body, user_id, location_id, type, created_at) VALUES ($1, $2, $3, $4, $5, now()) RETURNING *',
+            [title, body, userId, locationId, type]
+        );
 
+        res.status(201).json(result.rows[0]); // Respond with the created post
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+async function getDefaultUserId(username) {
+    try {
+        const query = 'SELECT id FROM users WHERE username = $1';
+        const result = await pool.query(query, [username]);
+    
+        if (result.rows.length > 0) {
+          return result.rows[0].id;
+        } else {
+          // User not found
+          console.log("user not found")
+          return null;
+        }
+      } catch (error) {
+        console.error('Error fetching user ID:', error);
+        throw error;
+      }
+    }
+async function getDefaultLocation(latitude, longitude) {
+    try {
+        const query = 'SELECT * FROM locations WHERE lat = $1 AND long = $2';
+        const result = await pool.query(query, [latitude,longitude]);
+    
+        if (result.rows.length > 0) {
+          return result.rows[0].id;
+        } else {
+          console.log("location not found")
+          return null;
+        }
+      } catch (error) {
+        console.error('Error fetching user ID:', error);
+        throw error;
+      }
+}
 
 module.exports = {
     getPostById, 
