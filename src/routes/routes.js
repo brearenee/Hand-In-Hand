@@ -267,17 +267,7 @@ app.get("/users/:userId", (request, response) => {
  *               items:
  *            
  */
-app.get('/posts', (request, response) => {
-    console.log('POST ROUTE CALLED')
 
-    pool.query('SELECT * FROM posts', (error, result) => {
-        if (error) {
-        console.log("throwing error") 
-        throw error;}
-        console.log(result)
-        response.send(result.rows);
-    });
-  });
 
 
 /** 

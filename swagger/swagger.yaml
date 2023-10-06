@@ -1,0 +1,223 @@
+openapi: 3.0.0
+info:
+  title: Hand in Hand
+  description: API documentation for Hand in Hand
+  version: 1.0.0
+paths:
+  /posts:
+    post:
+      summary: Create a new post
+      description: 'Create a new post with title, body, post-type, locationId, and userId.'
+      requestBody:
+        description: All fields required. LocationId and UserId must be an existing uuid string.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                body:
+                  type: string
+                type:
+                  type: string
+                locationId:
+                  type: string
+                  format: uuid
+                userId:
+                  type: string
+                  format: uuid
+              required:
+                - title
+                - body
+                - type
+                - locationId
+                - userId
+      responses:
+        '201':
+          description: Post created successfully. Returns the created post.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  postId:
+                    type: string
+                    format: uuid
+                  title:
+                    type: string
+                  body:
+                    type: string
+                  postType:
+                    type: string
+                  locationId:
+                    type: string
+                    foramt: uuid
+                  userId:
+                    type: string
+                    format: uuid
+        '400':
+          description: id for location and/or userid not found
+    get:
+      summary: Get posts based on filters
+      parameters:
+        - name: userId
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter posts by userId
+        - name: locationId
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter posts by location ID
+        - name: fromDate
+          in: query
+          schema:
+            type: string
+            format: date
+          description: Filter posts from a specific date (YYYY-MM-DD). Required with toDate.
+        - name: toDate
+          in: query
+          schema:
+            type: string
+            format: date
+          description: Filter posts until a specific date (YYYY-MM-DD). Required with fromDate.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    postId:
+                      type: integer
+                    title:
+                      type: string
+                    locationId:
+                      type: integer
+                    createdAt:
+                      type: string
+                      format: date-time
+        '400':
+          description: Bad request
+  '/posts/{postId}':
+    put:
+      summary: Update an existing post
+      description: Update an existing post by postId.
+      parameters:
+        - name: postId
+          in: path
+          description: ID of the post to update.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Post data to update. postId required.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                body:
+                  type: string
+                postType:
+                  type: string
+                locationId:
+                  type: string
+                  format: uuid
+                userId:
+                  type: string
+                  format: uuid
+      responses:
+        '200':
+          description: Post updated successfully. Returns the updated post.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  postId:
+                    type: string
+                    format: uuid
+                  title:
+                    type: string
+                  body:
+                    type: string
+                  postType:
+                    type: string
+                  locationId:
+                    type: string
+                    format: uuid
+                  userId:
+                    type: string
+                    format: uuid
+        '400':
+          description: 'error, all fields required.'
+          content:
+            application/json:
+              schema:
+                type: object
+    delete:
+      summary: Delete a post by postId
+      description: Delete a post by its unique post ID.
+      parameters:
+        - name: postId
+          in: path
+          description: ID of the post to delete.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Post deleted successfully.
+        '400':
+          description: postId not found
+    get:
+      summary: Get a specific post by ID
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the post to retrieve
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  postId:
+                    type: string
+                    format: uuid
+                  title:
+                    type: string
+                  locationId:
+                    type: string
+                    format: uuid
+                  createdAt:
+                    type: string
+                    format: date-time
+        '404':
+          description: Post not found
+  /users:
+    get: test
+  /locations: null
+components:
+  schemas: null
+  responses: null

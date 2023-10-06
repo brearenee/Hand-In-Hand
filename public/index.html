@@ -13,8 +13,8 @@
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="/css/styles.css" />
   <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/styles.css" />
   
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
@@ -190,15 +190,19 @@
 
         <!-- Updated Community Feed Block with Larger Container and Scrollbar -->
         <div class="container g-3 mt-4">
-          <h2 class="h2 text-center">Items and Events from DB</h2>
+          <h2 class="h2 text-center">Community Feed</h2>
           <div class="row" id="feed-content">
             <!-- Example feed item template -->
             <template>
-              <div class="card h-100">
+              <div class="card h-100 bg-grey">
                 <div class="container">
-                  <h4>Title</h4>
-                  <p>Created Date</p>
+                  <p2 class="fw-bold text-uppercase">Request Type</p2>
+                  <h4 class="text-uppercase">Title</h4>
+                  <p class="fw-bold">Created Date</p>
                   <p1 class="mb-0">Body Content</p1>
+                  <div class="d-flex justify-content-end mt-auto">
+                    <button class="btn btn-secondary text-uppercase">Respond</button>
+                  </div>
                 </div>
               </div>
             </template>
