@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: My API12346
+  title: My API12345
   description: API documentation for My API123
   version: 1.0.0
 paths:
@@ -9,7 +9,7 @@ paths:
       summary: Create a new post
       description: 'Create a new post with title, body, post-type, locationId, and userId.'
       requestBody:
-        description: Post data to create.
+        description: All fields required. LocationId and UserId must be an existing uuid string.
         required: true
         content:
           application/json:
@@ -20,16 +20,18 @@ paths:
                   type: string
                 body:
                   type: string
-                postType:
+                type:
                   type: string
                 locationId:
-                  type: integer
+                  type: string
+                  format: uuid
                 userId:
-                  type: integer
+                  type: string
+                  format: uuid
               required:
                 - title
                 - body
-                - postType
+                - type
                 - locationId
                 - userId
       responses:
@@ -41,7 +43,8 @@ paths:
                 type: object
                 properties:
                   postId:
-                    type: integer
+                    type: string
+                    format: uuid
                   title:
                     type: string
                   body:
@@ -49,9 +52,94 @@ paths:
                   postType:
                     type: string
                   locationId:
-                    type: integer
+                    type: string
+                    foramt: uuid
                   userId:
-                    type: integer
+                    type: string
+                    format: uuid
+        '400':
+          description: id for location and/or userid not found
+    get:
+      summary: Get posts based on filters
+      parameters:
+        - name: userId
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter posts by userId
+        - name: locationId
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter posts by location ID
+        - name: fromDate
+          in: query
+          schema:
+            type: string
+            format: date
+          description: Filter posts from a specific date (YYYY-MM-DD). Required with toDate.
+        - name: toDate
+          in: query
+          schema:
+            type: string
+            format: date
+          description: Filter posts until a specific date (YYYY-MM-DD). Required with fromDate.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    postId:
+                      type: integer
+                    title:
+                      type: string
+                    locationId:
+                      type: integer
+                    createdAt:
+                      type: string
+                      format: date-time
+        '400':
+          description: Bad request
+    '/{userId}':
+      get:
+        summary: Get all posts by  User ID
+        parameters:
+          - name: userId
+            in: path
+            required: true
+            schema:
+              type: string
+              format: uuid
+            description: ID of the user to retrieve posts
+        responses:
+          '200':
+            description: Successful response
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    postId:
+                      type: string
+                      format: uuid
+                    title:
+                      type: string
+                    locationId:
+                      type: string
+                      format: uuid
+                    createdAt:
+                      type: string
+                      format: date-time
+          '404':
+            description: Post not found
+  '/posts/{postId}':
     put:
       summary: Update an existing post
       description: Update an existing post by postId.
@@ -61,9 +149,10 @@ paths:
           description: ID of the post to update.
           required: true
           schema:
-            type: integer
+            type: string
+            format: uuid
       requestBody:
-        description: Post data to update.
+        description: Post data to update. postId required.
         required: true
         content:
           application/json:
@@ -77,9 +166,11 @@ paths:
                 postType:
                   type: string
                 locationId:
-                  type: integer
+                  type: string
+                  format: uuid
                 userId:
-                  type: integer
+                  type: string
+                  format: uuid
       responses:
         '200':
           description: Post updated successfully. Returns the updated post.
@@ -89,7 +180,8 @@ paths:
                 type: object
                 properties:
                   postId:
-                    type: integer
+                    type: string
+                    format: uuid
                   title:
                     type: string
                   body:
@@ -97,24 +189,67 @@ paths:
                   postType:
                     type: string
                   locationId:
-                    type: integer
+                    type: string
+                    format: uuid
                   userId:
-                    type: integer
+                    type: string
+                    format: uuid
+        '400':
+          description: 'error, all fields required.'
+          content:
+            application/json:
+              schema:
+                type: object
     delete:
       summary: Delete a post by postId
-      description: Delete a post by its unique ID.
+      description: Delete a post by its unique post ID.
       parameters:
         - name: postId
           in: path
           description: ID of the post to delete.
           required: true
           schema:
-            type: integer
+            type: string
+            format: uuid
       responses:
         '204':
           description: Post deleted successfully.
-  /users: 
-  /locations: 
+        '400':
+          description: postId not found
+    get:
+      summary: Get a specific post by ID
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the post to retrieve
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  postId:
+                    type: string
+                    format: uuid
+                  title:
+                    type: string
+                  locationId:
+                    type: string
+                    format: uuid
+                  createdAt:
+                    type: string
+                    format: date-time
+        '404':
+          description: Post not found
+  /users:
+    get: test
+  /locations: null
 components:
   schemas: null
   responses: null

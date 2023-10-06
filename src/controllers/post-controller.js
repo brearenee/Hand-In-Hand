@@ -22,6 +22,7 @@ async function getPostById(req, res) {
 
 //get all by default. Filter by parmeters when passed. 
 //needs BOTH to and from dates in the form YYY-MM-DD
+//TODO: query by userId. no longer a path. 
 async function getPosts(req, res) {
     const fromDate = req.query.fromDate;
     const toDate = req.query.toDate;
@@ -81,13 +82,14 @@ async function deletePostById(req, res) {
 }
 
 
-//having issues with body parsing. :-(
+
 async function createPost(req, res){
     request = await req
     console.log('request0', req)
     console.log('request.body', req.body)
     const { title, body, user_id, location_id, type } = req.body;
     //default userIds for beginning implementation
+    //TODO: query method to get the userid since theyre unique across machines
     const defaultUserId = '5bc4f097-8924-4873-9e85-a0f1de817e18'; 
     const defaultLocationId = '08f0cdeb-adcd-4382-98ab-920b4926fd67'; 
 

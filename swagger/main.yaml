@@ -6,7 +6,10 @@ info:
 paths:
   /posts:
     $ref: 'posts.yaml'
+  /posts/{postId}:
+    $ref: 'posts-postId.yaml'
   /users:
+    get: 'test'
   /locations:
 components:
   schemas: 
