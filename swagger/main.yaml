@@ -1,0 +1,13 @@
+openapi: 3.0.0
+info:
+  title: My API12345
+  description: API documentation for My API123
+  version: 1.0.0
+paths:
+  /posts:
+    $ref: 'posts.yaml'
+  /users:
+  /locations:
+components:
+  schemas: 
+  responses:

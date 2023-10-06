@@ -1,0 +1,19 @@
+# users.yaml
+/all:
+  get:
+    summary: Get all users
+    responses:
+      '200':
+        description: OK
+/{userId}:
+  get:
+    summary: Get user by ID
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: OK

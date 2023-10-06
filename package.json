@@ -16,6 +16,7 @@
     "bootstrap": "^5.3.2",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "fs": "^0.0.1-security",
     "jsdom": "^22.1.0",
     "node-fetch": "^3.3.2",
     "node-sass": "^9.0.0",
@@ -24,7 +25,8 @@
     "pg-promise": "^11.5.4",
     "postgres-migrations": "^5.3.0",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0"
+    "swagger-ui-express": "^5.0.0",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "chai": "^4.3.8",
