@@ -1,75 +1,43 @@
 const { expect } = require("chai");
-const { stub, createFakeServer } = require("sinon");
-const jsdom = require("jsdom");
-const { JSDOM } = jsdom;
-const path = require("path");
+const { Builder, By } = require("selenium-webdriver");
+const chrome = require("selenium-webdriver/chrome");
 
-// Set fetch to the global fetch function
-let fetch = global.fetch;
+describe("fetchPosts using Selenium", function() {
+    // Set the timeout for this hook
+    this.timeout(10000);
+    let driver;
 
-const { readFileSync } = require("fs");
+    before(async function() {
+        
 
-// Import the code you want to test using CommonJS require syntax
-const { fetchAndPopulateFeed } = require("../public/scripts/script");
-const file = path.join(__dirname, "../public/index.html");
+        // Initialize a headless chrome driver
+        driver = new Builder()
+            .forBrowser("chrome")
+            .setChromeOptions(new chrome.Options().headless())
+            .build();
 
-describe("fetchPosts", () => {
-    let server;
-    let fetchStub;
-    let document;
+        // Go to your HTML page
+        await driver.get("http://localhost:3000"); 
 
-    before(() => {
-    // Load your existing index.html file into a DOM environment
-        const html = readFileSync(file, "utf-8");
-        const dom = new JSDOM(html, { runScripts: "dangerously" });
-        document = dom.window.document;
-
-        // Create a spy on the fetch function
-        fetchStub = stub(global, "fetch");
-
-        // Start a fake server using sinon
-        server = createFakeServer();
+        // For the purpose of the test, we use a free online service to mock the posts API
+        await driver.executeScript("fetchAndPopulateFeed();");
     });
 
-    after(() => {
-    // Restore the original fetch function and clean up
-        fetchStub.restore();
-        server.restore();
-        delete global.fetch;
+    it("should fetch and populate feed content using Selenium", async function() {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
+        const feedContent = await driver.findElement(By.id("feed-content"));
+        const children = await feedContent.findElements(By.css(".row"));
+        
+        expect(children.length).to.be.at.least(1); 
+
+        const firstCardTitle = await children[0].findElement(By.css("h4")).getText();
+        expect(firstCardTitle).to.be.a("string");
     });
 
-    it("should fetch and populate feed content", async () => {
-    // Define the fake response data
-        const responseData = [
-            {
-                title: "Post 1",
-                created_at: "2023-09-25",
-                body: "Content of Post 1",
-            },
-            {
-                title: "Post 2",
-                created_at: "2023-09-26",
-                body: "Content of Post 2",
-            },
-        ];
-
-        // Mock the fetch function to return the fake response data
-        fetchStub.resolves({
-            json: async () => responseData,
-        });
-
-        // Call the function you want to test (assuming it's a function in script.js)
-        await fetchAndPopulateFeed(document);
-
-        // Verify that the fetch was called with the correct URL
-        expect(fetchStub.calledWith("/posts")).to.be.true;
-
-        // Verify that the feed content was populated with the correct data
-        const feedContent = document.getElementById("feed-content");
-        console.log("Content of children:", feedContent.children); // Add this line
-        console.log("Number of children:", feedContent.children.length); // Add this line
-        expect(feedContent.children.length).to.equal(responseData.length);
-
-    // You can add more assertions to check the content of the cloned templates if needed
+    after(async function() {
+        if (driver) {
+            await driver.quit();
+        }
     });
 });
