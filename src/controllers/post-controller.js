@@ -26,29 +26,34 @@ async function getPostById(req, res) {
 async function getPosts(req, res) {
     const fromDate = req.query.fromDate;
     const toDate = req.query.toDate;
-
     const locationId = req.query.locationId;
-    let query = 'SELECT * FROM posts';
+    const userId = req.query.userId;
+
+    let query = 'SELECT * FROM posts WHERE 1=1';
     const queryParams = [];
 
-    if (fromDate && toDate && locationId) {
-        query += ' WHERE created_at::DATE BETWEEN $1::DATE AND $2::DATE AND location_id = $3';
-        queryParams.push(fromDate, toDate, locationId)
-    } else if (fromDate && toDate) {
-        query += ' WHERE created_at::DATE BETWEEN $1::DATE AND $2::DATE';
-        queryParams.push(fromDate, toDate)
-    } else if (locationId) {
-        query += ' WHERE location_id = $3';
-        queryParams.push(locationId)
+    if (fromDate && toDate) {
+        query += ' AND created_at::DATE BETWEEN $1::DATE AND $2::DATE';
+        queryParams.push(fromDate, toDate);
     }
-    try{
+
+    if (locationId) {
+        query += ' AND location_id = $' + (queryParams.length + 1);
+        queryParams.push(locationId);
+    }
+
+    if (userId) {
+        query += ' AND user_id = $' + (queryParams.length + 1);
+        queryParams.push(userId);
+    }
+
+    try {
         const result = await pool.query(query, queryParams);
         res.json(result.rows);
-    }catch(error){
-        console.error('ERROR: getPosts ',error)
-        res.status(500).json({error: 'Internal Server Error'});
-    };
-
+    } catch (error) {
+        console.error('ERROR: getPosts ', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 };
 //userId is path parameter at URL posts/user/:userId
 async function getPostsByUserId(req, res) {
