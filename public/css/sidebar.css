@@ -19,15 +19,32 @@
     margin-top: 3em;
     border: 1.5px solid #b1adad;
     padding: 1em 1em 1em 1em;
+    background-color: #C4FFB2 !important;
 }
 
 .space-between-sections{
     height: 2em
 }
 
-.montserrat-font {
+.guidelines-title {
+    color: #000;
+    font-size: 17.7px;
+    font-weight: lighter;
     font-family: 'Montserrat', sans-serif;
-  }
+}
+
+.mission-title {
+    color: #000;
+    font-size: 17.7px;
+    font-weight: lighter;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.custom-text {
+    color: #000;
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+}
   
 
 
