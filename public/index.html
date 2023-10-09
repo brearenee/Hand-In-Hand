@@ -20,12 +20,20 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
   <header>
-    <nav class="navbar bg-primary fixed-top ">
+    <nav class="navbar bg-primary fixed-top">
       <div class="container">
+        <!-- Brand and Toggle Button -->
         <a class="navbar-brand" href="#">Welcome to HandInHand</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+        <!-- User Image-->
+        <div class="d-flex ml-auto align-items-center">
+          <img src="user-image.jpg" alt="User Image" class="user-image rounded-circle" width="40" height="40"> 
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      
+  
+        <!-- Offcanvas Menu -->
         <div class="offcanvas offcanvas-end bg-primary" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
           <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Navigation</h5>
@@ -54,16 +62,19 @@
                 </ul>
               </li>
             </ul>
-            <!--Search function for later on if we wish to implement it!-->
-            <!--<form class="d-flex mt-3" role="search">
+            <!-- Search function for later on if you wish to implement it -->
+            <!--
+            <form class="d-flex mt-3" role="search">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-secondary" type="submit">Search</button>
-            </form>-->
+            </form>
+            -->
           </div>
         </div>
       </div>
     </nav>
   </header>
+  
   <!-- Community Feed, sidebar, etc -->
   <div class="container mt-5">
     <div class="row">
