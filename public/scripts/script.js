@@ -20,9 +20,9 @@ async function fetchAndPopulateFeed() {
 
                     // Parse and format the date in MM/DD/YY format
                     const createdAt = new Date(users.created_at);
-                    const formattedDate = createdAt.toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' });
+                    const formattedDate = createdAt.toLocaleDateString("en-US", { year: "2-digit", month: "2-digit", day: "2-digit" });
                     // Get the time in Hour:Minutes AM/PM format
-                    const formattedTime = createdAt.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+                    const formattedTime = createdAt.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
                     // Combine the date and time
                     const dateTimeString = `${formattedDate} ${formattedTime}`;
                     // Set the text of the <p> element to the combined date and time
