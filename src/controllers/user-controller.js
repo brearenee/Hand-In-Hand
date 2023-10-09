@@ -16,6 +16,19 @@ const getAll = async (request, response) => {
     }
 };
 
+
+const getUsersByLocation = async (request, response) => {
+    try {
+        const location = request.params.lastLocation
+        const result = await pool.query("SELECT * FROM users WHERE last_location = $1", [location]);
+        response.status(200).json(result.rows);
+
+    } catch (error) {
+        console.log("Error fetching users in that location:", error);
+        response.status(500).send("Internal Server Error");
+    }
+};
+
 const getUserByID = async (request, response) => {
     try {
         const userId = request.params.userId
@@ -57,5 +70,6 @@ module.exports = {
     getAll,
     getUserByID,
     createUser,
-    deleteUserByID
+    deleteUserByID,
+    getUsersByLocation
 };
