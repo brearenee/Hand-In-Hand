@@ -101,12 +101,13 @@ app.post("/users", (request, response) => {
     });
 });
 
-
+/* TODO : NEED THIS
 
 app.get('/', function(req, res) {
   console.log("INITIAL REQUEST")
   res.sendFile(path.join(__dirname, '../../public/index.html'));
 });
+*/
 
 /** 
  * @swagger

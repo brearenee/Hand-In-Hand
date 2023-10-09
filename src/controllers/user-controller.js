@@ -16,6 +16,19 @@ const getAll = async (request, response) => {
     }
 };
 
+const getUserByID = async (request, response) => {
+    try {
+        const userId = request.params.userId
+        const result = await pool.query("SELECT * FROM users WHERE id = $1", [userId]);
+        response.status(200).json(result.rows);
+
+    } catch (error) {
+        console.log("Error fetching user:", error);
+        response.status(500).send("Internal Server Error");
+    }
+};
+
 module.exports = {
-    getAll
+    getAll,
+    getUserByID
 };
