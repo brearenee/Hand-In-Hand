@@ -24,7 +24,6 @@ async function getPostById(req, res) {
 
 //get all by default. Filter by parmeters when passed. 
 //needs BOTH to and from dates in the form YYY-MM-DD
-//TODO: query by userId. no longer a path. 
 async function getPosts(req, res) {
     const fromDate = req.query.fromDate;
     const toDate = req.query.toDate;
