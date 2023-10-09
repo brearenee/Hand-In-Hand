@@ -8,13 +8,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <!-- Bootstrap CSS
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="/css/custom.css">
   <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="stylesheet" href="/css/sidebar.css">
   
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
@@ -81,55 +84,47 @@
       <!-- Sidebar -->
       <div class="col-3 d-flex mt-3" id="wrapper">
         <nav id="sidebar">
+          <div class="guidelines-container">
+            <p class="guidelines-title" >Community Guidelines</p>
+            <p class="custom-text"> Be respectful to all those with whom you interact within our community.</p>
+            <p class="custom-text">Share comments and ideas thoughtfully, with the consideration you would expect to
+              be afforded.</p>
+            <p class="custom-text">Refrain from inappropriate, off-topic, abusive, harassing, or profane comments.</p>
+            <p class="custom-text">Do not post information that would be considered spam.</p>
+            <p class="custom-text">We reserve the right to reject or remove comments that are not in keeping with
+              our policy, values, and principles; and to block or ban users/followers who do not follow these
+              guidelines.</p>
+            <p class="custom-text">Original posts are to be auto-deleted one week after the requested date on the
+              form.</p>
+
+              <!-- "Report Misuse" Button -->
+              <div>
+                <a href="mailto:communityfirst.handinhand@gmail.com" class="btn btn-danger"> Report Misuse
+                </a>
+              </div>
+              
+          </div>
+            
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link p-0" data-toggle="collapse" href="#communityGuidelines" role="button"
+              <!-- <a class="nav-link p-0" data-toggle="collapse" href="#communityGuidelines" role="button"
                 aria-expanded="false" aria-controls="communityGuidelines">
                 Community Guidelines
-              </a>
+              </a> -->
+            <div class = "space-between-sections">
 
-              <!-- Content Box Under Community Guidelines -->
-              <div class="p-1">
-                <ul class="list-unstyled mb-3">
-                  <li class="mb-1">Be respectful to all those with whom you interact within our community.</li>
-                  <li class="mb-1">Share comments and ideas thoughtfully, with the consideration you would expect to
-                    be afforded.
-                  </li>
-                  <li class="mb-1">Refrain from inappropriate, off-topic, abusive, harassing, or profane comments.
-                  </li>
-                  <li class="mb-1">Do not post information that would be considered spam.</li>
-                  <li class="mb-1">We reserve the right to reject or remove comments that are not in keeping with
-                    our policy, values, and principles; and to block or ban users/followers who do not follow these
-                    guidelines.</li>
-                  <li class="mb-1">Original posts are to be auto-deleted one week after the requested date on the
-                    form.</li>
-                </ul>
-              </div>
-            </li>
-
-            <!-- "Report Misuse" Button -->
-            <li class="nav-item align-self-center">
-              <button id="reportMisuseButton" class="btn btn-danger">Report Misuse</button>
-            </li>
+            </div>
 
             <!-- HandInHand Mission Section -->
-            <li class="nav-item mt-5">
-              <a class="nav-link p-0" data-toggle="collapse" href="#handInHandMission" role="button"
-                aria-expanded="false" aria-controls="handInHandMission">
-                HandInHand Mission
-              </a>
+            <div class="mission-container">
+              <p class="mission-title">HandInHand Mission</p>
+              <p class="custom-text"> <em>"HandInHand is a web-based application that allows communities to come together to
+                engage in acts of service, volunteer-based opportunities, and community events."</em></p>
+              <p class="custom-text"> <em>"We're committed to promoting positivity, mental well-being, and meaningful
+                connections in the digital world."</em></p>
+                
+            </div>
             
-
-              <!-- HandInHand Mission Text -->
-              <div class="p-1">
-                <ul class="list-unstyled mb-3">
-                  <li class="mb-3">HandInHand is a web-based application that allows communities to come together to
-                    engage in acts of service, volunteer-based opportunities, and community events.</li>
-                  <li class="mb-3"> We're committed to promoting positivity, mental well-being, and meaningful
-                    connections in the digital world.</li>
-                </ul>
-              </div>
-            </li>
             <!-- Additional Sidebar Features (Placeholder) -->
             <!-- <li class="nav-item">
                 <a class="nav-link" href="#additionalFeature1">
