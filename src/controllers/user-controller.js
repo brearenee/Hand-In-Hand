@@ -41,8 +41,21 @@ const createUser = async (request, response) => {
     }
 };
 
+const deleteUserByID = async (request, response) => {
+    try {
+        const userId = request.params.userId
+        const result = await pool.query("DELETE FROM users WHERE id = $1", [userId]);
+        response.status(200).json(result.rows);
+
+    } catch (error) {
+        console.log("Error deleting user:", error);
+        response.status(500).send("Internal Server Error");
+    }
+};
+
 module.exports = {
     getAll,
     getUserByID,
-    createUser
+    createUser,
+    deleteUserByID
 };
