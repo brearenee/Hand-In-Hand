@@ -6,7 +6,11 @@ $danger: #E94220;
 $info: #5762D5; 
 $light: #D9D9D9;
 $dark: #2C2C2C;
-$white: #FAFAFA; 
+$white: #FAFAFA;
+
+// Global font settings
+$font-family-sans-serif: 'Montserrat', sans-serif;
+
 
 // Import the Bootstrap source SCSS file
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
