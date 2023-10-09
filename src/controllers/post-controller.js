@@ -1,4 +1,4 @@
-const pool = require('../utils/db')
+const {pool} = require('../utils/db')
 const pgp = require('pg-promise')();
 const express = require('express');
 const app = express();

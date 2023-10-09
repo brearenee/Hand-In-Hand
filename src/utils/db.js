@@ -10,4 +10,11 @@ const pool = new Pool({
     defaultDatabase: "postgres"
 });
 
-module.exports = pool;
+const dbConfig = {
+    database: process.env.POSTGRES_DB,
+    user: process.env.POSTGRES_USR,
+    password: process.env.POSTGRES_PWD,
+    host: process.env.POSTGRES_HOST,
+    port: parseInt(process.env.POSTGRES_PORT),
+  };
+module.exports = {pool, dbConfig};

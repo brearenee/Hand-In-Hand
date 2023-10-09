@@ -1,60 +1,63 @@
+
 const assert = require("assert");
-const migration  = require("../db/migration-script.js");
-const pgp = require("pg-promise")();
+const axios = require('axios');
+const apiUrl = 'http://localhost:3000/posts';
+const fakeUser = ['MochaTestUser', 39.798770010686965, -105.07207748323874 ]
 require("dotenv").config();
-const dbConfig = {
-    database: process.env.POSTGRES_DB,
-    user: process.env.POSTGRES_USR,
-    password: process.env.POSTGRES_PWD,
-    host: process.env.POSTGRES_HOST,
-    port: parseInt(process.env.POSTGRES_PORT),
-    ensureDatabaseExists: true,
-    defaultDatabase: "postgres"
-};
+
+const pgp = require('pg-promise')();
+const {dbConfig}= require('../src/utils/db')
 const db = pgp(dbConfig);
+let userId;
+
+//const pool = require('../utils/db')
+//const db = pgp({ pool });
 
 
 describe("Post Routes Tests ", function() {
 
     before( async function() {
+        //create a new user to test
+        //this query inserts the user and returns the new auto generated id.  
+        //if the user already exists, the query returns the userid of that user. 
+        let response = await db.one(`
+            INSERT INTO users (username, created_at, last_location) 
+            VALUES
+            ($1, CURRENT_TIMESTAMP, (SELECT id FROM locations WHERE lat = $2 AND long = $3))
+            ON CONFLICT (username) DO UPDATE
+            SET username = EXCLUDED.username
+            RETURNING id`, fakeUser);
 
-        try{
-            await db.connect();}
-        catch(error){ 
-            console.log("db connection failed", error);
-        }  
-
+        userId = response.id
     });
 
     after(async function() {
+        //delete the post we created, if it exists. 
+        await db.none('DELETE FROM posts WHERE user_id = $1', [userId])
+        //delete the user we created so that the database is returned to the state it was before the tests. 
+        await db.none('DELETE FROM users WHERE id = $1;', [userId])
+
 
     });
 
     it("createPosts works", async function() {
-        const axios = require('axios');
-
-        // Specify the API endpoint URL
-        const apiUrl = 'http://localhost:3000/posts'; // Replace with your actual API endpoint URL
-
-        // Data to be sent in the POST request body
+        let response;
         const postData = {
+            user_id: '',
             title: 'New Post',
             body: 'This is the content of the new post.',
             type: 'request'
             };
 
-        // Make a POST request with a request body
-        axios.post(apiUrl, postData)
-        .then(response => {
-            // Handle the API response data
-            console.log('Response status:', response.status);
-            console.log('Response data:', response.data);
-        })
-        .catch(error => {
-            // Handle errors
-            console.error('Error:', error);
-        });
-        assert.equal('test1', 'test1', `does not equal testUser1`);
+        //I don't believe I can create the initial object with a variable (userId), so I'm updating the object after creation.      
+        postData.user_id = userId
+
+        response = await axios.post(apiUrl, postData)
+
+            console.log("createPostsError")
+
+        assert.equal(response.status, 201, `returned ${response.status}, not 200`)
+        assert.equal(response.data.title, postData.title, `Post was not created`);
 
     });
 
