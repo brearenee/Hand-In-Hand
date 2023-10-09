@@ -28,3 +28,7 @@ img {
 .bg-grey {
   background-color: #d9d9d9;
 }
+
+input::file-selector-button {
+  background-color: #7D82B8 !important;
+}
