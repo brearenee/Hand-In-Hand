@@ -16,15 +16,11 @@ const postData = {
     type: 'request'
     };
 
-//const pool = require('../utils/db')
-//const db = pgp({ pool });
-
 
 describe("Post Routes Tests ", function() {
 
     before( async function() {
-        //create a new user to test
-        //this query inserts the user and returns the new auto generated id.  
+        //create a new user to test, returning the id.
         //if the user already exists, the query returns the userid of that user. 
         let response = await db.one(`
             INSERT INTO users (username, created_at, last_location) 
@@ -33,24 +29,18 @@ describe("Post Routes Tests ", function() {
             ON CONFLICT (username) DO UPDATE
             SET username = EXCLUDED.username
             RETURNING id`, fakeUser);
-
         userId = response.id
         postData.user_id = userId
     });
 
     after(async function() {
-        //delete the post we created, if it exists. 
+        //delete the things we created in this test, to make sure that the database is returned to the state it was in before. 
         await db.none('DELETE FROM posts WHERE user_id = $1', [userId])
-        //delete the user we created so that the database is returned to the state it was before the tests. 
         await db.none('DELETE FROM users WHERE id = $1;', [userId])
-
-
     });
 
     it("createPosts works", async function() {
-        let response;
-        response = await axios.post(apiUrl, postData)
-
+        let response = await axios.post(apiUrl, postData)
         assert.equal(response.status, 201, `returned ${response.status}, not 200`)
         assert.equal(response.data.title, postData.title, `Post was not created`);
     });
@@ -76,7 +66,6 @@ describe("Post Routes Tests ", function() {
         //check that the response is deleted. 
         try{ 
             deleted = true 
-            console.log(postData.title)
             await db.none(`SELECT * FROM posts WHERE title = $1`, postData.title)
         } catch (error){
             deleted = false
