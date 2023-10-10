@@ -1,8 +1,8 @@
 const assert = require("assert");
 const migration  = require("../db/migration-script.js");
 require("dotenv").config();
-const pgp = require('pg-promise')();
-const {dbConfig}= require('../src/utils/db')
+const pgp = require("pg-promise")();
+const {dbConfig}= require("../src/utils/db");
 const db = pgp(dbConfig);
 
 
@@ -20,9 +20,9 @@ describe("Migration Setup Tests", function() {
 
     after(async function() {
         try{
-        await pgp.end();
+            await pgp.end();
         }catch(error) { 
-            console.log("db close error",error)
+            console.log("db close error",error);
         }
   
     });
@@ -50,7 +50,7 @@ describe("Migration Setup Tests", function() {
                 await migration.migration();
             }
             await backForward();
-            done()
+            done();
         }, Error, "error in either rollback or rollforward. ");
     });
 

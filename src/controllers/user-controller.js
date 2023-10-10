@@ -1,5 +1,5 @@
-const {pool} = require('../utils/db')
-const express = require('express');
+const {pool} = require("../utils/db");
+const express = require("express");
 const app = express();
 app.use(express.json());
 
@@ -22,7 +22,7 @@ const getAll = async (request, response) => {
 //TODO: Include code to find users within a radius of the location
 const getUsersByLocation = async (request, response) => {
     try {
-        const location = request.params.lastLocation //location param
+        const location = request.params.lastLocation; //location param
         const result = await pool.query("SELECT * FROM users WHERE last_location = $1", [location]);
         response.status(200).json(result.rows);
 
@@ -35,7 +35,7 @@ const getUsersByLocation = async (request, response) => {
 //Get user by id
 const getUserByID = async (request, response) => {
     try {
-        const userId = request.params.userId
+        const userId = request.params.userId;
         const result = await pool.query("SELECT * FROM users WHERE id = $1", [userId]);
         response.status(200).json(result.rows);
 
@@ -49,7 +49,7 @@ const getUserByID = async (request, response) => {
 const createUser = async (request, response) => {
     try {
         const {id, username, last_location, created_at, updated_at} = request.body;
-        const result = await pool.query('INSERT INTO users (id, username, last_location, created_at, updated_at) VALUES ($1, $2, $3, $4, $5) RETURNING *', [id, username, last_location, created_at, updated_at]);
+        const result = await pool.query("INSERT INTO users (id, username, last_location, created_at, updated_at) VALUES ($1, $2, $3, $4, $5) RETURNING *", [id, username, last_location, created_at, updated_at]);
         response.status(200).json(result.rows);
 
     } catch (error) {
@@ -62,7 +62,7 @@ const createUser = async (request, response) => {
 // Delete request for a specific user
 const deleteUserByID = async (request, response) => {
     try {
-        const userId = request.params.userId
+        const userId = request.params.userId;
         const result = await pool.query("DELETE FROM users WHERE id = $1", [userId]);
         response.status(200).json(result.rows);
 
