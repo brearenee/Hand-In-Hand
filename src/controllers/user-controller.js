@@ -5,6 +5,7 @@ app.use(express.json());
 
 
 
+// Get request for all users
 const getAll = async (request, response) => {
     try {
         const result = await pool.query("SELECT * FROM users");
@@ -17,9 +18,11 @@ const getAll = async (request, response) => {
 };
 
 
+//Get request by user location
+//TODO: Include code to find users within a radius of the location
 const getUsersByLocation = async (request, response) => {
     try {
-        const location = request.params.lastLocation
+        const location = request.params.lastLocation //location param
         const result = await pool.query("SELECT * FROM users WHERE last_location = $1", [location]);
         response.status(200).json(result.rows);
 
@@ -29,6 +32,7 @@ const getUsersByLocation = async (request, response) => {
     }
 };
 
+//Get user by id
 const getUserByID = async (request, response) => {
     try {
         const userId = request.params.userId
@@ -41,6 +45,7 @@ const getUserByID = async (request, response) => {
     }
 };
 
+// Post request for new user
 const createUser = async (request, response) => {
     try {
         const {id, username, last_location, created_at, updated_at} = request.body;
@@ -54,6 +59,7 @@ const createUser = async (request, response) => {
     }
 };
 
+// Delete request for a specific user
 const deleteUserByID = async (request, response) => {
     try {
         const userId = request.params.userId
@@ -66,6 +72,8 @@ const deleteUserByID = async (request, response) => {
     }
 };
 
+
+//exports for modules
 module.exports = {
     getAll,
     getUserByID,
