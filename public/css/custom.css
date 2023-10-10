@@ -1,3 +1,11 @@
+.btn {
+  text-transform: uppercase !important;
+}
+
+.btn-secondary {
+  border: 1px solid #2C2C2C !important;
+}
+
 /*!
    * Bootstrap  v5.3.2 (https://getbootstrap.com/)
    * Copyright 2011-2023 The Bootstrap Authors
@@ -32,7 +40,7 @@
   --bs-secondary: #C4FFB2;
   --bs-success: #3E8914;
   --bs-info: #5762D5;
-  --bs-warning: #ffc107;
+  --bs-warning: #F78154;
   --bs-danger: #E94220;
   --bs-light: #D9D9D9;
   --bs-dark: #2C2C2C;
@@ -40,7 +48,7 @@
   --bs-secondary-rgb: 196, 255, 178;
   --bs-success-rgb: 62, 137, 20;
   --bs-info-rgb: 87, 98, 213;
-  --bs-warning-rgb: 255, 193, 7;
+  --bs-warning-rgb: 247, 129, 84;
   --bs-danger-rgb: 233, 66, 32;
   --bs-light-rgb: 217, 217, 217;
   --bs-dark-rgb: 44, 44, 44;
@@ -48,7 +56,7 @@
   --bs-secondary-text-emphasis: #4e6647;
   --bs-success-text-emphasis: #193708;
   --bs-info-text-emphasis: #232755;
-  --bs-warning-text-emphasis: #664d03;
+  --bs-warning-text-emphasis: #633422;
   --bs-danger-text-emphasis: #5d1a0d;
   --bs-light-text-emphasis: #495057;
   --bs-dark-text-emphasis: #495057;
@@ -56,7 +64,7 @@
   --bs-secondary-bg-subtle: #f3fff0;
   --bs-success-bg-subtle: #d8e7d0;
   --bs-info-bg-subtle: #dde0f7;
-  --bs-warning-bg-subtle: #fff3cd;
+  --bs-warning-bg-subtle: #fde6dd;
   --bs-danger-bg-subtle: #fbd9d2;
   --bs-light-bg-subtle: #f9fafa;
   --bs-dark-bg-subtle: #ced4da;
@@ -64,13 +72,13 @@
   --bs-secondary-border-subtle: #e7ffe0;
   --bs-success-border-subtle: #b2d0a1;
   --bs-info-border-subtle: #bcc0ee;
-  --bs-warning-border-subtle: #ffe69c;
+  --bs-warning-border-subtle: #fccdbb;
   --bs-danger-border-subtle: #f6b3a6;
   --bs-light-border-subtle: #e9ecef;
   --bs-dark-border-subtle: #adb5bd;
   --bs-white-rgb: 250, 250, 250;
   --bs-black-rgb: 0, 0, 0;
-  --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --bs-font-sans-serif: "Montserrat", sans-serif;
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(250, 250, 250, 0.15), rgba(250, 250, 250, 0));
   --bs-body-font-family: var(--bs-font-sans-serif);
@@ -144,7 +152,7 @@
   --bs-secondary-text-emphasis: #dcffd1;
   --bs-success-text-emphasis: #8bb872;
   --bs-info-text-emphasis: #9aa1e6;
-  --bs-warning-text-emphasis: #ffda6a;
+  --bs-warning-text-emphasis: #fab398;
   --bs-danger-text-emphasis: #f28e79;
   --bs-light-text-emphasis: #f8f9fa;
   --bs-dark-text-emphasis: #dee2e6;
@@ -152,7 +160,7 @@
   --bs-secondary-bg-subtle: #273324;
   --bs-success-bg-subtle: #0c1b04;
   --bs-info-bg-subtle: #11142b;
-  --bs-warning-bg-subtle: #332701;
+  --bs-warning-bg-subtle: #311a11;
   --bs-danger-bg-subtle: #2f0d06;
   --bs-light-bg-subtle: #343a40;
   --bs-dark-bg-subtle: #1a1d20;
@@ -160,7 +168,7 @@
   --bs-secondary-border-subtle: #76996b;
   --bs-success-border-subtle: #25520c;
   --bs-info-border-subtle: #343b80;
-  --bs-warning-border-subtle: #997404;
+  --bs-warning-border-subtle: #944d32;
   --bs-danger-border-subtle: #8c2813;
   --bs-light-border-subtle: #495057;
   --bs-dark-border-subtle: #343a40;
@@ -2022,13 +2030,13 @@ progress {
 
 .table-warning {
   --bs-table-color: #000;
-  --bs-table-bg: #fff3cd;
-  --bs-table-border-color: #ccc2a4;
-  --bs-table-striped-bg: #f2e7c3;
+  --bs-table-bg: #fde6dd;
+  --bs-table-border-color: #cab8b1;
+  --bs-table-striped-bg: #f0dbd2;
   --bs-table-striped-color: #000;
-  --bs-table-active-bg: #e6dbb9;
+  --bs-table-active-bg: #e4cfc7;
   --bs-table-active-color: #000;
-  --bs-table-hover-bg: #ece1be;
+  --bs-table-hover-bg: #ead5cc;
   --bs-table-hover-color: #000;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
@@ -3179,19 +3187,19 @@ fieldset:disabled .btn {
 
 .btn-warning {
   --bs-btn-color: #000;
-  --bs-btn-bg: #ffc107;
-  --bs-btn-border-color: #ffc107;
+  --bs-btn-bg: #F78154;
+  --bs-btn-border-color: #F78154;
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: #ffca2c;
-  --bs-btn-hover-border-color: #ffc720;
-  --bs-btn-focus-shadow-rgb: 217, 164, 6;
+  --bs-btn-hover-bg: #f8946e;
+  --bs-btn-hover-border-color: #f88e65;
+  --bs-btn-focus-shadow-rgb: 210, 110, 71;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: #ffcd39;
-  --bs-btn-active-border-color: #ffc720;
+  --bs-btn-active-bg: #f99a76;
+  --bs-btn-active-border-color: #f88e65;
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   --bs-btn-disabled-color: #000;
-  --bs-btn-disabled-bg: #ffc107;
-  --bs-btn-disabled-border-color: #ffc107;
+  --bs-btn-disabled-bg: #F78154;
+  --bs-btn-disabled-border-color: #F78154;
 }
 
 .btn-danger {
@@ -3314,19 +3322,19 @@ fieldset:disabled .btn {
 }
 
 .btn-outline-warning {
-  --bs-btn-color: #ffc107;
-  --bs-btn-border-color: #ffc107;
+  --bs-btn-color: #F78154;
+  --bs-btn-border-color: #F78154;
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: #ffc107;
-  --bs-btn-hover-border-color: #ffc107;
-  --bs-btn-focus-shadow-rgb: 255, 193, 7;
+  --bs-btn-hover-bg: #F78154;
+  --bs-btn-hover-border-color: #F78154;
+  --bs-btn-focus-shadow-rgb: 247, 129, 84;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: #ffc107;
-  --bs-btn-active-border-color: #ffc107;
+  --bs-btn-active-bg: #F78154;
+  --bs-btn-active-border-color: #F78154;
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: #ffc107;
+  --bs-btn-disabled-color: #F78154;
   --bs-btn-disabled-bg: transparent;
-  --bs-btn-disabled-border-color: #ffc107;
+  --bs-btn-disabled-border-color: #F78154;
   --bs-gradient: none;
 }
 
@@ -7224,8 +7232,8 @@ fieldset:disabled .btn {
 }
 
 .link-warning:hover, .link-warning:focus {
-  color: RGBA(255, 205, 57, var(--bs-link-opacity, 1)) !important;
-  text-decoration-color: RGBA(255, 205, 57, var(--bs-link-underline-opacity, 1)) !important;
+  color: RGBA(249, 154, 118, var(--bs-link-opacity, 1)) !important;
+  text-decoration-color: RGBA(249, 154, 118, var(--bs-link-underline-opacity, 1)) !important;
 }
 
 .link-danger {
