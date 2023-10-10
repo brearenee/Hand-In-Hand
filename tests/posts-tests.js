@@ -1,10 +1,11 @@
 
 const assert = require("assert");
+const {dateToTimestampWithTz, 
+    timestamptzToYyyyMmDd} = require('../src/utils/date-formatting')
 const axios = require('axios');
 const apiUrl = 'http://localhost:3000/posts';
 const fakeUser = ['MochaTestUser', 39.798770010686965, -105.07207748323874 ]
 require("dotenv").config();
-
 const pgp = require('pg-promise')();
 const {dbConfig}= require('../src/utils/db')
 const db = pgp(dbConfig);
@@ -39,13 +40,13 @@ describe("Post Routes Tests ", function() {
         await db.none('DELETE FROM users WHERE id = $1;', [userId])
     });
 
-    it("createPosts works", async function() {
+    it("Creates A Post", async function() {
         let response = await axios.post(apiUrl, postData)
         assert.equal(response.status, 201, `returned ${response.status}, not 200`)
         assert.equal(response.data.title, postData.title, `Post was not created`);
     });
 
-    it("deletes a post", async function()  {
+    it("Deletes A Post", async function()  {
         let deleted; 
         //create a post to delete. 
         //new created post returns an id we can later use to delete the post via post route. 
@@ -76,40 +77,36 @@ describe("Post Routes Tests ", function() {
         assert.equal(deleteResponse.status, 204, `returned ${deleteResponse.status}, not 200`)
     });
 
-    it("queries by time", async function() {
+    it("Queries Posts By Time", async function() {
+        let date = '2022-06-09'
+        new_date = dateToTimestampWithTz(date, -420)
 
-
-        //formatting the time into the correct format. 
-        let testDate = newDate( 2022, 6, 9)
-        testDate = testDate.getTime();
-        const offsetMilliseconds = timezoneOffsetMinutes * 60 * 1000;
-        testDate = testDate - offsetMilliseconds;
-        const toDate = '2023-10-10'
-        const fromDate = new Date()
-
-        postData.title = 'test to delete2'
-        postData.created_at = '2023-10-5'
+        postData.title = 'Test to delete2'
+        postData.created_at = new_date
         const sqlParams = Object.values(postData);
-        let postId = await db.one(`
+        await db.one(`
             INSERT INTO posts
-                (user_id, location_id, title, body, type) 
+                (user_id, location_id, title, body, type, created_at) 
             VALUES
                 ($1,
                 (SELECT id FROM locations WHERE lat = 39.798770010686965 AND long = -105.07207748323874),
-                $2, $3, $4)
+                $2, $3, $4, $5)
                 RETURNING id;`, sqlParams );
 
 
         const queryParams = {};
-        queryParams.fromDate = fromDate
-        queryParams.toDate = toDate
+        queryParams.fromDate = '2022-05-09'
+        queryParams.toDate = '2022-07-09'
+        delete postData.created_at;
 
         const response = await axios.get(apiUrl, {params: queryParams})
-        console.log(response.data)
-    
-        assert.notEqual(Object.keys(response).length, 1)
-        assert.notEqual(Object.keys(response).length, 0)
-
+        assert.equal(Object.keys(response.data).length, 1, 'error: entries =! 1. ')
+        assert.equal(response.data[0].created_at, new_date,'created_at date not correct' )
     })
+
+    it("returns 400 when missing fields", async function() {
+//TODO
+    });
+
 
 });

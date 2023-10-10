@@ -31,7 +31,8 @@
   "devDependencies": {
     "@axe-core/webdriverjs": "^4.7.3",
     "axe-core": "^4.8.2",
-    "chai": "^4.3.8",
+    "chai": "^4.3.10",
+    "chai-http": "^4.4.0",
     "eslint": "^8.49.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.28.1",
