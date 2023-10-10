@@ -76,4 +76,40 @@ describe("Post Routes Tests ", function() {
         assert.equal(deleteResponse.status, 204, `returned ${deleteResponse.status}, not 200`)
     });
 
+    it("queries by time", async function() {
+
+
+        //formatting the time into the correct format. 
+        let testDate = newDate( 2022, 6, 9)
+        testDate = testDate.getTime();
+        const offsetMilliseconds = timezoneOffsetMinutes * 60 * 1000;
+        testDate = testDate - offsetMilliseconds;
+        const toDate = '2023-10-10'
+        const fromDate = new Date()
+
+        postData.title = 'test to delete2'
+        postData.created_at = '2023-10-5'
+        const sqlParams = Object.values(postData);
+        let postId = await db.one(`
+            INSERT INTO posts
+                (user_id, location_id, title, body, type) 
+            VALUES
+                ($1,
+                (SELECT id FROM locations WHERE lat = 39.798770010686965 AND long = -105.07207748323874),
+                $2, $3, $4)
+                RETURNING id;`, sqlParams );
+
+
+        const queryParams = {};
+        queryParams.fromDate = fromDate
+        queryParams.toDate = toDate
+
+        const response = await axios.get(apiUrl, {params: queryParams})
+        console.log(response.data)
+    
+        assert.notEqual(Object.keys(response).length, 1)
+        assert.notEqual(Object.keys(response).length, 0)
+
+    })
+
 });

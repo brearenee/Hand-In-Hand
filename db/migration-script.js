@@ -20,7 +20,6 @@ async function migration(){
     };
     try {
         await migrate(dbConfig, "./db/migrations");
-        console.log("Migrations successfully applied");
     } catch (error) {
         console.error("Error applying migrations:", error);
     }
