@@ -9,7 +9,7 @@ paths:
   /posts/{postId}:
     $ref: './posts/posts-postId.yaml'
   /users:
-    get: './users/users.yaml'
+    $ref: './users/users.yaml'
   /users/{userId}:
     $ref: './users/users-userId.yaml'
   /locations:

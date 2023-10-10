@@ -125,7 +125,7 @@ async function getDefaultUserId(username) {
 }
 async function getDefaultLocation(latitude, longitude) {
     try {
-        const query = "SELECT * FROM locations WHERE lat = $1 AND long = $2";
+        const query = "SELECT id FROM locations WHERE lat = $1 AND long = $2";
         const result = await pool.query(query, [latitude,longitude]);
 
         if (result.rows.length > 0) {
@@ -145,5 +145,6 @@ module.exports = {
     getPosts, 
     getPostsByUserId, 
     deletePostById,
-    createPost
+    createPost, 
+    getDefaultLocation
 };
