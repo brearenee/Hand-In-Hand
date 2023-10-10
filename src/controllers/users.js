@@ -5,6 +5,7 @@ const port = 3000;
 
 
 app.use(express.json());*/
+/*
 require("dotenv").config();
 
 const Pool = require("pg").Pool;
@@ -50,3 +51,4 @@ app.post('/users', (req, res) => {
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
+*/

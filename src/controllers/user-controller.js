@@ -1,4 +1,4 @@
-const pool = require('../utils/db')
+const {pool} = require('../utils/db')
 const express = require('express');
 const app = express();
 app.use(express.json());
