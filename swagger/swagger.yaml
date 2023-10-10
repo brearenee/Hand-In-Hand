@@ -217,6 +217,106 @@ paths:
           description: Post not found
   /users:
     get: ./users/users.yaml
+  '/users/{userId}':
+    put:
+      summary: Update an existing user
+      description: Update an existing user by userId.
+      parameters:
+        - name: userId
+          in: path
+          description: ID of the user to update.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: user data to update. userId required.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                username:
+                  type: string
+                last_location:
+                  type: string
+                  format: uuid
+      responses:
+        '200':
+          description: user updated successfully. Returns the updated user.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  username:
+                    type: string
+                  last_location:
+                    type: string
+                    format: uuid
+                  updated_at:
+                    type: string
+                    format: timestamptz
+        '400':
+          description: 'error, all fields required.'
+          content:
+            application/json:
+              schema:
+                type: object
+    delete:
+      summary: Delete a user by userId
+      description: Delete a user by its unique user ID.
+      parameters:
+        - name: userId
+          in: path
+          description: ID of the user to delete.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: user deleted successfully.
+        '400':
+          description: usertId not found
+    get:
+      summary: Get a specific user by ID
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the user to retrieve
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  username:
+                    type: string
+                  location_id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+        '404':
+          description: user not found
   /locations: null
 components:
   schemas: null
