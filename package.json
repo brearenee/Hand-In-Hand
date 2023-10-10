@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "migrate": "node db/migration-script.js",
-    "selenium": "mocha tests/a11y-tests.js --exit && mocha tests/ui-tests.js --exit",
+    "selenium": "npm run selenium-a11y & npm run selenium-ui",
+    "selenium-a11y": "mocha tests/a11y-tests.js --exit",
+    "selenium-ui": "mocha tests/ui-tests.js --exit",
     "start": "nodemon index.js",
     "test": "mocha tests/migration-tests.js --exit && mocha tests/posts-tests.js --exit && mocha tests/users-tests.js --exit",
     "compile-scss": "node-sass --output-style expanded"
