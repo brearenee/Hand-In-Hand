@@ -1,7 +1,6 @@
 
 const assert = require("assert");
-const {dateToTimestampWithTz, 
-    timestamptzToYyyyMmDd} = require("../src/utils/date-formatting");
+const {dateToTimestampWithTz} = require("../src/utils/date-formatting");
 const axios = require("axios");
 const apiUrl = "http://localhost:3000/posts";
 const fakeUser = ["MochaTestUser", 39.798770010686965, -105.07207748323874 ];
@@ -9,6 +8,7 @@ require("dotenv").config();
 const pgp = require("pg-promise")();
 const {dbConfig}= require("../src/utils/db");
 const db = pgp(dbConfig);
+
 let userId;
 const postData = {
     user_id: "",

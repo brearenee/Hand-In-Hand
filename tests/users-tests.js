@@ -1,14 +1,11 @@
 const assert = require("assert");
 const axios = require("axios");
-const { error } = require("console");
-const { response } = require("express");
-const apiUrl = "http://localhost:3000/users"; // Replace with your actual API endpoint URL
+const apiUrl = "http://localhost:3000/users"; 
 require("dotenv").config();
 
 const pgp = require("pg-promise")();
 const {dbConfig}= require("../src/utils/db");
 const db = pgp(dbConfig);
-
 
 const userData = {
     id:"00000000-0000-0000-0000-000000000000",
