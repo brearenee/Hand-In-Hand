@@ -216,7 +216,7 @@ paths:
         '404':
           description: Post not found
   /users:
-    get: test
+    get: ./users/users.yaml
   /locations: null
 components:
   schemas: null

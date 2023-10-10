@@ -1,10 +1,9 @@
 # users.yaml
-/all:
-  get:
-    summary: Get all users
-    responses:
-      '200':
-        description: OK
+get:
+  summary: Get all users
+  responses:
+    '200':
+      description: OK
 /{userId}:
   get:
     summary: Get user by ID
