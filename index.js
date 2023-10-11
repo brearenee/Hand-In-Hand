@@ -1,18 +1,20 @@
 const express = require('express');
 const app = express();
+const YAML = require('yamljs');
 require('./src/routes/routes')(app);
+const postsRoutes = require('./src/routes/post-routes.js');
+const userRoutes = require('./src/routes/user-routes.js')
 const port = process.env.PORT || 3000;
+const swaggerUi = require('swagger-ui-express');
+const swaggerDoc = YAML.load('./swagger/swagger.yaml');
 
-const { swaggerUi, specs } = require('./swagger.js'); // Path to your swagger options file
-
-// Serve Swagger documentation
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-
-
-
+app.use(express.json());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+app.use('/posts', postsRoutes);
+app.use('/users', userRoutes);
 app.use(express.static('public'));
 
 app.listen(port);
 console.log('Server started at http://localhost:' + port);
 
-
+module.exports={app}
