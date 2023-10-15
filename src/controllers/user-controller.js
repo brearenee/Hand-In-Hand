@@ -72,6 +72,21 @@ const deleteUserByID = async (request, response) => {
     }
 };
 
+const updateUser = async (request, response) =>{
+    try{
+        const {id, username, last_location, created_at, updated_at} = request.body;
+        const userId = request.params.userId;
+        const result = await pool.query("UPDATE users SET username = $2, last_location = $3, created_at = $4, updated_at = $5 WHERE id = $1 RETURNING *",
+        [id, username, last_location, created_at, updated_at]);
+
+        response.status(200).json(result.rows);
+    } catch {
+        console.log("Error creating user:", error);
+        console.log(request.body);
+        response.status(500).send("Internal Server Error");
+    }
+}
+
 
 //exports for modules
 module.exports = {
@@ -79,5 +94,6 @@ module.exports = {
     getUserByID,
     createUser,
     deleteUserByID,
-    getUsersByLocation
+    getUsersByLocation,
+    updateUser
 };
