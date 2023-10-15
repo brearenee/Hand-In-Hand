@@ -73,4 +73,30 @@ it("Get all users", async function() {
  }
 });
 
+it("Get user by id", async function() {
+    await db.one('INSERT INTO users (id, username, last_location, created_at, updated_at) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+    [userData.id, userData.username, userData.last_location, userData.created_at, userData.updated_at])
+
+    try {
+       const response = await axios.get(`${apiUrl}/${userData.id}`);
+       assert.equal(response.data[0].id, userData.id, 'User was not retrieved');
+
+    } catch (error) {
+       throw error; // Throw any errors to fail the test
+    }
+   });
+
+it("Get user by location", async function() {
+    await db.one('INSERT INTO users (id, username, last_location, created_at, updated_at) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+    [userData.id, userData.username, userData.last_location, userData.created_at, userData.updated_at])
+
+    try {
+       const response = await axios.get(`${apiUrl}/location/${userData.last_location}`);
+       assert.equal(response.data[0].last_location, userData.last_location, 'User was not retrieved');
+    } catch (error) {
+        console.log(response)
+       throw error; // Throw any errors to fail the test
+    }
+   });
+
 });
