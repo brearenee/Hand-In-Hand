@@ -157,7 +157,7 @@
                 <div class="col-6">
                   <div class="mb-2">
                     <label for="post-summary" class="form-label">Summary of Request/Event/Item</label>
-                    <input type="email" class="form-control bg-light rounded-0" id="post-summary" required>
+                    <input type="text" class="form-control bg-light rounded-0" id="post-summary" required>
                   </div>
 
                   <div class="mb-2">
@@ -178,7 +178,7 @@
 
                   <div class="mb-2">
                     <label for="post-type-select" class="form-label">Type of Request</label>
-                    <select class="form-select bg-light rounded-0" aria-label="Default select example" required>
+                    <select class="form-select bg-light rounded-0" aria-label="Default select example" id="post-type-select" required>
                       <option value="1">Community Help</option>
                       <option value="2">Free Marketplace Item</option>
                       <option value="3">Community Event</option>
@@ -189,12 +189,12 @@
                     <div id="post-date-range">
                       <div class="input-group mb-3">
                         <span class="input-group-text w-25 rounded-0">From</span>
-                        <input type="date" class="form-control bg-light rounded-0" aria-label="Beginning date" required>
+                        <input type="date" class="form-control bg-light rounded-0" aria-label="Beginning date" id="post-from-date" required>
                       </div>
 
                       <div class="input-group mb-3">
                         <span class="input-group-text w-25 rounded-0">To</span>
-                        <input type="date" class="form-control bg-light rounded-0" aria-label="Ending date" required>
+                        <input type="date" class="form-control bg-light rounded-0" aria-label="Ending date" id="post-to-date" required>
 
                       </div>
                     </div>
