@@ -96,13 +96,16 @@ async function postData(data) {
         });
 
         const result = await response.json();
+        const onSubmitMessage = document.getElementById('on-submit-message');
 
         // Handle response, e.g., by updating the UI or giving feedback to the user
         if (response.ok) {
-            alert("Post created successfully!");
+            onSubmitMessage.classList.add("text-success")
+            onSubmitMessage.textContent = "Your request has been successfully added to the feed!"
             fetchAndPopulateFeed(); // Refresh the feed
         } else {
-            alert("Error creating post: " + (result.error || "Unknown error"));
+            onSubmitMessage.classList.add("text-danger")
+            onSubmitMessage.textContent = "Error creating post: " + (result.error || "Unknown error")
         }
     } catch (error) {
         console.error("Error posting data:", error);
