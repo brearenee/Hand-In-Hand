@@ -49,7 +49,8 @@ async function fetchAndPopulateFeed() {
 }
 fetchAndPopulateFeed();
 
-document.getElementById("helpFormSubmit").addEventListener("submit", function (event) {
+const helpForm = document.getElementById("helpFormSubmit");
+helpForm.addEventListener("submit", function (event) {
     // Prevent the form from submitting
     event.preventDefault();
 
@@ -100,6 +101,7 @@ async function postData(data) {
 
         // Handle response, e.g., by updating the UI or giving feedback to the user
         if (response.ok) {
+            helpForm.reset();
             onSubmitMessage.classList.add("text-success")
             onSubmitMessage.textContent = "Your request has been successfully added to the feed!"
             fetchAndPopulateFeed(); // Refresh the feed
