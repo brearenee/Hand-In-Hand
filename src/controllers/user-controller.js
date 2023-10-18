@@ -78,15 +78,38 @@ const deleteUserByID = async (request, response) => {
 
 const updateUser = async (request, response) =>{
     try{
-        const {id, username, last_location, created_at} = request.body;
         const userId = request.params.userId;
+
+        const userResult = await pool.query("SELECT * FROM users WHERE id = $1", [userId]);
+
+        if (userResult.rows.length === 0) {
+            response.status(404).send("User not found");
+            return;
+        }
+
+        const userBody = userResult.rows[0];
+
+        const newUserName = request.query.username;
+        const newLastLocation = request.query.last_location;
+        userBody.updated_at = timestamp;
+        
+        if (newUserName && newLastLocation){
+            userBody.username = newUserName;
+            userBody.last_location = newLastLocation;
+        }
+        else if (newUserName){
+            userBody.username = newUserName;
+        }
+        else if (newLastLocation){
+            userBody.last_location = newLastLocation;
+        }
         
         //Update updated_at timestamp
         const result = await pool.query("UPDATE users SET username = $2, last_location = $3, created_at = $4, updated_at = $5 WHERE id = $1 RETURNING *",
-        [id, username, last_location, created_at, timestamp]);
+        [userBody.id, userBody.username, userBody.last_location, userBody.created_at, userBody.updated_at]);
 
         response.status(200).json(result.rows);
-    } catch {
+    } catch (error) {
         console.log("Error creating user:", error);
         console.log(request.body);
         response.status(500).send("Internal Server Error");
