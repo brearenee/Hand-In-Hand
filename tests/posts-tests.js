@@ -10,6 +10,7 @@ const {dbConfig}= require("../src/utils/db");
 const db = pgp(dbConfig);
 
 let userId;
+let postId;
 const postData = {
     user_id: "",
     title: "New Post",
@@ -42,6 +43,7 @@ describe("Post Routes Tests ", function() {
 
     it("Creates A Post", async function() {
         let response = await axios.post(apiUrl, postData);
+        postId = response.data.id
         assert.equal(response.status, 201, `returned ${response.status}, not 200`);
         assert.equal(response.data.title, postData.title, "Post was not created");
     });
@@ -107,10 +109,23 @@ describe("Post Routes Tests ", function() {
     it("returns 400 when missing fields", async function() {
         //TODO
     });
+
+    it("edits a post", async function() {
+        let response;
+        try {
+            response = await axios.patch(`${apiUrl}/${postId}`, {
+                title: "Edited Title"
+            });         
+        } catch (error) {
+            console.error("patch request for post route failed. ", error)
+        } 
+        assert.equal(response.data.title, "Edited Title");
+    });
+
     it("Returns 404 Internal Server Error", async function() {
         postId = "00000000-1111-2222-3333-444444444444"
         try {
-            const updateResponse = await axios.put(`${apiUrl}/${postId}`, {
+            const updateResponse = await axios.patch(`${apiUrl}/${postId}`, {
                 title: "Updated Title",
                 body: "Updated Body",
                 type: "updated"
