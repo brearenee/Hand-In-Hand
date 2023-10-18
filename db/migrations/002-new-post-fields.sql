@@ -14,4 +14,6 @@ ALTER COLUMN request_to SET NOT NULL,
 ALTER COLUMN request_from SET NOT NULL;
 
 ALTER TABLE users
-ADD COLUMN firebase_id;
+ADD COLUMN firebase_id UUID;
+
+
