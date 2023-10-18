@@ -107,6 +107,21 @@ describe("Post Routes Tests ", function() {
     it("returns 400 when missing fields", async function() {
         //TODO
     });
+    it("Returns 404 Internal Server Error", async function() {
+        postId = "00000000-1111-2222-3333-444444444444"
+        try {
+            const updateResponse = await axios.put(`${apiUrl}/${postId}`, {
+                title: "Updated Title",
+                body: "Updated Body",
+                type: "updated"
+            });
+
+            // The test should fail if the request does not result in a 500 error
+            assert.fail("Expected 404 Internal Server Error, but got a different status code.");
+        } catch (error) {
+            assert.equal(error.response.status, 404, `expected 404, got ${error.response.status}`);
+        }
+    });
 
 
 });
