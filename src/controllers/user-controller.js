@@ -52,8 +52,8 @@ const getUserByID = async (request, response) => {
 const createUser = async (request, response) => {
     try {
         //created_at and updated_at the same at user creaation. 
-        const {id, username, last_location} = request.body;
-        const result = await pool.query("INSERT INTO users (id, username, last_location, created_at, updated_at) VALUES ($1, $2, $3, $4, $5) RETURNING *", [id, username, last_location, timestamp, timestamp]);
+        const {username, last_location} = request.body;
+        const result = await pool.query("INSERT INTO users (username, last_location, created_at, updated_at) VALUES ($1, $2, $3, $4) RETURNING *", [username, last_location, timestamp, timestamp]);
         response.status(200).json(result.rows);
 
     } catch (error) {
