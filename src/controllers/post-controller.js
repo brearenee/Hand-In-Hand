@@ -5,9 +5,10 @@ app.use(express.json());
 
 async function editPost(req, res) {
     request = await req;
-    const postId = req.params.id; // Assuming the post ID is passed as a URL parameter
+    const postId = req.params.postId; // Assuming the post ID is passed as a URL parameter
 
-    const { title, body, user_id, location_id, type } = req.body;
+    const { title, body, location_id, type } = request.body;
+    console.log(request.body)
 
     try {
         // Check if the post with the given ID exists
@@ -19,16 +20,16 @@ async function editPost(req, res) {
 
         // Update the post in the database, only if the fields are provided in the request
         const updateFields = {};
-        if (title !== undefined && title !== null) {
+        if (title !== undefined) {
             updateFields.title = title;
         }
-        if (body !== undefined && body !== null) {
+        if (body !== undefined) {
             updateFields.body = body;
         }
-        if (location_id !== undefined && location_id !== null) {
+        if (location_id !== undefined) {
             updateFields.location_id = location_id;
         }
-        if (type !== undefined && type !== null) {
+        if (type !== undefined) {
             updateFields.type = type;
         }
 
@@ -44,6 +45,7 @@ async function editPost(req, res) {
         res.status(500).json({ error: "Internal Server Error" });
     }
 }
+
 async function getPostById(req, res) {
     const postId = req.params.postId;
     try{
@@ -187,5 +189,6 @@ module.exports = {
     getPostsByUserId, 
     deletePostById,
     createPost, 
-    getDefaultLocation
+    getDefaultLocation, 
+    editPost
 };
