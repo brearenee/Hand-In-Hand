@@ -3,6 +3,47 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
+async function editPost(req, res) {
+    request = await req;
+    const postId = req.params.id; // Assuming the post ID is passed as a URL parameter
+
+    const { title, body, user_id, location_id, type } = req.body;
+
+    try {
+        // Check if the post with the given ID exists
+        const existingPost = await pool.query("SELECT * FROM posts WHERE id = $1", [postId]);
+
+        if (existingPost.rows.length === 0) {
+            return res.status(404).json({ error: "Post not found." });
+        }
+
+        // Update the post in the database, only if the fields are provided in the request
+        const updateFields = {};
+        if (title !== undefined && title !== null) {
+            updateFields.title = title;
+        }
+        if (body !== undefined && body !== null) {
+            updateFields.body = body;
+        }
+        if (location_id !== undefined && location_id !== null) {
+            updateFields.location_id = location_id;
+        }
+        if (type !== undefined && type !== null) {
+            updateFields.type = type;
+        }
+
+        // Update the post in the database with the provided fields
+        const result = await pool.query(
+            "UPDATE posts SET title = COALESCE($1, title), body = COALESCE($2, body), location_id = COALESCE($3, location_id), type = COALESCE($4, type), updated_at = now() WHERE id = $5 RETURNING *",
+            [updateFields.title, updateFields.body, updateFields.location_id, updateFields.type, postId]
+        );
+
+        res.status(200).json(result.rows[0]); // Respond with the updated post
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
 async function getPostById(req, res) {
     const postId = req.params.postId;
     try{
