@@ -5,8 +5,15 @@ async function fetchAndPopulateFeed() {
     // Select the template once
     const cardTemplate = document.querySelector("template");
 
+    // Clear existing cards
+    // Remove all dynamically added cards (those with the class 'dynamic-card')
+    const dynamicCards = feedContent.querySelectorAll(".dynamic-card");
+    dynamicCards.forEach(card => feedContent.removeChild(card)); 
+
+    console.log("Content cleared. Starting to populate...");
+
     try {
-        // Send a POST request to the server
+        // Send a GET request to the server
         const response = await fetch("/posts", {
             method: "GET",
             headers: {
@@ -17,9 +24,9 @@ async function fetchAndPopulateFeed() {
         const result = await response.json();
 
         // test that we get the results back. 
-        console.log("GET RESULTS: ", result)
+        console.log("GET RESULTS: ", result);
 
-        result.forEach((posts) => {
+        result.reverse().forEach((posts) => {
 
             // Clone a copy of the template we can insert in the DOM as a real visible node
             const card = cardTemplate.content.cloneNode(true);
@@ -28,12 +35,12 @@ async function fetchAndPopulateFeed() {
             card.getElementById("post-card-title").innerText = posts.title;
 
             // Parse and format the to date in MM/DD/YY format
-            const toDate= new Date(posts.request_to).toLocaleDateString("en-US", { year: "2-digit", month: "2-digit", day: "2-digit" });
-          
+            const toDate = new Date(posts.request_to).toLocaleDateString("en-US", { year: "2-digit", month: "2-digit", day: "2-digit" });
+
             // Parse and format the from date in MM/DD/YY format
-            const fromDate= new Date(posts.request_from).toLocaleDateString("en-US", { year: "2-digit", month: "2-digit", day: "2-digit" });
-          
-            card.getElementById("from-date").innerText = fromDate; 
+            const fromDate = new Date(posts.request_from).toLocaleDateString("en-US", { year: "2-digit", month: "2-digit", day: "2-digit" });
+
+            card.getElementById("from-date").innerText = fromDate;
             card.getElementById("to-date").innerText = toDate;
             card.getElementById("post-card-body").innerText = posts.body;
 
@@ -43,12 +50,16 @@ async function fetchAndPopulateFeed() {
             const colDiv = document.createElement("div");
             colDiv.classList.add("row");
             colDiv.classList.add("g-3");
+            colDiv.classList.add("dynamic-card");
 
             // Append the card to the new row div
             colDiv.appendChild(card);
 
             // Append the new column div to the row
             feedContent.appendChild(colDiv);
+
+            console.log("Card appended to feed content");
+
         });
 
     } catch (error) {
@@ -105,17 +116,17 @@ async function postData(data) {
         });
 
         const result = await response.json();
-        const onSubmitMessage = document.getElementById('on-submit-message');
+        const onSubmitMessage = document.getElementById("on-submit-message");
 
         // Handle response, e.g., by updating the UI or giving feedback to the user
         if (response.ok) {
             helpForm.reset();
-            onSubmitMessage.classList.add("text-success")
-            onSubmitMessage.textContent = "Your request has been successfully added to the feed!"
+            onSubmitMessage.classList.add("text-success");
+            onSubmitMessage.textContent = "Your request has been successfully added to the feed!";
             fetchAndPopulateFeed(); // Refresh the feed
         } else {
-            onSubmitMessage.classList.add("text-danger")
-            onSubmitMessage.textContent = "Error creating post: " + (result.error || "Unknown error")
+            onSubmitMessage.classList.add("text-danger");
+            onSubmitMessage.textContent = "Error creating post: " + (result.error || "Unknown error");
         }
     } catch (error) {
         console.error("Error posting data:", error);
