@@ -235,12 +235,13 @@
             <div class="row" id="feed-content">
               <!-- Example feed item template -->
               <template>
-                <div class="card h-100 bg-grey">
+                <div class="card h-100 bg-grey" id="post-card">
                   <div class="container">
-                    <p2 class="fw-bold text-uppercase">Request Type</p2>
-                    <h4 class="text-uppercase">Title</h4>
-                    <p class="fw-bold">Created Date</p>
-                    <p1 class="mb-0">Body Content</p1>
+                    <p2 class="fw-bold text-uppercase" id="post-card-type">Request Type</p2>
+                    <h4 class="text-uppercase" id="post-card-title">Title</h4>
+                    <p class="fw-bold">Requested Date(s): <span id="from-date">From Date</span> - <span id="to-date">To Date</span></p>
+
+                    <p1 class="mb-0" id="post-card-body">Body Content</p1>
                     <div class="d-flex justify-content-end mt-auto">
                       <button class="btn btn-secondary text-uppercase">Respond</button>
                     </div>

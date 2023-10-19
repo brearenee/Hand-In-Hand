@@ -6,30 +6,38 @@ async function fetchAndPopulateFeed() {
     const cardTemplate = document.querySelector("template");
 
     try {
-        const response = await fetch("/posts");
-        const data = await response.json();
+        // Send a POST request to the server
+        const response = await fetch("/posts", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
 
-        data.forEach((users) => {
+        const result = await response.json();
+
+        // test that we get the results back. 
+        console.log("GET RESULTS: ", result)
+
+        result.forEach((posts) => {
 
             // Clone a copy of the template we can insert in the DOM as a real visible node
             const card = cardTemplate.content.cloneNode(true);
 
             // Update the content of the cloned template with the employee data we queried from the backend
-            card.querySelector("h4").innerText = users.title;
+            card.getElementById("post-card-title").innerText = posts.title;
 
-            // Parse and format the date in MM/DD/YY format
-            const createdAt = new Date(users.created_at);
-            const formattedDate = createdAt.toLocaleDateString("en-US", { year: "2-digit", month: "2-digit", day: "2-digit" });
-            // Get the time in Hour:Minutes AM/PM format
-            const formattedTime = createdAt.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
-            // Combine the date and time
-            const dateTimeString = `${formattedDate} ${formattedTime}`;
-            // Set the text of the <p> element to the combined date and time
-            card.querySelector("p").innerText = dateTimeString;
+            // Parse and format the to date in MM/DD/YY format
+            const toDate= new Date(posts.request_to).toLocaleDateString("en-US", { year: "2-digit", month: "2-digit", day: "2-digit" });
+          
+            // Parse and format the from date in MM/DD/YY format
+            const fromDate= new Date(posts.request_from).toLocaleDateString("en-US", { year: "2-digit", month: "2-digit", day: "2-digit" });
+          
+            card.getElementById("from-date").innerText = fromDate; 
+            card.getElementById("to-date").innerText = toDate;
+            card.getElementById("post-card-body").innerText = posts.body;
 
-            card.querySelector("p1").innerText = users.body;
-
-            card.querySelector("p2").innerText = users.type;
+            card.getElementById("post-card-type").innerText = posts.type;
 
             // Create a new row div to wrap the card
             const colDiv = document.createElement("div");
@@ -68,10 +76,10 @@ helpForm.addEventListener("submit", function (event) {
     const formData = {
         title: postSummary,
         body: postDescription,
-        type: postType
+        type: postType,
+        fromDate: postFromDate,
+        toDate: postToDate,
         // location: postLocation,
-        // fromDate: postFromDate,
-        // toDate: postToDate,
         // Handle images later 
     };
     console.log("Form Data from submit button: \n", formData);
