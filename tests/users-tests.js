@@ -1,24 +1,31 @@
 const assert = require("assert");
 const axios = require('axios');
-const { error } = require("console");
-const { response } = require("express");
 const apiUrl = 'http://localhost:3000/users'; // Replace with your actual API endpoint URL
 require("dotenv").config();
 
 const pgp = require('pg-promise')();
 const {dbConfig}= require('../src/utils/db')
+const {getDefaultLocation}= require('../src/controllers/post-controller')
 const db = pgp(dbConfig);
 
 
 const userData = {
     username:"testuser0",
-    last_location:"586d8255-e629-4eda-a78b-af2ac0c6a4d9",
+    last_location: "",
     created_at:"2023-10-10T02:20:06.021Z",
     updated_at:"2023-10-10T02:20:06.021Z"
 };
 let fakeUserId;
 
+
 describe("Tests user routes", function() {
+
+    before( async function() {
+        try{
+            userData.last_location = await getDefaultLocation(39.798770010686965,  -105.07207748323874)
+        }catch(error){ console.log("location id error", error)}
+    });
+
 
     //remove created user after every test
     afterEach(async function() {
@@ -30,8 +37,8 @@ describe("Tests user routes", function() {
 
         //post new user
         try {
-            let response = await axios.post(apiUrl, userData); 
 
+            let response = await axios.post(apiUrl, userData); 
             fakeUserId = response.data[0].id;
             assert.equal(response.data[0].username, userData.username, `does not equal testUser created.`);
         } catch (error){
@@ -72,12 +79,12 @@ it("Delete a user", async function() {
 });
 
 it("Get all users", async function() {
- try {
-    const response = await axios.get(`${apiUrl}`);
-    assert.equal(response.status, 200, 'Users were not retrieved');
- } catch (error) {
-    throw error; // Throw any errors to fail the test
- }
+    try {
+        const response = await axios.get(`${apiUrl}`);
+        assert.equal(response.status, 200, 'Users were not retrieved');
+    } catch (error) {
+        throw error; // Throw any errors to fail the test
+    }
 });
 
 it("Get user by id", async function() {
