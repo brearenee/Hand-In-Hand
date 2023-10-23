@@ -10,7 +10,7 @@ const db = pgp(dbConfig);
 
 
 const userData = {
-    username:"testuser0",
+    username:"testuser00",
     last_location: "",
     created_at:"2023-10-10T02:20:06.021Z",
     updated_at:"2023-10-10T02:20:06.021Z"
