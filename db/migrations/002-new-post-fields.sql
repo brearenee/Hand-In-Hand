@@ -1,0 +1,20 @@
+ALTER TABLE posts
+ADD COLUMN request_from TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN request_to TIMESTAMPTZ DEFAULT (CURRENT_TIMESTAMP + INTERVAL '3 days');
+
+UPDATE posts
+SET 
+    request_from = COALESCE(request_to, CURRENT_TIMESTAMP),
+    request_to = COALESCE(request_from, CURRENT_TIMESTAMP + INTERVAL '3 days')
+WHERE 
+    request_to IS NULL OR request_from IS NULL;
+
+ALTER TABLE posts
+ALTER COLUMN request_to SET NOT NULL,
+ALTER COLUMN request_from SET NOT NULL;
+
+ALTER TABLE users
+ADD COLUMN firebase_id UUID,
+ADD COLUMN email text;
+
+
