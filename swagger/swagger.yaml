@@ -28,6 +28,12 @@ paths:
                 userId:
                   type: string
                   format: uuid
+                request_to:
+                  type: string
+                  format: date-time
+                request_from:
+                  type: string
+                  format: date-time
               required:
                 - title
                 - body
@@ -108,7 +114,7 @@ paths:
         '400':
           description: Bad request
   '/posts/{postId}':
-    put:
+    patch:
       summary: Update an existing post
       description: Update an existing post by postId.
       parameters:
@@ -139,6 +145,12 @@ paths:
                 userId:
                   type: string
                   format: uuid
+                request_to:
+                  type: string
+                  format: date-time
+                request_from:
+                  type: string
+                  format: date-time
       responses:
         '200':
           description: Post updated successfully. Returns the updated post.

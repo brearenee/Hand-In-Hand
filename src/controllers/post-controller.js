@@ -123,10 +123,8 @@ async function deletePostById(req, res) {
         return res.status(500).json({ error: "Internal Server Error" });
     }
 }
-async function createPost(req, res){
-    request = await req;
-    const { title, body, user_id, location_id, type } = req.body;
-    //default user/location Ids for beginning implementation
+async function createPost(req, res) {
+    const { title, body, user_id, location_id, type, request_to, request_from } = req.body;
     const defaultUserId = await getDefaultUserId("testUser1");
     const defaultLocationId = await getDefaultLocation(39.798770010686965, -105.07207748323874);
 
@@ -138,17 +136,33 @@ async function createPost(req, res){
     }
 
     try {
-        const result = await pool.query(
-            "INSERT INTO posts (title, body, user_id, location_id, type, created_at) VALUES ($1, $2, $3, $4, $5, now()) RETURNING *",
-            [title, body, userId, locationId, type]
-        );
+        const placeholders = [];
+        const values = [title, body, userId, locationId, type];
 
+        if (request_to !== undefined) {
+            placeholders.push('$' + (values.length + 1));
+            values.push(request_to);
+        } else {
+            placeholders.push('DEFAULT'); // Use DEFAULT keyword in SQL to insert default value
+        }
+
+        if (request_from !== undefined) {
+            placeholders.push('$' + (values.length + 1));
+            values.push(request_from);
+        } else {
+            placeholders.push('DEFAULT'); // Use DEFAULT keyword in SQL to insert default value
+        }
+
+        const query = `INSERT INTO posts (title, body, user_id, location_id, type, request_to, request_from, created_at) VALUES ($1, $2, $3, $4, $5, ${placeholders.join(', ')}, now()) RETURNING *`;
+
+        const result = await pool.query(query, values);
         res.status(201).json(result.rows[0]); // Respond with the created post
     } catch (error) {
         console.error("Error:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 }
+
 async function getDefaultUserId(username) {
     try {
         const query = "SELECT id FROM users WHERE username = $1";
