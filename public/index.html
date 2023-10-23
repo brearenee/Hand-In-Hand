@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
   <header>
-    <nav class="navbar bg-primary fixed-top">
+    <nav class="navbar navbar-expand-lg bg-primary fixed-top"> <!-- Use navbar-expand-lg for larger screens -->
       <div class="container">
         <!-- Brand and Toggle Button -->
         <a class="navbar-brand" href="#">Welcome to HandInHand</a>
@@ -37,6 +37,9 @@
             <span class="navbar-toggler-icon"></span>
           </button>
         </div>
+      </div>
+    </nav>
+  </header>
 
 
         <!-- Offcanvas Menu -->
@@ -88,7 +91,7 @@
     <div class="container mt-5">
       <div class="row">
         <!-- Sidebar -->
-        <div class="col-sm-4 d-flex mt-3" id="wrapper">
+        <div class="row row-cols-2 row-cols-md-2 row-cols-lg-2">
           <nav id="sidebar">
           <div class="guidelines-container">
             <p class="guidelines-title" >Community Guidelines</p>
@@ -113,16 +116,13 @@
             
           <ul class="nav flex-column">
             <li class="nav-item">
-              <!-- <a class="nav-link p-0" data-toggle="collapse" href="#communityGuidelines" role="button"
-                aria-expanded="false" aria-controls="communityGuidelines">
-                Community Guidelines
-              </a> -->
             <div class = "space-between-sections">
 
             </div>
 
             <!-- HandInHand Mission Section -->
-            <div class="mission-container">
+            <!-- Added the class d-none d-md-block to the sidebar to hide it on screens smaller than the (medium) breakpoint -->
+            <div class="col mission-container">
               <p class="mission-title">HandInHand Mission</p>
               <p class="custom-text"> <em>"HandInHand is a web-based application that allows communities to come together to
                 engage in acts of service, volunteer-based opportunities, and community events."</em></p>
@@ -148,7 +148,7 @@
         </div>
 
         <!--Form and Community Feed -->
-        <div class="col-sm-4">
+        <div class="col">
           <!-- FORM - Community Feed Post -->
           <div class="container mt-3">
             <form class=" containter g-3" id="helpFormSubmit">
@@ -199,8 +199,9 @@
                       </div>
                     </div>
                   </div>
+                  <!-- Added custom-width so that the submit button retains its size on smaller screens -->
                   <div class="d-flex mt-auto justify-content-end">
-                    <button type="submit" class="btn btn-primary w-50 text-uppercase">Submit</button>
+                    <button type="submit" class="btn btn-primary custom-width text-uppercase">Submit</button>
                   </div>
 
                 </div>
