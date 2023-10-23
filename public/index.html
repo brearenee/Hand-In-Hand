@@ -91,7 +91,8 @@
     <div class="container mt-5">
       <div class="row">
         <!-- Sidebar -->
-        <div class="row row-cols-2 row-cols-md-2 row-cols-lg-2">
+        <!-- Sidebar (hidden on xs and sm screens, shown on md and larger screens) -->
+        <div class="d-none d-md-block col-md-3">
           <nav id="sidebar">
           <div class="guidelines-container">
             <p class="guidelines-title" >Community Guidelines</p>
@@ -112,7 +113,6 @@
                 </a>
               </div>
               
-          </div>
             
           <ul class="nav flex-column">
             <li class="nav-item">
@@ -121,7 +121,6 @@
             </div>
 
             <!-- HandInHand Mission Section -->
-            <!-- Added the class d-none d-md-block to the sidebar to hide it on screens smaller than the (medium) breakpoint -->
             <div class="col mission-container">
               <p class="mission-title">HandInHand Mission</p>
               <p class="custom-text"> <em>"HandInHand is a web-based application that allows communities to come together to
@@ -130,6 +129,7 @@
                 connections in the digital world."</em></p>
                 
             </div>
+          </div>
             
             <!-- Additional Sidebar Features (Placeholder) -->
             <!-- <li class="nav-item">
@@ -148,7 +148,8 @@
         </div>
 
         <!--Form and Community Feed -->
-        <div class="col">
+        <!-- Main Content (full width on all screens) -->
+        <div class="col-12 col-lg-9">
           <!-- FORM - Community Feed Post -->
           <div class="container mt-3">
             <form class=" containter g-3" id="helpFormSubmit">
