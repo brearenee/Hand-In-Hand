@@ -115,7 +115,7 @@ const updateUser = async (request, response) =>{
         
         // Http Put request to update user with new user information
         const result = await pool.query("UPDATE users SET username = $2, last_location = $3, created_at = $4, updated_at = $5 WHERE id = $1 RETURNING *",
-        [userBody.id, userBody.username, userBody.last_location, userBody.created_at, userBody.updated_at]);
+            [userBody.id, userBody.username, userBody.last_location, userBody.created_at, userBody.updated_at]);
         response.status(200).json(result.rows);
 
     } catch (error) {
@@ -124,7 +124,7 @@ const updateUser = async (request, response) =>{
         console.log(request.body);
         response.status(500).send("Internal Server Error");
     }
-}
+};
 
 
 //exports for modules
