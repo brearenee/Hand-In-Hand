@@ -11,40 +11,46 @@ const db = pgp(dbConfig);
 
 
 const userData = {
-    id:"00000000-0000-0000-0000-000000000000",
     username:"testuser0",
     last_location:"586d8255-e629-4eda-a78b-af2ac0c6a4d9",
     created_at:"2023-10-10T02:20:06.021Z",
     updated_at:"2023-10-10T02:20:06.021Z"
 };
+let fakeUserId;
 
 describe("Tests user routes", function() {
 
     //remove created user after every test
     afterEach(async function() {
-        await db.none('DELETE FROM users WHERE id = $1', [userData.id]);
+        await db.none('DELETE FROM users WHERE id = $1', [fakeUserId]);
     });
 
     // Test to create a new user
     it("Post a new user", async function(){
 
-
         //post new user
-        axios.post(apiUrl, userData).then(response => {
-            assert.equal(response.data.id, userData.id, `does not equal testUser created.`);
-        });
+        try {
+            let response = await axios.post(apiUrl, userData); 
 
+            fakeUserId = response.data[0].id;
+            assert.equal(response.data[0].username, userData.username, `does not equal testUser created.`);
+        } catch (error){
+            console.log(error);
+            throw error;
+        }
 });
 
 it("Delete a user", async function() {
     let empty;
     //make a new user to delete
-    await db.one('INSERT INTO users (id, username, last_location, created_at, updated_at) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-        [userData.id, userData.username, userData.last_location, userData.created_at, userData.updated_at])
+    let response = await db.one('INSERT INTO users (username, last_location, created_at, updated_at) VALUES ($1, $2, $3, $4) RETURNING *',
+        [userData.username, userData.last_location, userData.created_at, userData.updated_at])
+    
+        fakeUserId = response.id
 
     //Delete user
     try {
-       await axios.delete(`${apiUrl}/${userData.id}`);
+       await axios.delete(`${apiUrl}/${fakeUserId}`);
 
     } catch (error) {
        throw error; // Throw any errors to fail the test
@@ -53,7 +59,7 @@ it("Delete a user", async function() {
     // Check if the user is deleted from the database
     try{
         empty = true;
-        await db.none('SELECT * FROM users WHERE id = $1 AND username = $2', [userData.id, userData.username]);
+        await db.none('SELECT * FROM users WHERE id = $1 AND username = $2', [fakeUserId, userData.username]);
 
     } catch{
         empty = false;
@@ -62,6 +68,7 @@ it("Delete a user", async function() {
     }
 
     assert.equal(empty, true, 'User still exists in the database');
+    await db.none('DELETE FROM users WHERE id = $1', [response.id]);
 });
 
 it("Get all users", async function() {
@@ -74,21 +81,24 @@ it("Get all users", async function() {
 });
 
 it("Get user by id", async function() {
-    await db.one('INSERT INTO users (id, username, last_location, created_at, updated_at) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-    [userData.id, userData.username, userData.last_location, userData.created_at, userData.updated_at])
+
+    let response = await db.one('INSERT INTO users ( username, last_location, created_at, updated_at) VALUES ($1, $2, $3, $4 ) RETURNING *',
+    [userData.username, userData.last_location, userData.created_at, userData.updated_at])
+    fakeUserId = response.id
 
     try {
-       const response = await axios.get(`${apiUrl}/${userData.id}`);
-       assert.equal(response.data[0].id, userData.id, 'User was not retrieved');
+       const response = await axios.get(`${apiUrl}/${fakeUserId}`);
+       assert.equal(response.data[0].id, fakeUserId, 'User was not retrieved');
 
     } catch (error) {
        throw error; // Throw any errors to fail the test
     }
+
    });
 
-it("Get user by location", async function() {
-    await db.one('INSERT INTO users (id, username, last_location, created_at, updated_at) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-    [userData.id, userData.username, userData.last_location, userData.created_at, userData.updated_at])
+it("Get users by location", async function() {
+    let response = await db.one('INSERT INTO users (username, last_location, created_at, updated_at) VALUES ($1, $2, $3, $4) RETURNING *',
+    [userData.username, userData.last_location, userData.created_at, userData.updated_at])
 
     try {
        const response = await axios.get(`${apiUrl}/location/${userData.last_location}`);
@@ -97,6 +107,27 @@ it("Get user by location", async function() {
         console.log(response)
        throw error; // Throw any errors to fail the test
     }
+    await db.none('DELETE FROM users WHERE id = $1', [response.id]);
    });
+
+   it("Put request", async function(){
+
+    let response = await db.one('INSERT INTO users (username, last_location, created_at, updated_at) VALUES ($1, $2, $3, $4) RETURNING *',
+    [userData.username, userData.last_location, userData.created_at, userData.updated_at])
+    
+    fakeUserId = response.id
+    userData.username = "newTestName";
+
+
+    try{
+        await axios.put(`${apiUrl}/${fakeUserId}?username=${userData.username}`, userData).then(response => {
+            assert.equal(response.data[0].username, userData.username, `did not update username.`);
+        });
+    } catch (error ){
+        console.log("failed to update user");
+        throw error;
+    }
+})
+
 
 });
