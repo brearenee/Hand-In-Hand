@@ -11,7 +11,8 @@
     padding: 1em 1em 1em 1em;
 }
 
-.btn{
+/* Added an id for this report button so it doesn't affect all the other buttons */
+#reportbutton{
     margin-left: 10%;
 }
 
