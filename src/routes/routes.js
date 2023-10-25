@@ -55,7 +55,7 @@ const pool = new Pool({
 
 module.exports = function(app){
 
-    app.get("/users", (request, response) => {
+   /* app.get("/users", (request, response) => {
         pool.query("SELECT * from users", (error, result) => {
             if (error) {
                 console.log("throwing error; unable to get users from postgres");
@@ -63,7 +63,7 @@ module.exports = function(app){
             }
             response.status(200).json(result.rows);
         });
-    });
+    });*/
 
 
 
@@ -89,6 +89,15 @@ module.exports = function(app){
  *               items:
  *                
  */
+
+
+/* TODO : NEED THIS
+
+app.get('/', function(req, res) {
+  console.log("INITIAL REQUEST")
+  res.sendFile(path.join(__dirname, '../../public/index.html'));
+});
+*/
 
 /** 
  * @swagger
@@ -138,7 +147,7 @@ module.exports = function(app){
  *              
  */
 
-app.get("/users/:userId", (request, response) => {
+/*app.get("/users/:userId", (request, response) => {
     const userId = request.params.userId;
 
     pool.query("SELECT * FROM users WHERE id = $1", [userId], (error, result) => {
@@ -148,8 +157,7 @@ app.get("/users/:userId", (request, response) => {
         }
         response.status(200).json(result.rows[0]);
     });
-});
-
+}); */
 
 
 
@@ -248,17 +256,7 @@ app.get("/users/:userId", (request, response) => {
  *               items:
  *            
  */
-app.get('/posts', (request, response) => {
-    console.log('POST ROUTE CALLED')
 
-    pool.query('SELECT * FROM posts', (error, result) => {
-        if (error) {
-        console.log("throwing error") 
-        throw error;}
-        console.log(result)
-        response.send(result.rows);
-    });
-  });
 
 
 /** 

@@ -1,0 +1,8 @@
+combine all the small files into one. :-) 
+npm install -g swagger-cli
+(permission issues with mac? run this first. 
+sudo chown -R $(whoami) /usr/local/lib/node_modules
+)
+swagger-cli bundle ./swagger/main.yaml --outfile swagger/swagger.yaml --type yaml
+
+https://davidgarcia.dev/posts/how-to-split-open-api-spec-into-multiple-files/

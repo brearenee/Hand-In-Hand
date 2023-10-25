@@ -1,0 +1,108 @@
+post:
+  summary: Create a new post
+  description: Create a new post with title, body, post-type, locationId, and userId.
+  requestBody:
+    description: All fields required. LocationId and UserId must be an existing uuid string. 
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            title:
+              type: string
+            body:
+              type: string
+            type:
+              type: string
+            locationId:
+              type: string
+              format: uuid
+            userId:
+              type: string
+              format: uuid
+            request_to: 
+              type: string
+              format: date-time
+            request_from: 
+              type: string
+              format: date-time
+          required:
+            - title
+            - body
+            - type
+            - locationId
+            - userId
+  responses:
+    '201':
+      description: Post created successfully. Returns the created post.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              postId:
+                type: string
+                format: uuid
+              title:
+                type: string
+              body:
+                type: string
+              postType:
+                type: string
+              locationId:
+                type: string
+                foramt: uuid
+              userId:
+                type: string
+                format: uuid
+    '400':
+      description: id for location and/or userid not found
+get:
+  summary: Get posts based on filters
+  parameters:
+    - name: userId
+      in: query
+      schema:
+        type: string
+        format: uuid
+      description: Filter posts by userId
+    - name: locationId
+      in: query
+      schema:
+        type: string
+        format: uuid
+      description: Filter posts by location ID
+    - name: fromDate
+      in: query
+      schema:
+        type: string
+        format: date
+      description: Filter posts from a specific date (YYYY-MM-DD). Required with toDate.
+    - name: toDate
+      in: query
+      schema:
+        type: string
+        format: date
+      description: Filter posts until a specific date (YYYY-MM-DD). Required with fromDate.
+  responses:
+    '200':
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                postId:
+                  type: integer
+                title:
+                  type: string
+                locationId:
+                  type: integer
+                createdAt:
+                  type: string
+                  format: date-time
+    '400':
+      description: Bad request

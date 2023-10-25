@@ -1,0 +1,18 @@
+openapi: 3.0.0
+info:
+  title: Hand in Hand
+  description: API documentation for Hand in Hand
+  version: 1.0.0
+paths:
+  /posts:
+    $ref: './posts/posts.yaml'
+  /posts/{postId}:
+    $ref: './posts/posts-postId.yaml'
+  /users:
+    $ref: './users/users.yaml'
+  /users/{userId}:
+    $ref: './users/users-userId.yaml'
+  /locations:
+components:
+  schemas: 
+  responses:
