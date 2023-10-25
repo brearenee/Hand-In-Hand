@@ -5,7 +5,7 @@
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>HandInHand</title>
 
@@ -42,7 +42,6 @@
             <span class="navbar-toggler-icon"></span>
           </button>
         </div>
-
 
         <!-- Offcanvas Menu -->
         <div class="offcanvas offcanvas-end bg-primary" tabindex="-1" id="offcanvasNavbar"
@@ -93,7 +92,8 @@
     <div class="container mt-5">
       <div class="row">
         <!-- Sidebar -->
-        <div class="col-3 d-flex mt-3" id="wrapper">
+        <!-- Sidebar (hidden on smaller screens (md, sm, xs) and displayed as a 3-column-wide block on lg and xl screens) -->
+        <div class="d-none d-lg-block col col-lg-3">
           <nav id="sidebar">
             <div class="guidelines-container">
               <p class="guidelines-title">Community Guidelines</p>
@@ -110,36 +110,30 @@
 
               <!-- "Report Misuse" Button -->
               <div>
-                <a href="mailto:communityfirst.handinhand@gmail.com" class="btn btn-danger"> Report Misuse
+                <a href="mailto:communityfirst.handinhand@gmail.com" class="btn btn-danger" id= "report-button"> Report Misuse
                 </a>
               </div>
+              
+            
+          <ul class="nav flex-column">
+            <li class="nav-item">
+            <div class = "space-between-sections">
 
+                </div>
+
+            <!-- HandInHand Mission Section -->
+            <div class="col mission-container">
+              <p class="mission-title">HandInHand Mission</p>
+              <p class="custom-text"> <em>"HandInHand is a web-based application that allows communities to come together to
+                engage in acts of service, volunteer-based opportunities, and community events."</em></p>
+              <p class="custom-text"> <em>"We're committed to promoting positivity, mental well-being, and meaningful
+                connections in the digital world."</em></p>
+                
             </div>
-
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <!-- <a class="nav-link p-0" data-toggle="collapse" href="#communityGuidelines" role="button"
-                aria-expanded="false" aria-controls="communityGuidelines">
-                Community Guidelines
-              </a> -->
-                <div class="space-between-sections">
-
-                </div>
-
-                <!-- HandInHand Mission Section -->
-                <div class="mission-container">
-                  <p class="mission-title">HandInHand Mission</p>
-                  <p class="custom-text"> <em>"HandInHand is a web-based application that allows communities to come
-                      together to
-                      engage in acts of service, volunteer-based opportunities, and community events."</em></p>
-                  <p class="custom-text"> <em>"We're committed to promoting positivity, mental well-being, and
-                      meaningful
-                      connections in the digital world."</em></p>
-
-                </div>
-
-                <!-- Additional Sidebar Features (Placeholder) -->
-                <!-- <li class="nav-item">
+          </div>
+            
+            <!-- Additional Sidebar Features (Placeholder) -->
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="#additionalFeature1">
                   Additional Feature 1
                 </a>
@@ -155,13 +149,14 @@
         </div>
 
         <!--Form and Community Feed -->
-        <div class="col-9">
+        <!-- Main Content (full width on all screens) -->
+        <div class="col-12 col-lg-9">
           <!-- FORM - Community Feed Post -->
           <div class="container mt-3">
             <form class=" containter g-3" id="helpFormSubmit">
               <fieldset class="row g-3">
                 <legend>Submit new Help Opportunity, Free Item, or Community Event</legend>
-                <div class="col-6">
+                <div class="col col-lg-6 col-sm-12">
                   <div class="mb-2">
                     <label for="post-summary" class="form-label">Summary of Request/Event/Item</label>
                     <input type="text" class="form-control bg-light rounded-0" id="post-summary" required>
@@ -177,12 +172,12 @@
                     <input type="text" class="form-control bg-light rounded-0" id="post-location"
                       placeholder="Address or approximate location" required>
                   </div>
-                  <div class="col-8">
+                  <div class="col col-lg-8 col-sm-12">
                     <label for="form-file-multiple" class="form-label">Upload image</label>
                     <input class="form-control bg-light rounded-0" type="file" id="form-file-multiple" multiple>
                   </div>
                 </div>
-                <div class="col-6 d-flex flex-column">
+                <div class="col col-lg-6 col-sm-12 d-flex flex-column">
 
                   <div class="mb-2">
                     <label for="post-type-select" class="form-label">Type of Request</label>
@@ -210,8 +205,9 @@
                       </div>
                     </div>
                   </div>
+
                   <div class="d-flex mt-auto justify-content-end">
-                    <button type="submit" class="btn btn-primary w-50 text-uppercase">Submit</button>
+                    <button type="submit" class="btn btn-primary text-uppercase">Submit</button>
                   </div>
                   <div id="on-submit-message" class="mt-3"></div>
                 </div>
