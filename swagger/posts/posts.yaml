@@ -21,6 +21,12 @@ post:
             userId:
               type: string
               format: uuid
+            request_to: 
+              type: string
+              format: date-time
+            request_from: 
+              type: string
+              format: date-time
           required:
             - title
             - body

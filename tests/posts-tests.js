@@ -10,6 +10,7 @@ const {dbConfig}= require("../src/utils/db");
 const db = pgp(dbConfig);
 
 let userId;
+let postId;
 const postData = {
     user_id: "",
     title: "New Post",
@@ -40,19 +41,32 @@ describe("Post Routes Tests ", function() {
         await db.none("DELETE FROM users WHERE id = $1;", [userId]);
     });
 
-    it("Creates A Post", async function() {
+    it("Post- Creates A Post", async function() {
         let response = await axios.post(apiUrl, postData);
+        postId = response.data.id
         assert.equal(response.status, 201, `returned ${response.status}, not 200`);
         assert.equal(response.data.title, postData.title, "Post was not created");
     });
 
+    it("Post - Returns error if required fields arent given", async function() {
+        postData.title = null
+        
+        try{
+            response = await axios.post(apiUrl, postData);
+            assert.fail(`Expected 400, recieved ${response.status}`);
+        }catch(error) {
+            assert.equal(error.response.status, 400, `returned ${error.response.status}, not 400" ${error}`);
+        }
+    });
+
     it("Deletes A Post", async function()  {
         let deleted; 
+        let deleteResponse
         //create a post to delete. 
         //new created post returns an id we can later use to delete the post via post route. 
         postData.title = "test to delete";
         const sqlParams = Object.values(postData);
-        let postId = await db.one(`
+        let delPostId = await db.one(`
             INSERT INTO posts
                 (user_id, location_id, title, body, type) 
             VALUES
@@ -60,24 +74,19 @@ describe("Post Routes Tests ", function() {
                 (SELECT id FROM locations WHERE lat = 39.798770010686965 AND long = -105.07207748323874),
                 $2, $3, $4)
                 RETURNING id;`, sqlParams );
-
-        //call the DELETE posts route using the id of the post we just created. 
-        let deleteResponse =  await axios.delete(`${apiUrl}/${postId.id}`);
-
-        //check that the response is deleted. 
         try{ 
             deleted = true; 
+            deleteResponse =  await axios.delete(`${apiUrl}/${delPostId.id}`);
             await db.none("SELECT * FROM posts WHERE title = $1", postData.title);
         } catch (error){
             deleted = false;
             console.error("post was not deleted");
         }
-
         assert.equal(deleted, true, "Post was not deleted");
         assert.equal(deleteResponse.status, 204, `returned ${deleteResponse.status}, not 200`);
     });
 
-    it("Queries Posts By Time", async function() {
+    it("Get - Queries Posts By Time", async function() {
         let date = "2022-06-09";
         new_date = dateToTimestampWithTz(date, -420);
 
@@ -97,15 +106,51 @@ describe("Post Routes Tests ", function() {
         const queryParams = {};
         queryParams.fromDate = "2022-05-09";
         queryParams.toDate = "2022-07-09";
-        delete postData.created_at;
 
         const response = await axios.get(apiUrl, {params: queryParams});
         assert.equal(Object.keys(response.data).length, 1, "error: entries =! 1. ");
         assert.equal(response.data[0].created_at, new_date,"created_at date not correct" );
     });
 
-    it("returns 400 when missing fields", async function() {
-        //TODO
+    it("Get - Returns 400 when missing required fields", async function() {
+        const queryParams = {};
+        let response;
+        queryParams.fromDate = "2022-05-09";
+        try{
+            response = await axios.patch(`${apiUrl}/${postId.id}`, {params: queryParams});
+            assert.fail(`Expected 500, recieved ${response.status}`);
+        }catch(error){
+            assert.equal(error.response.status, 500, `expected 500, recieved ${error.response.status}`)
+
+        }
+
+    });
+
+    it("Patch - Edits a post", async function() {
+        let response;
+        try {
+            response = await axios.patch(`${apiUrl}/${postId}`, {
+                title: "Edited Title"
+            });         
+        } catch (error) {
+            console.error("patch request for post route failed. ", error)
+        } 
+        assert.equal(response.data.title, "Edited Title");
+    });
+
+    it("Patch - Returns 404 with non existant id", async function() {
+        postId = "00000000-1111-2222-3333-444444444444"
+        let response;
+        try {
+            response = await axios.patch(`${apiUrl}/${postId}`, {
+                title: "Updated Title",
+                body: "Updated Body",
+                type: "updated"
+            });
+            assert.fail(`Expected 404 Internal Server Error, recieved ${response.status}`);
+        } catch (error) {
+            assert.equal(error.response.status, 404, `expected 404, got ${error.response.status}`);
+        }
     });
 
 

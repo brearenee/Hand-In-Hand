@@ -1,4 +1,4 @@
-put:
+patch:
   summary: Update an existing post
   description: Update an existing post by postId.
   parameters:
@@ -29,6 +29,12 @@ put:
             userId:
               type: string
               format: uuid
+            request_to:
+              type: string
+              format: date-time
+            request_from:
+              type: string
+              format: date-time
   responses:
     '200':
       description: Post updated successfully. Returns the updated post.

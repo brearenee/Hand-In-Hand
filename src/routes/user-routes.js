@@ -9,6 +9,7 @@ router.get("/:userId", userController.getUserByID);
 router.post("/", userController.createUser);
 router.delete("/:userId", userController.deleteUserByID);
 router.get("/location/:lastLocation", userController.getUsersByLocation);
+router.put("/:userId", userController.updateUser);
 
 
 module.exports = router;

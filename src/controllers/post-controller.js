@@ -3,6 +3,49 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
+async function editPost(req, res) {
+    request = await req;
+    const postId = req.params.postId; // Assuming the post ID is passed as a URL parameter
+
+    const { title, body, location_id, type } = request.body;
+    console.log(request.body)
+
+    try {
+        // Check if the post with the given ID exists
+        const existingPost = await pool.query("SELECT * FROM posts WHERE id = $1", [postId]);
+
+        if (existingPost.rows.length === 0) {
+            return res.status(404).json({ error: "Post not found." });
+        }
+
+        // Update the post in the database, only if the fields are provided in the request
+        const updateFields = {};
+        if (title !== undefined) {
+            updateFields.title = title;
+        }
+        if (body !== undefined) {
+            updateFields.body = body;
+        }
+        if (location_id !== undefined) {
+            updateFields.location_id = location_id;
+        }
+        if (type !== undefined) {
+            updateFields.type = type;
+        }
+
+        // Update the post in the database with the provided fields
+        const result = await pool.query(
+            "UPDATE posts SET title = COALESCE($1, title), body = COALESCE($2, body), location_id = COALESCE($3, location_id), type = COALESCE($4, type), updated_at = now() WHERE id = $5 RETURNING *",
+            [updateFields.title, updateFields.body, updateFields.location_id, updateFields.type, postId]
+        );
+
+        res.status(200).json(result.rows[0]); // Respond with the updated post
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 async function getPostById(req, res) {
     const postId = req.params.postId;
     try{
@@ -80,10 +123,8 @@ async function deletePostById(req, res) {
         return res.status(500).json({ error: "Internal Server Error" });
     }
 }
-async function createPost(req, res){
-    request = await req;
-    const { title, body, user_id, location_id, type } = req.body;
-    //default user/location Ids for beginning implementation
+async function createPost(req, res) {
+    const { title, body, user_id, location_id, type, request_to, request_from } = req.body;
     const defaultUserId = await getDefaultUserId("testUser1");
     const defaultLocationId = await getDefaultLocation(39.798770010686965, -105.07207748323874);
 
@@ -95,17 +136,33 @@ async function createPost(req, res){
     }
 
     try {
-        const result = await pool.query(
-            "INSERT INTO posts (title, body, user_id, location_id, type, created_at) VALUES ($1, $2, $3, $4, $5, now()) RETURNING *",
-            [title, body, userId, locationId, type]
-        );
+        const placeholders = [];
+        const values = [title, body, userId, locationId, type];
 
+        if (request_to !== undefined) {
+            placeholders.push('$' + (values.length + 1));
+            values.push(request_to);
+        } else {
+            placeholders.push('DEFAULT'); // Use DEFAULT keyword in SQL to insert default value
+        }
+
+        if (request_from !== undefined) {
+            placeholders.push('$' + (values.length + 1));
+            values.push(request_from);
+        } else {
+            placeholders.push('DEFAULT'); // Use DEFAULT keyword in SQL to insert default value
+        }
+
+        const query = `INSERT INTO posts (title, body, user_id, location_id, type, request_to, request_from, created_at) VALUES ($1, $2, $3, $4, $5, ${placeholders.join(', ')}, now()) RETURNING *`;
+
+        const result = await pool.query(query, values);
         res.status(201).json(result.rows[0]); // Respond with the created post
     } catch (error) {
         console.error("Error:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 }
+
 async function getDefaultUserId(username) {
     try {
         const query = "SELECT id FROM users WHERE username = $1";
@@ -146,5 +203,6 @@ module.exports = {
     getPostsByUserId, 
     deletePostById,
     createPost, 
-    getDefaultLocation
+    getDefaultLocation, 
+    editPost
 };
