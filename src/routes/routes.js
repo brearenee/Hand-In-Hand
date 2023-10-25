@@ -74,10 +74,10 @@ module.exports = function(app){
 
 
     app.get('/sign-in', function(req, res) {
-        console.log("SECOND REQUEST")
-        res.sendFile(path.join(__dirname, '../../public/sign-in.html'));
-      });
-  
+      console.log("INITIAL REQUEST")
+      res.sendFile(path.join(__dirname, '../../public/sign-in.html'));
+    });
+
 
 
     
