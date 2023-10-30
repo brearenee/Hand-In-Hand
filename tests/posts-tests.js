@@ -5,9 +5,7 @@ const axios = require("axios");
 const apiUrl = "http://localhost:3000/posts";
 const fakeUser = ["MochaTestUser", 39.798770010686965, -105.07207748323874 ];
 require("dotenv").config();
-const pgp = require("pg-promise")();
-const {dbConfig}= require("../src/utils/db");
-const db = pgp(dbConfig);
+const {db}= require("../src/utils/db");
 
 let userId;
 let postId;
@@ -43,13 +41,13 @@ describe("Post Routes Tests ", function() {
 
     it("Post- Creates A Post", async function() {
         let response = await axios.post(apiUrl, postData);
-        postId = response.data.id
+        postId = response.data.id;
         assert.equal(response.status, 201, `returned ${response.status}, not 200`);
         assert.equal(response.data.title, postData.title, "Post was not created");
     });
 
     it("Post - Returns error if required fields arent given", async function() {
-        postData.title = null
+        postData.title = null;
         
         try{
             response = await axios.post(apiUrl, postData);
@@ -61,7 +59,7 @@ describe("Post Routes Tests ", function() {
 
     it("Deletes A Post", async function()  {
         let deleted; 
-        let deleteResponse
+        let deleteResponse;
         //create a post to delete. 
         //new created post returns an id we can later use to delete the post via post route. 
         postData.title = "test to delete";
@@ -120,7 +118,7 @@ describe("Post Routes Tests ", function() {
             response = await axios.patch(`${apiUrl}/${postId.id}`, {params: queryParams});
             assert.fail(`Expected 500, recieved ${response.status}`);
         }catch(error){
-            assert.equal(error.response.status, 500, `expected 500, recieved ${error.response.status}`)
+            assert.equal(error.response.status, 500, `expected 500, recieved ${error.response.status}`);
 
         }
 
@@ -133,13 +131,13 @@ describe("Post Routes Tests ", function() {
                 title: "Edited Title"
             });         
         } catch (error) {
-            console.error("patch request for post route failed. ", error)
+            console.error("patch request for post route failed. ", error);
         } 
         assert.equal(response.data.title, "Edited Title");
     });
 
     it("Patch - Returns 404 with non existant id", async function() {
-        postId = "00000000-1111-2222-3333-444444444444"
+        postId = "00000000-1111-2222-3333-444444444444";
         let response;
         try {
             response = await axios.patch(`${apiUrl}/${postId}`, {

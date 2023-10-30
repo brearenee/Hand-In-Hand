@@ -1,9 +1,7 @@
 const assert = require("assert");
 const {migration}  = require("../db/migration-script.js");
-const {dbConfig}  = require("../src/utils/db.js");
-const pgp = require("pg-promise")();
+const {db}  = require("../src/utils/db.js");
 require("dotenv").config();
-const db = pgp(dbConfig);
 const chai = require("chai");
 const expect = chai.expect;
 
@@ -24,7 +22,7 @@ describe("Migration Setup Tests", function() {
     });
 
     after(async function() {
-        await pgp.end();
+        //await pgp.end();
     });
 
     it("migration 001 works on current database", async function() {
