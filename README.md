@@ -81,4 +81,5 @@ You may need to run following command inside the app-1 Docker container.
 Inside app-1 Docker container, run
 ```npm run start```
 
-Go to Swagger API docs in http://localhost:3000/api-docs/ 
+Go to Swagger API docs in https://localhost:3000/api-docs/ 
+

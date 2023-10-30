@@ -9,7 +9,7 @@ services:
         volumes:
             - ./:/usr/src/app/
             - /usr/src/app/node_modules
-
+            
     postgres:
         image: postgres:14.1-alpine
         restart: always

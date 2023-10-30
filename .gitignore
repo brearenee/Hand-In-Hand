@@ -133,3 +133,7 @@ dist
 
 # .DS_Store from mac 
 **/.DS_Store
+
+# encryption keys for https
+config/certificate.pem
+config/private-key.pem

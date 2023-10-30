@@ -19,6 +19,10 @@ RUN npm install
 # Bundle app source
 COPY . .
 
+# Copy SSL certificate files from the /config directory
+COPY $CERT_PATH /usr/src/app
+COPY $KEY_PATH /usr/src/app
+
 # Make this port accessible from outside the container
 # Necessary for your browser to send HTTP requests to your Node app
 EXPOSE 3000
