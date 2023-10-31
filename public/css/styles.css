@@ -21,9 +21,22 @@ img {
 }
 
 .bg-grey {
-  background-color: #d9d9d9;
+  background-color: #efefef;
 }
 
 input::file-selector-button {
   background-color: #7D82B8 !important;
+}
+
+#sign-in-main{
+  background-color: #F5F5F5;
+}
+
+.title-text{
+  font-family: 'Codec Pro', sans-serif;
+  font-weight: bold;
+  font-size: 3rem;                                    
+}
+.subtitle-text{
+  letter-spacing: .2rem;
 }
