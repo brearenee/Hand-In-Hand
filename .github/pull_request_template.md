@@ -1,12 +1,9 @@
 ### This PR introduces the following changes 
 
-#### Change Summary #1. 
+#### Summary of Changes
 - Detail 
 - Detail
-
-#### Change Summary #2
 - Detail 
-- Detail
 
 ### Steps to Review
 

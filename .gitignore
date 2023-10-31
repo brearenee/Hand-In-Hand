@@ -137,3 +137,6 @@ dist
 # encryption keys for https
 config/certificate.pem
 config/private-key.pem
+
+# Ignore md files in assets/files 
+public/assets/files/here/*.md
