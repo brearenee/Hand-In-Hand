@@ -35,6 +35,21 @@ const getUsersByLocation = async (request, response) => {
     }
 };
 
+//get user by email
+const getUsersByEmail = async (request, response) => {
+    try {
+        const email = request.params.email; //location param
+        const result = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+        response.status(200).json(result.rows);
+
+    } catch (error) {
+        console.log("Error fetching users in that user:", error);
+        response.status(500).send("Internal Server Error");
+    }
+};
+
+
+
 //Get user by id
 const getUserByID = async (request, response) => {
     try {
@@ -52,8 +67,8 @@ const getUserByID = async (request, response) => {
 const createUser = async (request, response) => {
     try {
         //created_at and updated_at the same at user creaation. 
-        const {username, last_location} = request.body;
-        const result = await pool.query("INSERT INTO users (username, last_location, created_at, updated_at) VALUES ($1, $2, $3, $4) RETURNING *", [username, last_location, timestamp, timestamp]);
+        const {username, last_location, email} = request.body;
+        const result = await pool.query("INSERT INTO users (username, last_location, email, created_at, updated_at) VALUES ($1, $2, $3, $4, $5) RETURNING *", [username, last_location, email, timestamp, timestamp]);
         response.status(200).json(result.rows);
 
     } catch (error) {
@@ -93,14 +108,34 @@ const updateUser = async (request, response) =>{
         const userBody = userResult.rows[0];
         const newUserName = request.query.username;
         const newLastLocation = request.query.last_location;
+        const newEmail = request.query.email;
 
         //Update updated_at timestamp
         userBody.updated_at = timestamp;
         
-        // Update both username and last_location
+        // Update username and last_location and email
+        if (newUserName && newLastLocation && newEmail){
+            userBody.username = newUserName;
+            userBody.last_location = newLastLocation;
+            userBody.email = newEmail;
+        }
+
+        //if only new username and location
         if (newUserName && newLastLocation){
             userBody.username = newUserName;
             userBody.last_location = newLastLocation;
+        }
+
+        //if new username and email
+        if (newUserName && newEmail){
+            userBody.username = newUserName;
+            userBody.email = newEmail;
+        }
+
+        //if new location and email
+        if (newLastLocation && newEmail){
+            userBody.last_location = newLastLocation;
+            userBody.email = newEmail;
         }
 
         // Update just username
@@ -134,5 +169,6 @@ module.exports = {
     createUser,
     deleteUserByID,
     getUsersByLocation,
-    updateUser
+    updateUser,
+    getUsersByEmail
 };

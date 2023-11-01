@@ -12,6 +12,7 @@ const db = pgp(dbConfig);
 const userData = {
     username:"testuser00",
     last_location: "",
+    email: "Test@testmail.com",
     created_at:"2023-10-10T02:20:06.021Z",
     updated_at:"2023-10-10T02:20:06.021Z"
 };
@@ -50,8 +51,8 @@ describe("Tests user routes", function() {
     it("Delete a user", async function() {
         let empty;
         //make a new user to delete
-        let response = await db.one("INSERT INTO users (username, last_location, created_at, updated_at) VALUES ($1, $2, $3, $4) RETURNING *",
-            [userData.username, userData.last_location, userData.created_at, userData.updated_at]);
+        let response = await db.one("INSERT INTO users (username, last_location, email, created_at, updated_at) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+            [userData.username, userData.last_location, userData.email, userData.created_at, userData.updated_at]);
     
         fakeUserId = response.id;
 
@@ -89,8 +90,8 @@ describe("Tests user routes", function() {
 
     it("Get user by id", async function() {
 
-        let response = await db.one("INSERT INTO users ( username, last_location, created_at, updated_at) VALUES ($1, $2, $3, $4 ) RETURNING *",
-            [userData.username, userData.last_location, userData.created_at, userData.updated_at]);
+        let response = await db.one("INSERT INTO users ( username, last_location, email, created_at, updated_at) VALUES ($1, $2, $3, $4, $5 ) RETURNING *",
+            [userData.username, userData.last_location, userData.email, userData.created_at, userData.updated_at]);
         fakeUserId = response.id;
 
         try {
@@ -104,8 +105,8 @@ describe("Tests user routes", function() {
     });
 
     it("Get users by location", async function() {
-        let response = await db.one("INSERT INTO users (username, last_location, created_at, updated_at) VALUES ($1, $2, $3, $4) RETURNING *",
-            [userData.username, userData.last_location, userData.created_at, userData.updated_at]);
+        let response = await db.one("INSERT INTO users (username, last_location, email, created_at, updated_at) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+            [userData.username, userData.last_location, userData.email, userData.created_at, userData.updated_at]);
 
         try {
             const response = await axios.get(`${apiUrl}/location/${userData.last_location}`);
@@ -117,21 +118,57 @@ describe("Tests user routes", function() {
         await db.none("DELETE FROM users WHERE id = $1", [response.id]);
     });
 
+    it("Get users by email", async function() {
+        let response = await db.one("INSERT INTO users (username, last_location, email, created_at, updated_at) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+            [userData.username, userData.last_location, userData.email, userData.created_at, userData.updated_at]);
+
+        try {
+            const response = await axios.get(`${apiUrl}/email/${userData.email}`);
+            assert.equal(response.data[0].email, userData.email, "User was not retrieved");
+        } catch (error) {
+            console.log(response);
+            throw error; // Throw any errors to fail the test
+        }
+        await db.none("DELETE FROM users WHERE id = $1", [response.id]);
+    });
+
     it("Put request", async function(){
 
-        let response = await db.one("INSERT INTO users (username, last_location, created_at, updated_at) VALUES ($1, $2, $3, $4) RETURNING *",
-            [userData.username, userData.last_location, userData.created_at, userData.updated_at]);
+        let response = await db.one("INSERT INTO users (username, last_location, email, created_at, updated_at) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+            [userData.username, userData.last_location, userData.email, userData.created_at, userData.updated_at]);
     
         fakeUserId = response.id;
         userData.username = "newTestName";
 
 
+        //test updating username
         try{
             await axios.put(`${apiUrl}/${fakeUserId}?username=${userData.username}`, userData).then(response => {
                 assert.equal(response.data[0].username, userData.username, "did not update username.");
             });
         } catch (error ){
-            console.log("failed to update user");
+            console.log("failed to update user with new username");
+            throw error;
+        }
+
+        //test updating email
+        try{
+            await axios.put(`${apiUrl}/${fakeUserId}?email=${userData.email}`, userData).then(response => {
+                assert.equal(response.data[0].email, userData.email, "did not update username.");
+            });
+        } catch (error ){
+            console.log("failed to update user with email");
+            throw error;
+        }
+
+        //test for updating both email and username at once
+        try{
+            await axios.put(`${apiUrl}/${fakeUserId}?username=${userData.username}&email=${userData.email}`, userData).then(response => {
+                assert.equal(response.data[0].username, userData.username, "did not update username.");
+                assert.equal(response.data[0].email, userData.email, "did not update email");
+            });
+        } catch (error ){
+            console.log("failed to update username and email");
             throw error;
         }
     });
