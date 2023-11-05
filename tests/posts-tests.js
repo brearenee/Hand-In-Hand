@@ -2,10 +2,11 @@
 const assert = require("assert");
 const {dateToTimestampWithTz} = require("../src/utils/date-formatting");
 const axios = require("axios");
-const apiUrl = "http://localhost:3000/posts";
+const apiUrl = "https://localhost:3000/posts";
 const fakeUser = ["MochaTestUser", 39.798770010686965, -105.07207748323874 ];
 require("dotenv").config();
 const {db}= require("../src/utils/db");
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
 let userId;
 let postId;
@@ -149,6 +150,25 @@ describe("Post Routes Tests ", function() {
         } catch (error) {
             assert.equal(error.response.status, 404, `expected 404, got ${error.response.status}`);
         }
+    });
+
+    it("Get - Queries Posts By Type", async function () {
+
+        const queryType = "Free Marketplace Item";
+    
+        // Make an HTTP GET request to the getPostsByType endpoint with the specified type
+        const response = await axios.get(`${apiUrl}/type/${queryType}`);
+    
+        // Assert that the response status is 200 (OK)
+        assert.equal(response.status, 200, `Expected status code 200, but got ${response.status}`);
+    
+        // Assert that the response contains an array of posts
+        assert(Array.isArray(response.data), "Response should be an array");
+    
+        // Assert that all posts in the response have the correct type
+        response.data.forEach(post => {
+            assert.equal(post.type, queryType, `Post type should be ${queryType}`);
+        });
     });
 
 
