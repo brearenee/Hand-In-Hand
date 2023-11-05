@@ -226,42 +226,43 @@
             <!-- Navbar for feed-->
             <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item text-uppercase" role="presentation">
-                <a class="nav-link active text-dark" id="all-posts-tab" data-bs-toggle="tab" href="#all-posts"
+                <a class="nav-link active text-dark feed-tab" id="all-posts-tab" data-bs-toggle="tab" data-post-type="All Posts" href="#all-posts"
                   role="tab" aria-controls="all-posts" aria-selected="true">All Posts</a>
               </li>
               <li class="nav-item text-uppercase" role="presentation">
-                <a class="nav-link text-uppercase text-dark" id="help-opportunities-tab" data-bs-toggle="tab"
+                <a class="nav-link text-uppercase text-dark feed-tab" id="help-opportunities-tab" data-bs-toggle="tab" data-post-type="Community Help"
                   href="#help-opportunities" role="tab" aria-controls="help-opportunities" aria-selected="false">Help
                   Opportunities</a>
               </li>
               <li class="nav-item text-uppercase" role="presentation">
-                <a class="nav-link text-dark" id="marketplace-items-tab" data-bs-toggle="tab" href="#marketplace-items"
+                <a class="nav-link text-dark feed-tab" id="marketplace-items-tab" data-bs-toggle="tab" data-post-type="Free Marketplace Item" href="#marketplace-items"
                   role="tab" aria-controls="marketplace-items" aria-selected="false">Marketplace Items</a>
               </li>
               <li class="nav-item text-uppercase" role="presentation">
-                <a class="nav-link text-dark" id="community-events-tab" data-bs-toggle="tab" href="#community-events"
+                <a class="nav-link text-dark feed-tab" id="community-events-tab" data-bs-toggle="tab" data-post-type="Community Event" href="#community-events"
                   role="tab" aria-controls="community-events" aria-selected="false">Community Events</a>
               </li>
             </ul>
-          </div>
-          <div class="row" id="feed-content">
-            <!-- Example feed item template -->
-            <template>
-              <div class="card h-100 bg-grey" id="post-card">
-                <div class="container">
-                  <p2 class="fw-bold text-uppercase" id="post-card-type">Request Type</p2>
-                  <h4 class="text-uppercase" id="post-card-title">Title</h4>
-                  <p class="fw-bold">Requested Date(s): <span id="from-date">From Date</span> - <span id="to-date">To
-                      Date</span></p>
-
-                  <p1 class="mb-0" id="post-card-body">Body Content</p1>
-                  <div class="d-flex justify-content-end mt-auto">
-                    <button class="btn btn-secondary text-uppercase">Respond</button>
+            <div class="row" id="feed-content">
+              <!-- Example feed item template -->
+              <template>
+                <div class="card h-100 bg-grey" id="post-card">
+                  <div class="container">
+                    <p2 class="fw-bold text-uppercase" id="post-card-type">Request Type</p2>
+                    <h4 class="text-uppercase" id="post-card-title">Title</h4>
+                    <p class="fw-bold">Requested Date(s): <span id="from-date">From Date</span> - <span id="to-date">To
+                        Date</span></p>
+  
+                    <p1 class="mb-0" id="post-card-body">Body Content</p1>
+                    <div class="d-flex justify-content-end mt-auto">
+                      <button class="btn btn-secondary text-uppercase">Respond</button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </template>
+              </template>
+            </div>
           </div>
+          
         </div>
       </div>
     </div>
@@ -302,21 +303,7 @@
 
 
   <!-- Custom JS -->
-  <script src="/scripts/script.js"></script>
-
-  <!-- axe-core script for A11Y testing -->
-  <script src="node_modules/axe-core/axe.min.js"></script>
-
-  <script>
-    // Get a reference to the "Report Misuse" button by its id
-    const reportMisuseButton = document.getElementById('reportMisuseButton');
-
-    // Add a click event listener to the button
-    reportMisuseButton.addEventListener('click', function () {
-      // Perform the desired action when the button is clicked
-      alert('Report Misuse button clicked!'); // You can replace this with your actual functionality
-    });
-  </script>
+  <script type="module" src="/scripts/script.js"></script>
 
 
 </body>

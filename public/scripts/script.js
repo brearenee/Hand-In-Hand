@@ -2,15 +2,8 @@ console.log("script.js");
 
 async function fetchAndPopulateFeed() {
     const feedContent = document.getElementById("feed-content");
-    // Select the template once
-    const cardTemplate = document.querySelector("template");
-
-    // Clear existing cards
-    // Remove all dynamically added cards (those with the class 'dynamic-card')
-    const dynamicCards = feedContent.querySelectorAll(".dynamic-card");
-    dynamicCards.forEach(card => feedContent.removeChild(card)); 
-
-    console.log("Content cleared. Starting to populate...");
+    
+    clearFeedContent(feedContent);
 
     try {
         // Send a GET request to the server
@@ -26,41 +19,7 @@ async function fetchAndPopulateFeed() {
         // test that we get the results back. 
         console.log("GET RESULTS: ", result);
 
-        result.reverse().forEach((posts) => {
-
-            // Clone a copy of the template we can insert in the DOM as a real visible node
-            const card = cardTemplate.content.cloneNode(true);
-
-            // Update the content of the cloned template with the employee data we queried from the backend
-            card.getElementById("post-card-title").innerText = posts.title;
-
-            // Parse and format the to date in MM/DD/YY format
-            const toDate = new Date(posts.request_to).toLocaleDateString("en-US", { year: "2-digit", month: "2-digit", day: "2-digit" });
-
-            // Parse and format the from date in MM/DD/YY format
-            const fromDate = new Date(posts.request_from).toLocaleDateString("en-US", { year: "2-digit", month: "2-digit", day: "2-digit" });
-
-            card.getElementById("from-date").innerText = fromDate;
-            card.getElementById("to-date").innerText = toDate;
-            card.getElementById("post-card-body").innerText = posts.body;
-
-            card.getElementById("post-card-type").innerText = posts.type;
-
-            // Create a new row div to wrap the card
-            const colDiv = document.createElement("div");
-            colDiv.classList.add("row");
-            colDiv.classList.add("g-3");
-            colDiv.classList.add("dynamic-card");
-
-            // Append the card to the new row div
-            colDiv.appendChild(card);
-
-            // Append the new column div to the row
-            feedContent.appendChild(colDiv);
-
-            console.log("Card appended to feed content");
-
-        });
+        populateFeedCards(feedContent, result); 
 
     } catch (error) {
         console.error("Error fetching and populating feed:", error);
@@ -100,6 +59,15 @@ helpForm.addEventListener("submit", function (event) {
 
 
 
+function clearFeedContent(feedContent) {  
+    // Clear existing cards
+    // Remove all dynamically added cards (those with the class 'dynamic-card')
+    const dynamicCards = feedContent.querySelectorAll(".dynamic-card");
+    dynamicCards.forEach(card => feedContent.removeChild(card));
+
+    console.log("Content cleared. Starting to populate...");
+}
+
 // function to post a new form entry to DB
 async function postData(data) {
 
@@ -135,9 +103,97 @@ async function postData(data) {
 }
 
 
+// Function to fetch posts by type
+async function fetchPostsByType(type) {
+    try {
+        const response = await fetch(`/posts/type/${type}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
+        const result = await response.json();
+
+        // test that we get the results back. 
+        console.log("POST TYPE RESULTS: ", result);
+        const feedContent = document.getElementById("feed-content");
+        
+        // update community feed with only those cards
+        clearFeedContent(feedContent); 
+        populateFeedCards(feedContent, result); 
+        
+
+    } catch (error) {
+        console.error('Error:', error);
+        // Handle the error in your UI (e.g., display an error message)
+    }
+}
+
+// Add event listeners to the tab links
+document.querySelectorAll('.feed-tab').forEach(tabLink => {
+    tabLink.addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent the default tab switching behavior
+
+        const postType = this.getAttribute('data-post-type');
+        if (postType == "All Posts") {
+            fetchAndPopulateFeed()
+        } else {
+            console.log(postType)
+            fetchPostsByType(postType);
+        }
+
+    });
+});
+
+
+// helper function to populate feed cards
+function populateFeedCards(feedContent, data){
+    // Select the template once
+    const cardTemplate = document.querySelector("template");
+    console.log(data); 
+
+    data.reverse().forEach((post) => {
+
+        // Clone a copy of the template we can insert in the DOM as a real visible node
+        const card = cardTemplate.content.cloneNode(true);
+
+        // Update the content of the cloned template with the employee data we queried from the backend
+        card.getElementById("post-card-title").innerText = post.title;
+
+        // Parse and format the to date in MM/DD/YY format
+        const toDate = new Date(post.request_to).toLocaleDateString("en-US", { year: "2-digit", month: "2-digit", day: "2-digit" });
+
+        // Parse and format the from date in MM/DD/YY format
+        const fromDate = new Date(post.request_from).toLocaleDateString("en-US", { year: "2-digit", month: "2-digit", day: "2-digit" });
+
+        card.getElementById("from-date").innerText = fromDate;
+        card.getElementById("to-date").innerText = toDate;
+        card.getElementById("post-card-body").innerText = post.body;
+
+        card.getElementById("post-card-type").innerText = post.type;
+
+        // Create a new row div to wrap the card
+        const colDiv = document.createElement("div");
+        colDiv.classList.add("row");
+        colDiv.classList.add("g-3");
+        colDiv.classList.add("dynamic-card");
+
+        // Append the card to the new row div
+        colDiv.appendChild(card);
+
+        // Append the new column div to the row
+        feedContent.appendChild(colDiv);
+
+        console.log("Card appended to feed content");
+
+    });
+
+}
+
 
 // Export the fetchAndPopulateFeed function
-module.exports = {
+export default {
     fetchAndPopulateFeed,
 };
 

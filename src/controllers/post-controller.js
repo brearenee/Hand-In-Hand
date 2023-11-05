@@ -109,6 +109,23 @@ async function getPostsByUserId(req, res) {
         res.status(500).json({error: "Internal Server Error"});
     }
 }
+
+async function getPostsByType(req, res){
+
+    const type = req.params.type;
+    console.log(type);
+    try{
+        const result = await pool.query("SELECT * FROM posts where type = $1", [type]);
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: "No posts found for this post type." });
+        }
+        res.json(result.rows);
+    }catch(error){
+        console.error("ERROR: getPostsByType",error);
+        res.status(500).json({error: "Internal Server Error"});
+    }
+}
+
 async function deletePostById(req, res) {
     const postId = req.params.postId;
     console.log(postId);
@@ -201,6 +218,7 @@ module.exports = {
     getPostById, 
     getPosts, 
     getPostsByUserId, 
+    getPostsByType,
     deletePostById,
     createPost, 
     getDefaultLocation, 
