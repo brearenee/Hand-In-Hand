@@ -8,7 +8,7 @@ async function editPost(req, res) {
     const postId = req.params.postId; // Assuming the post ID is passed as a URL parameter
 
     const { title, body, location_id, type } = request.body;
-    console.log(request.body)
+    console.log(request.body);
 
     try {
         // Check if the post with the given ID exists
@@ -157,20 +157,20 @@ async function createPost(req, res) {
         const values = [title, body, userId, locationId, type];
 
         if (request_to !== undefined) {
-            placeholders.push('$' + (values.length + 1));
+            placeholders.push("$" + (values.length + 1));
             values.push(request_to);
         } else {
-            placeholders.push('DEFAULT'); // Use DEFAULT keyword in SQL to insert default value
+            placeholders.push("DEFAULT"); // Use DEFAULT keyword in SQL to insert default value
         }
 
         if (request_from !== undefined) {
-            placeholders.push('$' + (values.length + 1));
+            placeholders.push("$" + (values.length + 1));
             values.push(request_from);
         } else {
-            placeholders.push('DEFAULT'); // Use DEFAULT keyword in SQL to insert default value
+            placeholders.push("DEFAULT"); // Use DEFAULT keyword in SQL to insert default value
         }
 
-        const query = `INSERT INTO posts (title, body, user_id, location_id, type, request_to, request_from, created_at) VALUES ($1, $2, $3, $4, $5, ${placeholders.join(', ')}, now()) RETURNING *`;
+        const query = `INSERT INTO posts (title, body, user_id, location_id, type, request_to, request_from, created_at) VALUES ($1, $2, $3, $4, $5, ${placeholders.join(", ")}, now()) RETURNING *`;
 
         const result = await pool.query(query, values);
         res.status(201).json(result.rows[0]); // Respond with the created post

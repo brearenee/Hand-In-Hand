@@ -6,7 +6,7 @@ const apiUrl = "https://localhost:3000/posts";
 const fakeUser = ["MochaTestUser", 39.798770010686965, -105.07207748323874 ];
 require("dotenv").config();
 const {db}= require("../src/utils/db");
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 let userId;
 let postId;
@@ -87,7 +87,7 @@ describe("Post Routes Tests ", function() {
 
     it("Get - Queries Posts By Time", async function() {
         let date = "2022-06-09";
-        new_date = dateToTimestampWithTz(date, -420);
+        let new_date = dateToTimestampWithTz(date, -420);
 
         postData.title = "Test to delete2";
         postData.created_at = new_date;

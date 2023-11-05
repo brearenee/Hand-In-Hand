@@ -2,7 +2,7 @@ console.log("script.js");
 
 async function fetchAndPopulateFeed() {
     const feedContent = document.getElementById("feed-content");
-    
+
     clearFeedContent(feedContent);
 
     try {
@@ -19,7 +19,7 @@ async function fetchAndPopulateFeed() {
         // test that we get the results back. 
         console.log("GET RESULTS: ", result);
 
-        populateFeedCards(feedContent, result); 
+        populateFeedCards(feedContent, result);
 
     } catch (error) {
         console.error("Error fetching and populating feed:", error);
@@ -35,8 +35,8 @@ helpForm.addEventListener("submit", function (event) {
     // Fetch the values from the form
     let postSummary = document.getElementById("post-summary").value;
     let postDescription = document.getElementById("post-description").value;
-    let postLocation = document.getElementById("post-location").value;
-    let postImages = document.getElementById("form-file-multiple").files; // This returns a FileList object
+    // let postLocation = document.getElementById("post-location").value;
+    // let postImages = document.getElementById("form-file-multiple").files; // This returns a FileList object
     let selectElement = document.getElementById("post-type-select"); // selects the select box 
     let postType = selectElement.options[selectElement.selectedIndex].text; // targets the seelcted item fromt eh drop down 
     let postFromDate = document.getElementById("post-from-date").value;
@@ -59,7 +59,7 @@ helpForm.addEventListener("submit", function (event) {
 
 
 
-function clearFeedContent(feedContent) {  
+function clearFeedContent(feedContent) {
     // Clear existing cards
     // Remove all dynamically added cards (those with the class 'dynamic-card')
     const dynamicCards = feedContent.querySelectorAll(".dynamic-card");
@@ -118,28 +118,28 @@ async function fetchPostsByType(type) {
         // test that we get the results back. 
         console.log("POST TYPE RESULTS: ", result);
         const feedContent = document.getElementById("feed-content");
-        
+
         // update community feed with only those cards
-        clearFeedContent(feedContent); 
-        populateFeedCards(feedContent, result); 
-        
+        clearFeedContent(feedContent);
+        populateFeedCards(feedContent, result);
+
 
     } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
         // Handle the error in your UI (e.g., display an error message)
     }
 }
 
 // Add event listeners to the tab links
-document.querySelectorAll('.feed-tab').forEach(tabLink => {
-    tabLink.addEventListener('click', function (event) {
+document.querySelectorAll(".feed-tab").forEach(tabLink => {
+    tabLink.addEventListener("click", function (event) {
         event.preventDefault(); // Prevent the default tab switching behavior
 
-        const postType = this.getAttribute('data-post-type');
+        const postType = this.getAttribute("data-post-type");
         if (postType == "All Posts") {
-            fetchAndPopulateFeed()
+            fetchAndPopulateFeed();
         } else {
-            console.log(postType)
+            console.log(postType);
             fetchPostsByType(postType);
         }
 
@@ -148,10 +148,10 @@ document.querySelectorAll('.feed-tab').forEach(tabLink => {
 
 
 // helper function to populate feed cards
-function populateFeedCards(feedContent, data){
+function populateFeedCards(feedContent, data) {
     // Select the template once
     const cardTemplate = document.querySelector("template");
-    console.log(data); 
+    console.log(data);
 
     data.reverse().forEach((post) => {
 
