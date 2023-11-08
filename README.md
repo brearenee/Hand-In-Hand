@@ -83,3 +83,6 @@ Inside app-1 Docker container, run
 
 Go to Swagger API docs in https://localhost:3000/api-docs/ 
 
+
+### coverage report
+`npx nyc --reporter=lcov --reporter=text mocha   "tests/**/*.js" "src/**/*.js" --exit`

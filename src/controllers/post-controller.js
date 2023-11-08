@@ -8,7 +8,6 @@ async function editPost(req, res) {
     const postId = req.params.postId; // Assuming the post ID is passed as a URL parameter
 
     const { title, body, location_id, type } = request.body;
-    console.log(request.body);
 
     try {
         // Check if the post with the given ID exists
@@ -41,7 +40,6 @@ async function editPost(req, res) {
 
         res.status(200).json(result.rows[0]); // Respond with the updated post
     } catch (error) {
-        console.error("Error:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 }
@@ -50,12 +48,11 @@ async function getPostById(req, res) {
     const postId = req.params.postId;
     try{
         const result = await pool.query("SELECT * FROM posts where id = $1", [postId]);
-        res.json(result.rows);
         if (result.rows.length === 0) {
             return res.status(404).json({ error: "No posts found with this id" });
         }
+        else {return res.status(202).json(result.rows);}
     }catch(error){
-        console.error("ERROR: getPostById", error);
         res.status(500).json({error: "Internal Server Error"});
     }
 }
@@ -88,7 +85,7 @@ async function getPosts(req, res) {
 
     try {
         const result = await pool.query(query, queryParams);
-        res.json(result.rows);
+        res.status(200).json(result.rows);
     } catch (error) {
         console.error("ERROR: getPosts ", error);
         res.status(500).json({ error: "Internal Server Error" });
@@ -97,13 +94,13 @@ async function getPosts(req, res) {
 //userId is path parameter at URL posts/user/:userId
 async function getPostsByUserId(req, res) {
     const userId = req.params.userId;
-    console.log(userId);
+    //console.log(userId);
     try{
         const result = await pool.query("SELECT * FROM posts where user_id = $1", [userId]);
         if (result.rows.length === 0) {
             return res.status(404).json({ error: "No posts found for this user." });
         }
-        res.json(result.rows);
+        res.status(200).json(result.rows);
     }catch(error){
         console.error("ERROR: getPostsByUserId",error);
         res.status(500).json({error: "Internal Server Error"});
@@ -128,15 +125,13 @@ async function getPostsByType(req, res){
 
 async function deletePostById(req, res) {
     const postId = req.params.postId;
-    console.log(postId);
     try {
         const result = await pool.query("DELETE FROM posts WHERE id = $1", [postId]);
         if (result.rowCount === 0) {
             return res.status(404).json({ error: "Post not found" });
         }
-        return res.status(204).send();
+        else {return res.status(204).json();}
     } catch (error) {
-        console.error("ERROR: DeletePostById", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 }
@@ -189,11 +184,9 @@ async function getDefaultUserId(username) {
             return result.rows[0].id;
         } else {
             // User not found
-            console.log("user not found");
             return null;
         }
     } catch (error) {
-        console.error("Error fetching user ID:", error);
         throw error;
     }
 }
@@ -209,7 +202,7 @@ async function getDefaultLocation(latitude, longitude) {
             return null;
         }
     } catch (error) {
-        console.error("Error fetching user ID:", error);
+        //location not found
         throw error;
     }
 }
@@ -222,5 +215,6 @@ module.exports = {
     deletePostById,
     createPost, 
     getDefaultLocation, 
-    editPost
+    editPost,
+    getDefaultUserId
 };

@@ -1,4 +1,22 @@
-console.log("script.js");
+import { getGeolocation } from './geolocation.js';
+let address
+
+
+async function autofillLocation() {
+    address = await getGeolocation();
+    if (address.neighborhood != null){
+        document.getElementById('post-location').value = `${address.neighborhood} neighborhood in ${address.city}  `
+    } else if (address.full_address != null) {
+        console.log("full_address")
+        document.getElementById('post-location').value = `${address.full_address}`
+    } else if (address.street_number  != null) {
+        document.getElementById('post-location').value = `${address.street_number} ${address.street_name}, ${address.city}, ${address.state_short}`
+    }
+    else{
+        document.getElementById('post-location').value = `Lattitude: ${address.latitude}, Longitude: ${address.longitude}`
+    }
+}
+await autofillLocation()
 
 async function fetchAndPopulateFeed() {
     const feedContent = document.getElementById("feed-content");
@@ -196,5 +214,3 @@ function populateFeedCards(feedContent, data) {
 export default {
     fetchAndPopulateFeed,
 };
-
-

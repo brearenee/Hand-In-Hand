@@ -10,6 +10,7 @@
     "selenium-ui": "mocha tests_selenium/ui-tests.js --exit",
     "start": "nodemon index.js",
     "test": "mocha tests --exit",
+    "coverage": "npx nyc --reporter=lcov --reporter=text mocha   \"tests/**/*.js\" \"src/**/*.js\" --exit",
     "compile-scss": "node-sass --output-style expanded"
   },
   "author": "Brea Chaney Alyssa Williams Jessica Gardner Sarah Barnes Erika Sadsad",

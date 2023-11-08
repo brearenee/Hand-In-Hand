@@ -5,8 +5,19 @@ const axios = require("axios");
 const apiUrl = "https://localhost:3000/posts";
 const fakeUser = ["MochaTestUser", 39.798770010686965, -105.07207748323874 ];
 require("dotenv").config();
-const {db}= require("../src/utils/db");
+const {db, pool}= require("../src/utils/db");
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+const sinon = require("sinon");
+	const {
+	    editPost,
+	    getDefaultUserId,
+	    getPostById,
+	    getPosts,
+	    getPostsByUserId,
+	    deletePostById,
+	    createPost,
+	    getDefaultLocation,
+	} = require("../src/controllers/post-controller"); 
 
 let userId;
 let postId;
@@ -14,7 +25,7 @@ const postData = {
     user_id: "",
     title: "New Post",
     body: "This is the content of the new post.",
-    type: "request"
+    type: "Request"
 };
 
 
@@ -153,8 +164,20 @@ describe("Post Routes Tests ", function() {
     });
 
     it("Get - Queries Posts By Type", async function () {
-
-        const queryType = "Free Marketplace Item";
+        postData.title = "Test to delete3";
+        const sqlParamz = Object.values(postData);
+       try{
+        let delPostId = await db.one(`
+            INSERT INTO posts
+                (user_id, location_id, title, body, type) 
+            VALUES
+                ($1,
+                (SELECT id FROM locations WHERE lat = 39.798770010686965 AND long = -105.07207748323874),
+                $2, $3, $4)
+                RETURNING id;`, sqlParamz );
+         
+                }catch(error){(console.log(error))}
+                const queryType = "Request";
     
         // Make an HTTP GET request to the getPostsByType endpoint with the specified type
         const response = await axios.get(`${apiUrl}/type/${queryType}`);
@@ -170,6 +193,199 @@ describe("Post Routes Tests ", function() {
             assert.equal(post.type, queryType, `Post type should be ${queryType}`);
         });
     });
+});
 
+describe("Post Unit Tests", () => {
+    let req;
+    let res;
+    let sandbox;
+
+    beforeEach(() => {
+        sandbox = sinon.createSandbox();
+        req = {
+            params: {
+                postId: 1 // Specify the post ID to edit
+            },
+            query:{
+                fromDate: "10-10-10",
+                toDate: "10-10-10",
+                locationId: 1, 
+                userId: 1
+            },
+            body: {
+                title: "Updated Title",
+                body: "Updated Body",
+                location_id: 2,
+                type: "updated",
+            }
+        };
+
+        res = {
+            status: sandbox.stub().returnsThis(),
+            json: sandbox.spy()
+        };
+    });
+
+    afterEach(() => {
+        sandbox.restore();
+    });
+
+    it("editPost should update post and return the updated post", async function(){
+        // Stub the pool.query method within the sandbox to simulate a successful database update
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [{ id: 1, title: "Updated Title", body: "Updated Body", location_id: 2, type: "updated" }] });   
+        // Call the editPost function with the provided request and response objects
+        await editPost(req, res);        
+        // Assert the response status and JSON payload
+        sinon.assert.calledOnceWithExactly(res.status, 200);
+        sinon.assert.calledOnceWithExactly(res.json, { id: 1, title: "Updated Title", body: "Updated Body", location_id: 2, type: "updated" });
+    
+    });
+
+    it("editPost errors", async function(){
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.rejects();      
+        await editPost(req, res);        
+        sinon.assert.calledOnceWithExactly(res.status, 500);     
+    });
+
+    it("getPostById returns none ", async function(){
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [] });         
+        await getPostById(req, res);        
+        sinon.assert.calledOnceWithExactly(res.status, 404);     
+    });
+
+    it("getPostById returns error ", async function(){
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.rejects();         
+        await getPostById(req, res);        
+        sinon.assert.calledOnceWithExactly(res.status, 500);     
+    });
+
+    it("should getPosts", async function(){
+
+        // Stub the pool.query method within the sandbox to simulate a successful database update
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [{ id: 1, username: "TestUser", email: "test@gmail.com" }] });
+        await getPosts(req, res);
+
+        sinon.assert.calledOnceWithExactly(res.status, 200);
+    });
+
+    it("should getPostById", async function(){
+
+        // Stub the pool.query method within the sandbox to simulate a successful database update
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [{ id: 1, username: "TestUser", email: "test@gmail.com" }] });
+        const response = await getPostById(req, res);
+
+        sinon.assert.calledOnceWithExactly(res.status, 202);
+    });
+
+    it("should getPostsByUserId", async () => {
+        // Stub the pool.query method within the sandbox to simulate a successful database update
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [{ id: 1, username: "TestUser", email: "test@gmail.com" }] });
+        const response = await getPostsByUserId(req, res);
+    
+        sinon.assert.calledOnceWithExactly(res.status, 200);
+    });
+
+    it("should delete post by ID", async () => {           
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [{ id: 1, title: "Updated Title", body: "Updated Body", location_id: 2, type: "updated" }] });
+        const response = await deletePostById(req, res);
+        sinon.assert.calledOnceWithExactly(res.status, 204);
+    });
+    it("deletePostById should error", async () => {           
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.rejects();
+        const response = await deletePostById(req, res);
+        sinon.assert.calledOnceWithExactly(res.status, 500);
+    });
+
+    it("should createPost", async () => {
+            
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [{ id: 1, title: "Updated Title", body: "Updated Body", location_id: 2, type: "updated" }] });
+        const response = await createPost(req, res);
+
+        sinon.assert.calledOnceWithExactly(res.status, 201);
+    });
+
+    it("create post with no title returns error", async () => {     
+        const req2 = {
+            params: {
+                postId: 1 // Specify the post ID to edit
+            },
+            query:{
+                fromDate: "10-10-10",
+                toDate: "10-10-10",
+                locationId: 1, 
+                userId: 1
+            },
+            body: {
+            }
+        };
+    
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [{ id: 1, title: "Updated Title", body: "Updated Body", location_id: 2, type: "updated" }] });
+        const response = await createPost(req2, res);
+        sinon.assert.calledOnceWithExactly(res.status, 400);
+    });
+
+    it("create post with queries", async () => {     
+        const req2 = {
+            params: {
+                postId: 1 // Specify the post ID to edit
+            },
+            query:{
+                fromDate: "10-10-10",
+                toDate: "10-10-10",
+                locationId: 1, 
+                userId: 1
+            },
+            body: {
+                title: "Updated Title",
+                body: "Updated Body",
+                request_to: "",
+                request_from: "",
+                location_id: 2,
+                type: "updated",
+            }
+        };
+    
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [{ id: 1, title: "Updated Title", body: "Updated Body", location_id: 2, type: "updated" }] });
+        const response = await createPost(req2, res);
+        sinon.assert.calledOnceWithExactly(res.status, 201);
+    });
+
+    it("should getDefaultuserI", async () => {          
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves( { rows: [{ id: 1, username: "TestUser", email: "test@gmail.com" }] });
+        const response = await getDefaultUserId("TestUser");
+
+        assert.equal(response, 1);
+    });
+
+
+    it("getDefaultuserI should error", async () => {           
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.rejects();
+        await assert.rejects(async () => {
+            await getDefaultUserId();
+        }, Error);
+    });
+
+    it("should return null", async () => {
+            
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves( { rows: []});
+        const response = await getDefaultUserId("TestUser");
+
+        assert.equal(response, null);
+    });
 
 });

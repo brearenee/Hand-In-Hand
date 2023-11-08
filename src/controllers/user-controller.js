@@ -15,8 +15,7 @@ const getAll = async (request, response) => {
         response.status(200).json(result.rows);
 
     } catch (error) {
-        console.log("Error fetching users:", error);
-        response.status(500).send("Internal Server Error");
+        response.status(500).json(error,"Internal Server Error");
     }
 };
 
@@ -30,8 +29,7 @@ const getUsersByLocation = async (request, response) => {
         response.status(200).json(result.rows);
 
     } catch (error) {
-        console.log("Error fetching users in that location:", error);
-        response.status(500).send("Internal Server Error");
+        response.status(500).json(error,"Internal Server Error");
     }
 };
 
@@ -43,7 +41,6 @@ const getUsersByEmail = async (request, response) => {
         response.status(200).json(result.rows);
 
     } catch (error) {
-        console.log("Error fetching users in that user:", error);
         response.status(500).send("Internal Server Error");
     }
 };
@@ -58,7 +55,6 @@ const getUserByID = async (request, response) => {
         response.status(200).json(result.rows);
 
     } catch (error) {
-        console.log("Error fetching user:", error);
         response.status(500).send("Internal Server Error");
     }
 };
@@ -87,7 +83,7 @@ const deleteUserByID = async (request, response) => {
 
     } catch (error) {
         console.log("Error deleting user:", error);
-        response.status(500).send("Internal Server Error");
+        response.status(500).json("Internal Server Error");
     }
 };
 
@@ -100,7 +96,7 @@ const updateUser = async (request, response) =>{
 
         // Check if user is in database
         if (userResult.rows.length === 0) {
-            response.status(404).send("User not found");
+            response.status(404).json("User not found");
             return;
         }
 
@@ -150,16 +146,16 @@ const updateUser = async (request, response) =>{
         
         // Http Put request to update user with new user information
         const result = await pool.query("UPDATE users SET username = $2, last_location = $3, created_at = $4, updated_at = $5 WHERE id = $1 RETURNING *",
-        [userBody.id, userBody.username, userBody.last_location, userBody.created_at, userBody.updated_at]);
+            [userBody.id, userBody.username, userBody.last_location, userBody.created_at, userBody.updated_at]);
         response.status(200).json(result.rows);
 
     } catch (error) {
         // Log errors
         console.log("Error creating user:", error);
         console.log(request.body);
-        response.status(500).send("Internal Server Error");
+        response.status(500).json("Internal Server Error");
     }
-}
+};
 
 
 //exports for modules

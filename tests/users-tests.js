@@ -1,12 +1,17 @@
 const assert = require("assert");
+const sinon = require("sinon");
 const axios = require("axios");
-const apiUrl = "http://localhost:3000/users"; // Replace with your actual API endpoint URL
+const apiUrl = "https://localhost:3000/users"; // Replace with your actual API endpoint URL
 require("dotenv").config();
-
-const pgp = require("pg-promise")();
-const {dbConfig}= require("../src/utils/db");
+const {db, pool}= require("../src/utils/db");
 const {getDefaultLocation}= require("../src/controllers/post-controller");
-const db = pgp(dbConfig);
+const {
+    getAll, getUsersByLocation, getUsersByEmail, getUserByID, createUser,
+    deleteUserByID, updateUser
+} = require("../src/controllers/user-controller"); 
+
+const users = require("../src/controllers/user-controller");
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 
 const userData = {
@@ -19,7 +24,7 @@ const userData = {
 let fakeUserId;
 
 
-describe("Tests user routes", function() {
+describe("Tests user routes Integration", function() {
 
     before( async function() {
         try{
@@ -27,11 +32,11 @@ describe("Tests user routes", function() {
         }catch(error){ console.log("location id error", error);}
     });
 
-
     //remove created user after every test
     afterEach(async function() {
         await db.none("DELETE FROM users WHERE id = $1", [fakeUserId]);
     });
+
 
     // Test to create a new user
     it("Post a new user", async function(){
@@ -174,4 +179,120 @@ describe("Tests user routes", function() {
     });
 
 
+});
+
+describe("User Unit Tests", () => {
+    let req;
+    let res;
+    let sandbox;
+
+    before(() => {      
+    });
+  
+    beforeEach(() => {
+        sandbox = sinon.createSandbox();
+        req = {
+            params: {
+                userId: 1, // Specify the post ID to edit
+                lastLocation:1
+            },
+            query: {
+                username: "TestUser",
+                last_location: 1, 
+                email: "a@b.com"
+
+            },
+            body: {
+                username: "Updated Title",
+                email: "Updated Body",
+                location_id: 2,
+                type: "updated",
+            }
+        };
+        res = {
+            status: sandbox.stub().returnsThis(),
+            json: sandbox.spy()
+        };
+    });
+  
+    afterEach(() => {
+        sandbox.restore();
+    });
+  
+    it("get all users", async function(){     
+        // Stub the pool.query method within the sandbox to simulate a successful database update
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [{ id: 1, username: "TestUser", email: "a@b.com" }] });
+      
+        // Call the editPost function with the provided request and response objects
+        await getAll(req, res);
+      
+        // Assert the response status and JSON payload
+        sinon.assert.calledOnceWithExactly(res.status, 200);
+    });
+
+    it("gets all users returns 500", async function(){
+        const poolQueryStub = sandbox.stub(pool, "query");
+        const error = new Error("Database query failed");
+        poolQueryStub.rejects(error);
+        await getAll(req, res);
+        sinon.assert.calledOnceWithExactly(res.status, 500);
+    });
+
+    it("gets users by location", async function(){
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [{ id: 1, username: "TestUser", email: "a@b.com" }] });
+        await getUsersByLocation(req, res);
+        sinon.assert.calledOnceWithExactly(res.status, 200);
+    });
+    it("gets users by location returns 500", async function(){
+        const poolQueryStub = sandbox.stub(pool, "query");
+        const error = new Error("Database query failed");
+        poolQueryStub.rejects(error);
+        await getUsersByLocation(req, res);
+        sinon.assert.calledOnceWithExactly(res.status, 500);
+    });
+
+    it("gets users by email", async function(){
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [{ id: 1, username: "TestUser", email: "a@b.com" }] });
+        await getUsersByEmail(req, res);
+        sinon.assert.calledOnceWithExactly(res.status, 200);
+    });
+
+    it("gets users by ID", async function(){
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [{ id: 1, username: "TestUser", email: "a@b.com" }] });
+        await getUserByID(req, res);
+        sinon.assert.calledOnceWithExactly(res.status, 200);
+    });
+    it("creates user", async function(){
+    
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [{ id: 1, username: "TestUser", email: "a@b.com" }] });
+        await createUser(req, res);
+        sinon.assert.calledOnceWithExactly(res.status, 200);
+    });
+
+    it("deletes user", async function(){
+
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [{ id: 1, username: "TestUser", email: "a@b.com" }] });
+        await deleteUserByID(req, res);
+        sinon.assert.calledOnceWithExactly(res.status, 200);
+    });
+
+    it("updates user- not found", async function(){
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [] });
+        await updateUser(req, res);
+        sinon.assert.calledOnceWithExactly(res.status, 404);
+    });
+
+    it("updates all fields in user", async function(){
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [{ id: 1, username: "TestUser", email: "a@b.com", last_location: 1 }] });
+        await updateUser(req, res);
+        sinon.assert.calledOnceWithExactly(res.status, 200);
+    });
 });
