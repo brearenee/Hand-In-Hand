@@ -63,12 +63,12 @@ describe("Location Routes Tests ", function() {
 
 });
 
-describe("Location Unit Tests", () => {
+describe("Location Unit Tests", function() {
     let req;
     let res;
     let sandbox;
   
-    beforeEach(() => {
+    beforeEach(function() {
         sandbox = sinon.createSandbox();
         req = {
             params: {
@@ -94,7 +94,7 @@ describe("Location Unit Tests", () => {
         };
     });
   
-    afterEach(() => {
+    afterEach(function() {
         sandbox.restore();
     });
   
@@ -106,7 +106,7 @@ describe("Location Unit Tests", () => {
         assert.equal(result.id, 1);   
     });
 
-    it("getLocationByCoor should return 200", async () => {
+    it("getLocationByCoor should return 200", async function() {
 
     });
 

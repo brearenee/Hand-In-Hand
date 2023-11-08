@@ -1,6 +1,6 @@
 const { expect } = require("chai");
 const { Builder, By } = require("selenium-webdriver");
-const chrome = require('selenium-webdriver/chrome');
+const chrome = require("selenium-webdriver/chrome");
 
 describe("fetchPosts using Selenium", function() {
     // Set the timeout for this hook
@@ -17,10 +17,10 @@ describe("fetchPosts using Selenium", function() {
             .build();
 
         // Go to localhost to test dashboard
-        await driver.get('http://localhost:3000'); 
+        await driver.get("http://localhost:3000"); 
 
         // For this test, we use the fetchAndPopulateFeed() function
-        await driver.executeScript(`fetchAndPopulateFeed();`);
+        await driver.executeScript("fetchAndPopulateFeed();");
     });
 
     it("should fetch and populate feed content", async function() {
@@ -32,7 +32,7 @@ describe("fetchPosts using Selenium", function() {
         expect(children.length).to.be.at.least(1); 
 
         const firstCardTitle = await children[0].findElement(By.css("h4")).getText();
-        expect(firstCardTitle).to.be.a('string');
+        expect(firstCardTitle).to.be.a("string");
     });
 
     after(async function() {

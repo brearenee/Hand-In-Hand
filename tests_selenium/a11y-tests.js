@@ -25,7 +25,7 @@ describe("Accessibility Tests", function() {
     this.timeout(10000);
     let driver;
 
-    before(async () => {
+    before(async function() {
         driver = new Builder()
             .forBrowser("chrome")
             .setChromeOptions(new chrome.Options().headless())
@@ -34,13 +34,13 @@ describe("Accessibility Tests", function() {
     });
 
     // Check color contrast 
-    it("should meet color contrast standards", async () => {
+    it("should meet color contrast standards", async function() {
         const violations = await runAxe(driver, "color-contrast");
         expect(violations.length).to.equal(0, JSON.stringify(violations, null, 2));
     });
 
     // Check ALT attribute for images 
-    it("should have alt text for all images", async () => {
+    it("should have alt text for all images", async function() {
         const violations = await runAxe(driver, "image-alt");
         expect(violations.length).to.equal(0, JSON.stringify(violations, null, 2));
     });
@@ -49,7 +49,7 @@ describe("Accessibility Tests", function() {
 
 
     // Tear down selenium driver
-    after(async () => {
+    after(async function() {
         if (driver) await driver.quit();
     });
 });

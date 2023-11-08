@@ -12,6 +12,9 @@ $white: #FAFAFA;
 // Global font settings
 $font-family-sans-serif: 'Montserrat', sans-serif;
 
+// Import the Bootstrap source SCSS file
+@import 'node_modules/bootstrap/scss/bootstrap';
+
 // Custom buttons 
 .btn{
     text-transform: uppercase !important;
@@ -21,5 +24,3 @@ $font-family-sans-serif: 'Montserrat', sans-serif;
     border: 1px solid #2C2C2C !important; 
 }
 
-// Import the Bootstrap source SCSS file
-@import 'node_modules/bootstrap/scss/bootstrap.scss';

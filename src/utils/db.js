@@ -1,5 +1,5 @@
 const { Pool } = require("pg");
-const pgp = require('pg-promise')();
+const pgp = require("pg-promise")();
 const pool = new Pool({
     database: process.env.POSTGRES_DB,
     user: process.env.POSTGRES_USR,

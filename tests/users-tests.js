@@ -181,15 +181,15 @@ describe("Tests user routes Integration", function() {
 
 });
 
-describe("User Unit Tests", () => {
+describe("User Unit Tests", function() {
     let req;
     let res;
     let sandbox;
 
-    before(() => {      
+    before(function() {      
     });
   
-    beforeEach(() => {
+    beforeEach(function() {
         sandbox = sinon.createSandbox();
         req = {
             params: {
@@ -215,7 +215,7 @@ describe("User Unit Tests", () => {
         };
     });
   
-    afterEach(() => {
+    afterEach(function() {
         sandbox.restore();
     });
   

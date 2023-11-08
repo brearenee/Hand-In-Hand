@@ -1,7 +1,7 @@
 let latitude;
 let longitude;
 async function getGeolocation() {
-    let data
+    let data;
     if ("geolocation" in navigator) {
         console.log("Testing geolocation");
         try {
@@ -15,16 +15,16 @@ async function getGeolocation() {
             const coordinates = {
                 "latitude": latitude, 
                 "longitude": longitude
-            }
+            };
 
             //reverse geocode those coordinates by calling our api.
             try{
             
-            const response = await fetch(`/locations/lat/${latitude}/long/${longitude}`); 
-            data = await response.json(); // Parse the JSON data from the response
+                const response = await fetch(`/locations/lat/${latitude}/long/${longitude}`); 
+                data = await response.json(); // Parse the JSON data from the response
             }
-            catch(error){ console.log("fetch locationApi err", error)}
-            return data
+            catch(error){ console.log("fetch locationApi err", error);}
+            return data;
 
         } catch (error) {
             console.error(error.message);
@@ -37,4 +37,4 @@ async function getGeolocation() {
 async function addLocation() {
 }
 
-export { getGeolocation }
+export { getGeolocation };

@@ -138,5 +138,5 @@ dist
 config/certificate.pem
 config/private-key.pem
 
-# Ignore md files in assets/files 
-public/assets/files/here/*.md
+# Ignore md files in assets/files - community guidelines/toc odf is drafted in md. 
+public/assets/files/*.md

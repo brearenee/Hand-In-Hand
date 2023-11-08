@@ -1,0 +1,48 @@
+name: Lint Code
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  eslint:
+    name: Run ESLint
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out source code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18' # current version of Node.js for project structure 
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Run ESLint with fix option 
+      run: npx eslint . --fix
+
+    # Step to annotate ESLint warnings/errors - OPTIONAL - look into later
+    # - name: Annotate linting errors
+    #   if: failure() # This step will run only if the ESLint step fails
+    #   uses: yuzutech/annotations-action@v0.4.0
+    #   with:
+    #     repo-token: ${{ secrets.GITHUB_TOKEN }}
+    #     title: 'ESLint Annotations'
+    #     annotations: |
+    #       {
+    #         "tool": "ESLint",
+    #         "path": "path to file",
+    #         "start_line": "start line number",
+    #         "end_line": "end line number",
+    #         "start_column": "start column",
+    #         "end_column": "end column",
+    #         "annotation_level": "failure level",
+    #         "message": "error/warning message"
+    #       }
