@@ -45,6 +45,20 @@ const getUsersByEmail = async (request, response) => {
     }
 };
 
+//get user by username
+const getUsersByUserName = async (request, response) => {
+    try {
+        const username = request.params.username; // param
+        const result = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
+        response.status(200).json(result.rows);
+
+    } catch (error) {
+        console.log("Error fetching that user:", error);
+        response.status(500).send("Internal Server Error");
+    }
+};
+
+
 
 
 //Get user by id
@@ -166,5 +180,6 @@ module.exports = {
     deleteUserByID,
     getUsersByLocation,
     updateUser,
-    getUsersByEmail
+    getUsersByEmail,
+    getUsersByUserName
 };
