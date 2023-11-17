@@ -1,14 +1,14 @@
 #sidebar {
     background-color: #F5F5F5;
-    border: 1px solid hsla(0, 0%, 0%, .1);
-    padding: 2em 2em 2em 2em;
+    border: 1px solid hsl(0deg 0% 0% / 10%);
+    padding: 2em;
     ;
 
 }
 
 .guidelines-container{
     border: 1.5px solid #b1adad;
-    padding: 1em 1em 1em 1em;
+    padding: 1em;
 }
 
 /* Added an id for this report button so it doesn't affect all the other buttons */
@@ -19,7 +19,7 @@
 .mission-container{
     margin-top: 3em;
     border: 1.5px solid #b1adad;
-    padding: 1em 1em 1em 1em;
+    padding: 1em;
     background-color: #C4FFB2 !important;
 }
 
@@ -31,20 +31,20 @@
     color: #000;
     font-size: 17.7px;
     font-weight: lighter;
-    font-family: 'Montserrat', sans-serif;
+    font-family: Montserrat, sans-serif;
 }
 
 .mission-title {
     color: #000;
     font-size: 17.7px;
     font-weight: lighter;
-    font-family: 'Montserrat', sans-serif;
+    font-family: Montserrat, sans-serif;
 }
 
 .custom-text {
     color: #000;
     font-size: 15px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: Montserrat, sans-serif;
 }
   
 

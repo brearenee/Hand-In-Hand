@@ -4,15 +4,15 @@ let address;
 
 async function autofillLocation() {
     address = await getGeolocation();
-    if (address.neighborhood != null){
+    if (address.neighborhood != null) {
         document.getElementById("post-location").value = `${address.neighborhood} neighborhood in ${address.city}  `;
     } else if (address.full_address != null) {
         console.log("full_address");
         document.getElementById("post-location").value = `${address.full_address}`;
-    } else if (address.street_number  != null) {
+    } else if (address.street_number != null) {
         document.getElementById("post-location").value = `${address.street_number} ${address.street_name}, ${address.city}, ${address.state_short}`;
     }
-    else{
+    else {
         document.getElementById("post-location").value = `Lattitude: ${address.latitude}, Longitude: ${address.longitude}`;
     }
 }
@@ -65,8 +65,8 @@ helpForm.addEventListener("submit", function (event) {
         title: postSummary,
         body: postDescription,
         type: postType,
-        fromDate: postFromDate,
-        toDate: postToDate,
+        request_from: postFromDate,
+        request_to: postToDate,
         // location: postLocation,
         // Handle images later 
     };
@@ -172,38 +172,47 @@ function populateFeedCards(feedContent, data) {
     console.log(data);
 
     data.reverse().forEach((post) => {
-
-        // Clone a copy of the template we can insert in the DOM as a real visible node
-        const card = cardTemplate.content.cloneNode(true);
-
-        // Update the content of the cloned template with the employee data we queried from the backend
-        card.getElementById("post-card-title").innerText = post.title;
-
-        // Parse and format the to date in MM/DD/YY format
-        const toDate = new Date(post.request_to).toLocaleDateString("en-US", { year: "2-digit", month: "2-digit", day: "2-digit" });
+        // Parse and formation the current date 
+        const currentDate = new Date().toLocaleDateString("en-US", { timeZone: "UTC", year: "2-digit", month: "2-digit", day: "2-digit" });
 
         // Parse and format the from date in MM/DD/YY format
-        const fromDate = new Date(post.request_from).toLocaleDateString("en-US", { year: "2-digit", month: "2-digit", day: "2-digit" });
+        let postEndDate = new Date(post.request_to).toLocaleDateString("en-US", { timeZone: "UTC", year: "2-digit", month: "2-digit", day: "2-digit" });
 
-        card.getElementById("from-date").innerText = fromDate;
-        card.getElementById("to-date").innerText = toDate;
-        card.getElementById("post-card-body").innerText = post.body;
+        // Only show the card if the post is a future date (also including today)
+        if (postEndDate >= currentDate) {
 
-        card.getElementById("post-card-type").innerText = post.type;
+            // Clone a copy of the template we can insert in the DOM as a real visible node
+            const card = cardTemplate.content.cloneNode(true);
 
-        // Create a new row div to wrap the card
-        const colDiv = document.createElement("div");
-        colDiv.classList.add("row");
-        colDiv.classList.add("g-3");
-        colDiv.classList.add("dynamic-card");
+            // Update the content of the cloned template with the employee data we queried from the backend
+            card.getElementById("post-card-title").innerText = post.title;
 
-        // Append the card to the new row div
-        colDiv.appendChild(card);
+            // Assign toDate to parsed request_to date. 
+            const toDate = postEndDate;
 
-        // Append the new column div to the row
-        feedContent.appendChild(colDiv);
+            // Parse and format the to date in MM/DD/YY format
+            const fromDate = new Date(post.request_from).toLocaleDateString("en-US", { timeZone: "UTC", year: "2-digit", month: "2-digit", day: "2-digit" });
 
-        console.log("Card appended to feed content");
+            card.getElementById("from-date").innerText = fromDate;
+            card.getElementById("to-date").innerText = toDate;
+            card.getElementById("post-card-body").innerText = post.body;
+
+            card.getElementById("post-card-type").innerText = post.type;
+
+            // Create a new row div to wrap the card
+            const colDiv = document.createElement("div");
+            colDiv.classList.add("row");
+            colDiv.classList.add("g-3");
+            colDiv.classList.add("dynamic-card");
+
+            // Append the card to the new row div
+            colDiv.appendChild(card);
+
+            // Append the new column div to the row
+            feedContent.appendChild(colDiv);
+
+            console.log("Card appended to feed content");
+        }
 
     });
 
