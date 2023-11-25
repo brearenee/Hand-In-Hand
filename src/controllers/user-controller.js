@@ -77,10 +77,9 @@ const getUserByID = async (request, response) => {
 const createUser = async (request, response) => {
     try {
         //created_at and updated_at the same at user creaation. 
-        const {username, last_location, email} = request.body;
-        const result = await pool.query("INSERT INTO users (username, last_location, email, created_at, updated_at) VALUES ($1, $2, $3, $4, $5) RETURNING *", [username, last_location, email, timestamp, timestamp]);
+        const {username, last_location, email, firebase_id} = request.body;
+        const result = await pool.query("INSERT INTO users (username,created_at, last_location, email, updated_at, firebase_id) VALUES ($1, $2, $3, $4, $5, $6 ) RETURNING *;", [username, timestamp,last_location, email, timestamp, firebase_id]);
         response.status(200).json(result.rows);
-
     } catch (error) {
         console.log("Error creating user:", error);
         console.log(request.body);

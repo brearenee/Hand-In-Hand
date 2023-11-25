@@ -1,19 +1,17 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
-import {
-    getAuth,
-    onAuthStateChanged,
-    signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js";
 
-// Initialize Firebase with your configuration
+// Firebase config. Only need once plus it's more protected this way
 const firebaseConfig = {
-    //Will need to figure out how to hide the api key in the future-- lets just get it working first
     apiKey: "AIzaSyC0oWPskVb62ZSrP_0HXMtvHzeAju3hKKM",
     authDomain: "handinhand-d834c.firebaseapp.com",
     projectId: "handinhand-d834c"
 };
-  
+
+// Initialize the Firebase app
 const app = initializeApp(firebaseConfig);
+
+// Get the authentication instance
 const auth = getAuth(app);
 
 // Function to sign in a user
@@ -23,6 +21,7 @@ function signInUser(email, password) {
             // Signed in
             const user = userCredential.user;
             console.log("User signed in:", user);
+
             window.location.href = "index.html"; // Redirect upon successful sign-in
         })
         .catch((error) => {
@@ -33,12 +32,14 @@ function signInUser(email, password) {
         });
 }
 
-// Event listener for sign-in button click
-document.getElementById("sign-in-btn").addEventListener("click", () => {
+const signInForm = document.getElementById("sign-in-form"); 
+
+// Event listener for form submit on sign-in button click
+signInForm.addEventListener("submit", (event) => {
+    event.preventDefault();
     const email = document.getElementById("user-name").value;
     const password = document.getElementById("password").value;
 
     // Call the sign-in function with the provided email and password
     signInUser(email, password);
 });
-
