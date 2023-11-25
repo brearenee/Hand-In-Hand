@@ -25,16 +25,18 @@ function signInUser(email, password) {
             window.location.href = "index.html"; // Redirect upon successful sign-in
         })
         .catch((error) => {
-            const errorCode = error.code;
+            const errorCode = error.code.toLowerCase(); // Convert to lowercase
             const errorMessage = error.message;
+            console.error("Sign-in error:", errorCode, errorMessage);
 
             // Handle specific errors
             if (errorCode === "auth/user-not-found" || errorCode === "auth/wrong-password") {
-                // User not found or wrong password
-                alert("Incorrect email or password. Please try again.");
+                // If true that user-not-found or wrong-password
+                alert("Sorry, your email or password is incorrect. Please try again.");
+            // Otherwise
             } else {
-                // Other errors
-                console.error("Sign-in error:", errorCode, errorMessage);
+                // Generic error msg for any other error that may occur during the sign-in process.
+                alert("Sign-In error occurred. Please try again later.");
             }
         });
 }
