@@ -27,8 +27,15 @@ function signInUser(email, password) {
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.error("Sign-in error:", errorCode, errorMessage);
-            // Handle errors or display to the user
+
+            // Handle specific errors
+            if (errorCode === "auth/user-not-found" || errorCode === "auth/wrong-password") {
+                // User not found or wrong password
+                alert("Incorrect email or password. Please try again.");
+            } else {
+                // Other errors
+                console.error("Sign-in error:", errorCode, errorMessage);
+            }
         });
 }
 
