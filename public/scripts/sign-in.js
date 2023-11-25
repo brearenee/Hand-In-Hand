@@ -31,15 +31,16 @@ function signInUser(email, password) {
 
             // Handle specific errors
             if (errorCode === "auth/user-not-found" || errorCode === "auth/wrong-password") {
-                // If true that user-not-found or wrong-password
-                alert("Sorry, your email or password is incorrect. Please try again.");
-            // Otherwise
-            } else {
                 // Generic error msg for any other error that may occur during the sign-in process.
                 alert("Sign-In error occurred. Please try again later.");
+            } else {
+                // Alert for user-not-found or wrong-password
+                alert("Sorry, your email or password is incorrect. Please try again.");
             }
         });
 }
+
+
 
 const signInForm = document.getElementById("sign-in-form"); 
 
