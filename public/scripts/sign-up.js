@@ -28,20 +28,20 @@ document.addEventListener("DOMContentLoaded", function () {
             window.location.href = "sign-in";
 
         } catch (error) {
+            // Handle the authentication error
             const errorCode = error.code.toLowerCase(); // Convert to lowercase
             const errorMessage = error.message;
             console.error("Sign-in error:", errorCode, errorMessage);
 
             // Handle specific errors
-            if (errorCode === "auth/user-not-found" || errorCode === "auth/invalid-login-credentials") {
-                // Alert for user-not-found or wrong-password
-                alert("Sorry, your email or password is incorrect. Please try again");
-            } else if (errorCode === "auth/too-many-requests"){
-                alert("Too many failed attempts. Please try again later.");
+            if (errorCode === "auth/email-already-in-use") {
+                // Alert for email-already-in-use
+                alert("Sorry, this email is already in use. Please try again");
             } else {
                 // Generic error msg for any other error that may occur during the sign-in process.
                 alert("Sorry, there's something wrong. Please try again later.");
             }
+        }
     });
 });
 
