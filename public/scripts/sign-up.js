@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Handle specific errors
             if (errorCode === "auth/email-already-in-use") {
                 // Alert for email-already-in-use
-                alert("Sorry, this email is already in use. Please try again");
+                alert("Sorry, this email is already in use. Please try again.");
             } else {
                 // Generic error msg for any other error that may occur during the sign-in process.
                 alert("Sorry, there's something wrong. Please try again later.");
