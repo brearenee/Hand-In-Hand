@@ -37,7 +37,7 @@ function signInUser(email, password) {
                 alert("Too many failed attempts. Please try again later.");
             } else {
                 // Generic error msg for any other error that may occur during the sign-in process.
-                alert(", there's something wrong. Please try again later.");
+                alert("Oops, something went wrong. Please try again later.");
             }
         });
 }
