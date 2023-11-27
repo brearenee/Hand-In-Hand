@@ -33,6 +33,7 @@ function signInUser(email, password) {
             if (errorCode === "auth/user-not-found" || errorCode === "auth/invalid-login-credentials") {
                 // Alert for user-not-found or wrong-password
                 alert("Sorry, your email or password is incorrect. Please try again.");
+                // Alert for too many failed attempts
             } else if (errorCode === "auth/too-many-requests"){
                 alert("Too many failed attempts. Please try again later.");
             } else {
