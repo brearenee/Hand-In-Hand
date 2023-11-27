@@ -44,4 +44,15 @@ describe("Migration Setup Tests", function() {
         expect(timestamp).to.not.be.null;
     });
 
+    it("migraation 003 works on current database", async function() {
+        let user;
+        try {
+            user = await db.one("SELECT from users where id = $1;", "11111111-0000-1111-0000-000000000000");
+
+        } catch (error) {
+            console.error("Migration 003 failed on current database, user does not exist.", error);
+        }
+        expect(user).to.not.be.null;
+    });
+
 });

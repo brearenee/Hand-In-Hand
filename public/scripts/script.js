@@ -1,6 +1,8 @@
+import { getPostsAndPutIntoDB } from "./freeItems.js";
 import { getGeolocation } from "./geolocation.js";
-let address;
 
+
+let address;
 
 async function autofillLocation() {
     address = await getGeolocation();
@@ -12,15 +14,27 @@ async function autofillLocation() {
     } else if (address.street_number != null) {
         document.getElementById("post-location").value = `${address.street_number} ${address.street_name}, ${address.city}, ${address.state_short}`;
     }
-    else {
-        document.getElementById("post-location").value = `Lattitude: ${address.latitude}, Longitude: ${address.longitude}`;
+    else{
+        document.getElementById("post-location").value = `Lattitude: ${address.lat}, Longitude: ${address.long}`;
     }
 }
+
 await autofillLocation();
 
-async function fetchAndPopulateFeed() {
-    const feedContent = document.getElementById("feed-content");
+async function populateDB() {
+    //function to populate our db with trashnothing posts.
+    try {
+        address = await getGeolocation(); //gets location again
+        await getPostsAndPutIntoDB(address.lat, address.long); //calls the script that calls our freeItems route
+    } catch (error) {
+        console.error("Error populating DB:", error);
+    }
+}
 
+
+async function fetchAndPopulateFeed() {
+
+    const feedContent = document.getElementById("feed-content");
     clearFeedContent(feedContent);
 
     try {
@@ -43,7 +57,20 @@ async function fetchAndPopulateFeed() {
         console.error("Error fetching and populating feed:", error);
     }
 }
-fetchAndPopulateFeed();
+
+async function initFeed(){
+    //calls our populate db function, forces a 4 second delay to allow for population of posts db
+    //calls the fetchAndPopulateFeed function
+    await populateDB();
+    
+    setTimeout(fetchAndPopulateFeed, 2000); //timeout to allow for posts to populate db
+
+}
+
+initFeed();
+
+
+
 
 const helpForm = document.getElementById("helpFormSubmit");
 helpForm.addEventListener("submit", function (event) {
@@ -74,8 +101,6 @@ helpForm.addEventListener("submit", function (event) {
 
     postData(formData);
 });
-
-
 
 function clearFeedContent(feedContent) {
     // Clear existing cards
@@ -119,7 +144,6 @@ async function postData(data) {
         alert("An error occurred while posting data.");
     }
 }
-
 
 // Function to fetch posts by type
 async function fetchPostsByType(type) {
@@ -167,6 +191,7 @@ document.querySelectorAll(".feed-tab").forEach(tabLink => {
 
 // helper function to populate feed cards
 function populateFeedCards(feedContent, data) {
+
     // Select the template once
     const cardTemplate = document.querySelector("template");
     console.log(data);
@@ -215,9 +240,7 @@ function populateFeedCards(feedContent, data) {
         }
 
     });
-
 }
-
 
 // Export the fetchAndPopulateFeed function
 export default {
