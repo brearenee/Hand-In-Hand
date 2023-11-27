@@ -29,9 +29,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
         } catch (error) {
             // Handle the authentication error
-            const errorCode = error.code;
+            const errorCode = error.code.toLowerCase(); // Convert to lowercase
             const errorMessage = error.message;
-            console.error("Authentication error:", errorCode, errorMessage);
+            console.error("Sign-in error:", errorCode, errorMessage);
+
+            // Handle specific errors
+            if (errorCode === "auth/email-already-in-use") {
+                // Alert for email-already-in-use
+                alert("Sorry, this email is already in use. Please try again.");
+            } else {
+                // Generic error msg for any other error that may occur during the sign-up process.
+                alert("Oops, something went wrong. Please try again later.");
+            }
         }
     });
 });

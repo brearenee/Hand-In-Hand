@@ -25,12 +25,25 @@ function signInUser(email, password) {
             window.location.href = "index.html"; // Redirect upon successful sign-in
         })
         .catch((error) => {
-            const errorCode = error.code;
+            const errorCode = error.code.toLowerCase(); // Convert to lowercase
             const errorMessage = error.message;
             console.error("Sign-in error:", errorCode, errorMessage);
-            // Handle errors or display to the user
+
+            // Handle specific errors
+            if (errorCode === "auth/user-not-found" || errorCode === "auth/invalid-login-credentials") {
+                // Alert for user-not-found or wrong-password
+                alert("Sorry, your email or password is incorrect. Please try again.");
+                // Alert for too many failed attempts
+            } else if (errorCode === "auth/too-many-requests"){
+                alert("Too many failed attempts. Please try again later.");
+            } else {
+                // Generic error msg for any other error that may occur during the sign-in process.
+                alert("Oops, something went wrong. Please try again later.");
+            }
         });
 }
+
+
 
 const signInForm = document.getElementById("sign-in-form"); 
 
