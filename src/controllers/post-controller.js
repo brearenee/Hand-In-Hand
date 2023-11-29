@@ -2,6 +2,16 @@ const {pool} = require("../utils/db");
 const express = require("express");
 const app = express();
 app.use(express.json());
+require("dotenv").config();
+
+// Check for dev vs. production environment and set baseUrl
+let baseUrl; 
+if (process.env.NODE_ENV == "production"){
+    baseUrl = "https://hand-in-hand-f3ebe38822bf.herokuapp.com";
+} else{
+    baseUrl = "https://localhost:3000";
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+}
 
 async function editPost(req, res) {
     request = await req;
@@ -137,6 +147,7 @@ async function deletePostById(req, res) {
         return res.status(500).json({ error: "Internal Server Error" });
     }
 }
+
 async function createPost(req, res) {
     const { title, body, user_id, location, type, request_to, request_from } = req.body;
     let locationId;
@@ -152,7 +163,7 @@ async function createPost(req, res) {
     if ((location.lat == 0 && location.long == 0) ){
         locationId = await getDefaultLocation(39.798770010686965, -105.07207748323874);
     } else  {
-        let locationResponse = await fetch(`https://localhost:3000/locations/lat/${location.lat}/long/${location.long}`);
+        let locationResponse = await fetch(`${baseUrl}/locations/lat/${location.lat}/long/${location.long}`);
         locationResponse = await locationResponse.json();
         locationId = locationResponse.id;
     }
