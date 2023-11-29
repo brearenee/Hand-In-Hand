@@ -13,17 +13,50 @@ document.addEventListener("DOMContentLoaded", function () {
         const email = document.getElementById("signup-email").value;
         const password = document.getElementById("signup-password").value;
 
+        // Fetch the values from the form for sign up
+        //let postSignUpPhone = document.getElementById("signup-phone").value;
+        //let postSignUpImg = document.getElementById("signup-img").value;
+        //let postSignUpAddress = document.getElementById("signup-address").value;
+        //let postSignUpCity = document.getElementById("signup-city").value;
+        //let selectElement = document.getElementById("signup-state"); // selects the select box 
+        //let postState = selectElement.options[selectElement.selectedIndex].text; // targets the selected item from the drop down 
+        //let postSignUpZip = document.getElementById("signup-zip").value;
+        //let postSignUpBio = document.getElementById("signup-about-me").value;
+
         try {
             const auth = getAuth();
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
             // User signed up successfully
             const user = userCredential.user;
+            const location = await getTempLocation();
+            console.log(location); 
+            const newUser = {
+                username: username,
+                last_location: location,
+                email: user.email,
+                firebase_id: user.uid
+                //,phone: postSignUpPhone,
+                //img: postSignUpImg,
+                //address: postSignUpAddress,
+                //city: postSignUpCity,
+                //state: postState,
+                //zip: postSignUpZip,
+                //bio: postSignUpBio
+            };
 
-     
+            console.log(newUser);
             // Continue with any other logic after user registration
-            alert(`User created! \nEMAIL: ${user.email}\nUUID: ${user.uid}\n`);
-
+            alert("User created! Please sign in to access your account.");
+            const response = await fetch("/users", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(newUser)
+            });
+            const data = await response.json();
+            console.log("Success:", data);
             // Redirect to sign-in after successful registration
             window.location.href = "sign-in";
 
@@ -45,49 +78,49 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-/*Since sign-up is working we're going to commment this out for now and then come back to it later.
-const helpForm = document.getElementById("helpSignUpForm");
-helpForm.addEventListener("sign-up-submit", async function (event) {
-        // Prevent the form from submitting
-        event.preventDefault();
-
-        // Fetch the values from the form for sign up
-        let postSignUpUsername = document.getElementById("signup-username").value;
-        let postSignUpEmail = document.getElementById("signup-email").value;
-        let postPassword = document.getElementById("signup-password").value;
-        //let postSignUpPhone = document.getElementById("signup-phone").value;
-        //let postSignUpImg = document.getElementById("signup-img").value;
-        //let postSignUpAddress = document.getElementById("signup-address").value;
-        //let postSignUpCity = document.getElementById("signup-city").value;
-        //let selectElement = document.getElementById("signup-state"); // selects the select box 
-        //let postState = selectElement.options[selectElement.selectedIndex].text; // targets the selected item from the drop down 
-        //let postSignUpZip = document.getElementById("signup-zip").value;
-        //let postSignUpBio = document.getElementById("signup-about-me").value;
-                
-        try {
-            const response = await fetch('/users', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: postSignUpUsername,
-                    email: postSignUpEmail,
-                    password: postPassword,
-                    //phone: postSignUpPhone,
-                    //img: postSignUpImg,
-                    //address: postSignUpAddress,
-                    //city: postSignUpCity,
-                    //state: postState,
-                    //zip: postSignUpZip,
-                    //bio: postSignUpBio
-                })
-            });
-            const data = await response.json();
-            console.log('Success:', data);
-            window.location.href = "sign-in";
-        } catch (error) {
-            console.error('Error:', error);
+async function getTempLocation() {
+    try {
+        const lat = 39.7452242;
+        const long = -105.0088767;
+        const response = await fetch(`https://localhost:3000/locations/lat/${lat}/long/${long}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
-});
-*/
+        const data = await response.json();
+        const location_id = data.id;
+        return location_id;
+    } catch (error) {
+        console.error("Fetch error:", error);
+    }
+}
+//capture the id from the returned location object
+/*//get temporary location_id
+
+	
+	
+//create new user via User Api Route
+//create the object you want to send to the api
+  const requestBody = {
+    username: postSignUpUsername,
+    last_location: location_id,
+  email: postSignUpEmail
+  firebase_id: //TODO figure out how to grab this
+	
+  };
+  try {
+    const response = await fetch(`https://localhost:3000/users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(requestBody),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+  } catch (error) {
+    console.error('Fetch error:', error);
+  }
+}*/

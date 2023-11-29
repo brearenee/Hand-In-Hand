@@ -1,0 +1,2 @@
+ALTER TABLE users
+ALTER COLUMN firebase_id SET DATA TYPE text;
