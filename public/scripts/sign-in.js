@@ -22,7 +22,7 @@ function signInUser(email, password) {
             const user = userCredential.user;
             console.log("User signed in:", user);
 
-            window.location.href = "index.html"; // Redirect upon successful sign-in
+            window.location.href = "/"; // Redirect upon successful sign-in
         })
         .catch((error) => {
             const errorCode = error.code.toLowerCase(); // Convert to lowercase

@@ -2,6 +2,10 @@
   "name": "hand-in-hand",
   "version": "1.0.0",
   "description": "Web Application for CS4360",
+  "engines": {
+    "node": "18.x",
+    "npm": "9.x"
+  },
   "main": "index.js",
   "scripts": {
     "lint": "npx eslint . --fix",
@@ -9,7 +13,8 @@
     "selenium": "npm run selenium-a11y & npm run selenium-ui",
     "selenium-a11y": "mocha tests_selenium/a11y-tests.js --exit",
     "selenium-ui": "mocha tests_selenium/ui-tests.js --exit",
-    "start": "nodemon index.js",
+    "start": "node index.js",
+    "dev-start": "nodemon index.js",
     "test": "mocha tests --exit",
     "coverage": "npx nyc --reporter=lcov --reporter=text mocha   \"tests/**/*.js\" \"src/**/*.js\" --exit",
     "compile-scss": "node-sass --output-style expanded",

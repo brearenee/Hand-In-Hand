@@ -1,9 +1,23 @@
+require("dotenv").config();
 const axios = require("axios");
 const {db}= require("../utils/db");
+
+
 const type = "Free Marketplace Item"; //type of trashnothing posts
-const apiUrlForPosts = "https://localhost:3000/posts";
+
+// Check for dev vs. production environment and set baseUrl
+let baseUrl; 
+
+
+if (process.env.NODE_ENV == "production"){
+    baseUrl = "https://hand-in-hand-f3ebe38822bf.herokuapp.com";
+} else{
+    baseUrl = "https://localhost:3000";
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+}
+
 const user_id = "11111111-0000-1111-0000-000000000000"; //id for trashnothing user
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 
 //get the items and put them into our db
 const getFreeItems = async (request, response) => {
@@ -18,7 +32,7 @@ const getFreeItems = async (request, response) => {
         //if user declines browser,  lat/long will be 0,0 and therefore decline TrashNothing feed. 
         if (latitude != 0 && longitude != 0){
             //create the location if it doesn't exist. 
-            apiResponse = await fetch(`https://localhost:3000/locations/lat/${latitude}/long/${longitude}`);}
+            apiResponse = await fetch(`${baseUrl}/locations/lat/${latitude}/long/${longitude}`);}
         location = await apiResponse.json();
     
     } catch {
@@ -56,7 +70,7 @@ const insertItems = async (request, response) => {
             //get/create location of each post
             let lat = element.latitude;
             let long = element.longitude;
-            let apiResponse = await fetch(`https://localhost:3000/locations/lat/${lat}/long/${long}`);
+            let apiResponse = await fetch(`${baseUrl}/locations/lat/${lat}/long/${long}`);
             let location = await apiResponse.json();
 
             let postData = {
@@ -72,7 +86,7 @@ const insertItems = async (request, response) => {
                     .then(existingRecord => {
                         if (existingRecord == null) {
 
-                            axios.post(apiUrlForPosts, postData)
+                            axios.post(`${baseUrl}/posts`, postData)
                                 .then(response => {
                                     console.log("TrashNothing Post Created");
                                 })

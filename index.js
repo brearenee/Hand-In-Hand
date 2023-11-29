@@ -13,12 +13,9 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerDoc = YAML.load("./swagger/swagger.yaml");
 const https = require("https");
 const fs = require("fs");
-require("dotenv").config(); 
+require("dotenv").config();
 
-const options = {
-    key: fs.readFileSync(process.env.KEY_PATH),   
-    cert: fs.readFileSync(process.env.CERT_PATH)  
-};
+
 
 app.use(express.json());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
@@ -43,9 +40,19 @@ app.get("/geocode/:query", async (req, res) => {
     }
 });
 
-const server = https.createServer(options, app);
 
-server.listen(port);
-console.log("Server started at https://localhost:" + port);
 
-module.exports={app};
+if (process.env.NODE_ENV == "production") {
+    app.listen(port);
+    console.log("App started at https://hand-in-hand-f3ebe38822bf.herokuapp.com/");
+} else {
+    const options = {
+        key: fs.readFileSync(process.env.KEY_PATH),
+        cert: fs.readFileSync(process.env.CERT_PATH)
+    };
+    const server = https.createServer(options, app);
+    server.listen(port);
+    console.log("Server started at https://localhost:" + port);
+}
+
+module.exports = { app };
