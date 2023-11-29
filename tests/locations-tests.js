@@ -106,6 +106,14 @@ describe("Location Unit Tests", function() {
         assert.equal(result.id, 1);   
     });
 
+    it("doesLocationExist throws error if more than one response", async function(){
+        const poolQueryStub = sandbox.stub(db, "oneOrNone");
+        poolQueryStub.throws(new Error("Fake error message"));  
+        const result = await doesLocationExist(111,111);        
+        assert.strictEqual(result, null, "Expected the result to be null");
+        
+    });
+
     it("getLocationByCoor should return 200", async function() {
 
     });

@@ -65,7 +65,7 @@ async function getPosts(req, res) {
     const locationId = req.query.locationId;
     const userId = req.query.userId;
 
-    let query = "SELECT * FROM posts WHERE 1=1";
+    let query = "SELECT * FROM posts WHERE 1=1 ";
     const queryParams = [];
 
     if (fromDate && toDate) {
@@ -83,11 +83,13 @@ async function getPosts(req, res) {
         queryParams.push(userId);
     }
 
+    query += " ORDER BY request_from ASC";
+
     try {
         const result = await pool.query(query, queryParams);
         res.status(200).json(result.rows);
     } catch (error) {
-        console.error("ERROR: getPosts ", error);
+        // console.error("ERROR: getPosts ", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 }
@@ -102,7 +104,7 @@ async function getPostsByUserId(req, res) {
         }
         res.status(200).json(result.rows);
     }catch(error){
-        console.error("ERROR: getPostsByUserId",error);
+        //console.error("ERROR: getPostsByUserId",error);
         res.status(500).json({error: "Internal Server Error"});
     }
 }
@@ -118,7 +120,7 @@ async function getPostsByType(req, res){
         }
         res.json(result.rows);
     }catch(error){
-        console.error("ERROR: getPostsByType",error);
+        //console.error("ERROR: getPostsByType",error);
         res.status(500).json({error: "Internal Server Error"});
     }
 }
@@ -136,16 +138,28 @@ async function deletePostById(req, res) {
     }
 }
 async function createPost(req, res) {
-    const { title, body, user_id, location_id, type, request_to, request_from } = req.body;
-    const defaultUserId = await getDefaultUserId("testUser1");
-    const defaultLocationId = await getDefaultLocation(39.798770010686965, -105.07207748323874);
+    const { title, body, user_id, location, type, request_to, request_from } = req.body;
+    let locationId;
 
-    const userId = user_id || defaultUserId;
-    const locationId = location_id || defaultLocationId;
+    if (!title || !body || !type || !location) {
 
-    if (!title || !body || !type) {
         return res.status(400).json({ error: "Title, body, and post type are required fields." });
     }
+
+
+    //take latt long and see if it exists in the db. 
+    //if user declined location services, default lat long is 0, 0. locationId can't be blank, so we use these coordinates for now. 
+    if ((location.lat == 0 && location.long == 0) ){
+        locationId = await getDefaultLocation(39.798770010686965, -105.07207748323874);
+    } else  {
+        let locationResponse = await fetch(`https://localhost:3000/locations/lat/${location.lat}/long/${location.long}`);
+        locationResponse = await locationResponse.json();
+        locationId = locationResponse.id;
+    }
+
+    const defaultUserId = await getDefaultUserId("testUser1");
+    const userId = user_id || defaultUserId;
+  
 
     try {
         const placeholders = [];
@@ -170,7 +184,6 @@ async function createPost(req, res) {
         const result = await pool.query(query, values);
         res.status(201).json(result.rows[0]); // Respond with the created post
     } catch (error) {
-        console.error("Error:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 }

@@ -29,6 +29,20 @@ app.use("/sign-in", signInRoutes);
 app.use("/freeItems", freeItemRoutes);
 app.use(express.static("public"));
 
+app.get("/geocode/:query", async (req, res) => {
+    const { query } = req.params;
+ 
+    try {
+        const mapboxResponse = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${process.env.MAPBOX_API_SEARCH}&country=US`);
+        const data = await mapboxResponse.json();
+        res.json(data);
+        //console.log(data)
+    } catch (error) {
+        console.error("Error fetching data from Mapbox:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
 const server = https.createServer(options, app);
 
 server.listen(port);

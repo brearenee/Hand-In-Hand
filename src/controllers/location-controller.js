@@ -16,7 +16,7 @@ async function doesLocationExist(lat,long) {
         return null;
     }
 }
-
+//creates and/or returns location
 async function getLocationByCoor(req, res) {
 
     request = await req;
@@ -40,7 +40,13 @@ async function getLocationByCoor(req, res) {
 
 
 async function createLocation(lat, long) {
-    const address = await reverseGeocode(lat, long);
+    let address;
+    try{
+        address = await reverseGeocode(lat, long);
+    }catch(error){
+        console.log("Create Location Reverse Geocode Error");
+
+    }
     try{
         let result = await db.one(`
             INSERT INTO locations
@@ -48,11 +54,26 @@ async function createLocation(lat, long) {
             street_name, city, state_long, state_short, zip)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;`, [address.lat, address.long, address.neighborhood, address.street_number,
             address.street_name, address.city, address.state_long, address.state_short, address.zip]);
+        result.full_address = `${address.street_number} ${address.street_name} ${address.city}, ${address.state_short} `;
         return result;
     } catch(error) { console.log("error inserting into database", error);}
 }
 
+async function getLocationById(req, res) {
+    request = await req;
+    const id = request.params.id; 
+    try{
+        let result = await db.one(`
+            Select * from locations where id = $1;`, [id]);
+        return res.status(200).json(result);
+    } catch(error) { 
+        console.log("error getting id", error);
+        return res.status(500).json(res);}
+}
+
 async function reverseGeocode(latitude, longitude) {
+
+    let address;
     try {
         // Make an external call to Mapbox Places API for reverse geocoding
         const response = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json`, {
@@ -61,9 +82,8 @@ async function reverseGeocode(latitude, longitude) {
                 limit: 1 
             }
         });
-
         //object to place the api response.
-        const address = {
+        address = {
             "full_address":null,
             "lat": latitude,
             "long": longitude,
@@ -88,7 +108,6 @@ async function reverseGeocode(latitude, longitude) {
         for (const i in apiResponse) {
             let currentObj = apiResponse[i];
             if (apiResponse.hasOwnProperty(i)) {
-                
                 if (currentObj.id.startsWith("neighborhood")) {
                     address.neighborhood = currentObj.text;
                 } else if (currentObj.id.startsWith("postcode")) {
@@ -97,7 +116,8 @@ async function reverseGeocode(latitude, longitude) {
                     address.city = currentObj.text;
                 } else if (currentObj.id.startsWith("region")) {
                     address.state_long = currentObj.text;
-                    address.state_short = currentObj.short_code.substring(currentObj.short_code.length - 2);}
+                    address.state_short = currentObj.short_code.split("-")[1];//short_code.substring(currentObj.short_code.length - 2);
+                }
             }
         }
         return address;
@@ -114,4 +134,5 @@ module.exports = {
     createLocation, 
     reverseGeocode,
     doesLocationExist,
+    getLocationById
 };

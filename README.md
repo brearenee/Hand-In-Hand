@@ -121,4 +121,5 @@ Go to Swagger API docs in https://localhost:3000/api-docs/
 
 
 ### coverage report
+`npm run coverage`
 `npx nyc --reporter=lcov --reporter=text mocha   "tests/**/*.js" "src/**/*.js" --exit`

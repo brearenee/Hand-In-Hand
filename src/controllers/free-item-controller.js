@@ -1,8 +1,5 @@
 const axios = require("axios");
 const {db}= require("../utils/db");
-const { getDefaultLocation } = require("./post-controller");
-const { getLocationByCoor } = require("./location-controller");
-
 const type = "Free Marketplace Item"; //type of trashnothing posts
 const apiUrlForPosts = "https://localhost:3000/posts";
 const user_id = "11111111-0000-1111-0000-000000000000"; //id for trashnothing user
@@ -12,24 +9,21 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const getFreeItems = async (request, response) => {
     const api_key = process.env.TN_API_KEY;
     let location;
+    let apiResponse;
 
-    //get lat and long from params
     const latitude = request.params.lat;
     const longitude = request.params.long;
-    const apiUrlForLocation = `https://localhost:3000/locations/lat/${latitude}/long/${longitude}`;
-    
-    //get location of user to include a correct location_id for the posts
-    const locationObj = {lat: latitude,
-        long: longitude
-    };
+  
     try {
-        //get location based off of coordinates
-        location = await getDefaultLocation(locationObj.lat, locationObj.long);
+        //if user declines browser,  lat/long will be 0,0 and therefore decline TrashNothing feed. 
+        if (latitude != 0 && longitude != 0){
+            //create the location if it doesn't exist. 
+            apiResponse = await fetch(`https://localhost:3000/locations/lat/${latitude}/long/${longitude}`);}
+        location = await apiResponse.json();
+    
     } catch {
-        console.log("location does not exist yet");
-        //create new location and get id
-        location = await getLocationByCoor(locationObj);
-        location = await getDefaultLocation(locationObj.lat, locationObj.long);
+        console.log("/Locations Error");
+
     }
 
     //url for api call to trash nothing
@@ -38,7 +32,6 @@ const getFreeItems = async (request, response) => {
 
         //make the call to trashnothing api
         const result = await axios.get(apiBaseUrl);
-        //console.log(response)
         response.status(200).json(result.status);
 
         //create one object with location and result from trashnothing api
@@ -54,27 +47,41 @@ const getFreeItems = async (request, response) => {
     }    
 };
 
+
 const insertItems = async (request, response) => {
     try {
         // Insert code to put filtered posts into posts db
         //get each item as an individual post
         for (const element of request.result.data.posts) {
+            //get/create location of each post
+            let lat = element.latitude;
+            let long = element.longitude;
+            let apiResponse = await fetch(`https://localhost:3000/locations/lat/${lat}/long/${long}`);
+            let location = await apiResponse.json();
+
             let postData = {
                 user_id: user_id,
                 title: element.title,
                 body: element.content,
                 type: type,
-                location_id: request.location
+                location: location
             };
             //filter out posts if they are already in our db
             if (!request.result.data.posts.reselling) {
                 db.oneOrNone("SELECT * FROM posts WHERE title = $1 AND body = $2", [element.title, element.content])
                     .then(existingRecord => {
                         if (existingRecord == null) {
-                            //console.log("Post does not exist");
-                            axios.post(apiUrlForPosts, postData);
+
+                            axios.post(apiUrlForPosts, postData)
+                                .then(response => {
+                                    console.log("TrashNothing Post Created");
+                                })
+                                .catch(error => {
+                                    console.log("/Posts error");
+                                    console.error("Error:", error);
+                                });
                         } else {
-                            //console.log("Record already exists");
+                            console.log("Record Already Exists");
                         }
                     })
                     .catch(error => {

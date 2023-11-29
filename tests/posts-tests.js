@@ -24,7 +24,8 @@ const postData = {
     user_id: "",
     title: "New Post",
     body: "This is the content of the new post.",
-    type: "Request"
+    type: "Request",
+    location: {lat:0, long:0}
 };
 
 
@@ -99,8 +100,15 @@ describe("Post Routes Tests ", function () {
         let date = "2022-06-09";
         let new_date = dateToTimestampWithTz(date, -420);
 
-        postData.title = "Test to delete2";
-        postData.created_at = new_date;
+        const postData = {
+            user_id: userId,
+            title: "Test to delete2",
+            body: "This is the content of the new post.",
+            type: "Request",
+            created_at: new_date
+
+        };
+
         const sqlParams = Object.values(postData);
         await db.one(`
             INSERT INTO posts
@@ -115,6 +123,7 @@ describe("Post Routes Tests ", function () {
         const queryParams = {};
         queryParams.fromDate = "2022-05-09";
         queryParams.toDate = "2022-07-09";
+
 
         const response = await axios.get(apiUrl, { params: queryParams });
         assert.equal(Object.keys(response.data).length, 1, "error: entries =! 1. ");
@@ -214,7 +223,11 @@ describe("Post Unit Tests", function() {
             body: {
                 title: "Updated Title",
                 body: "Updated Body",
-                location_id: 2,
+                location:{
+                    location_id:2, 
+                    lat:0, 
+                    long:0
+                },
                 type: "updated",
             }
         };
@@ -305,9 +318,9 @@ describe("Post Unit Tests", function() {
     });
 
     it("should createPost", async function() {
-
+        let address = {"lat": 0, "long": 0};
         const poolQueryStub = sandbox.stub(pool, "query");
-        poolQueryStub.resolves({ rows: [{ id: 1, title: "Updated Title", body: "Updated Body", location_id: 2, type: "updated" }] });
+        poolQueryStub.resolves({ rows: [{ id: 1, title: "Updated Title", body: "Updated Body", location: address, type: "updated" }] });
         const response = await createPost(req, res);
 
         sinon.assert.calledOnceWithExactly(res.status, 201);
@@ -321,7 +334,10 @@ describe("Post Unit Tests", function() {
             query: {
                 fromDate: "10-10-10",
                 toDate: "10-10-10",
-                locationId: 1,
+                location: { 
+                    lat:0,
+                    long: 0
+                },
                 userId: 1
             },
             body: {
@@ -350,7 +366,10 @@ describe("Post Unit Tests", function() {
                 body: "Updated Body",
                 request_to: "",
                 request_from: "",
-                location_id: 2,
+                location: {    
+                    lat:0,
+                    long: 0
+                },
                 type: "updated",
             }
         };

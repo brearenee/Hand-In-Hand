@@ -31,7 +31,12 @@ describe("Free Item Unit Tests", function () {
         };
         if (!axios.post.restore) {
             // Only create the stub if it doesn't exist
-            axiosPostStub = sandbox.stub(axios, "post").resolves({ data: "fake response" });
+            axiosPostStub = sandbox.stub(axios, "post").resolves({data: {
+                posts: [
+                    { latitude: 39.798770010686965, longitude: -105.07207748323874, title: "Title1", content: "Content1", reselling:null },
+                    { latitude: 40.712776, longitude: -74.005974, title: "Title2", content: "Content2", reselling:null }
+                ]}
+            });
         }
     });
 
@@ -76,18 +81,39 @@ describe("Free Item Unit Tests", function () {
         sinon.assert.notCalled(axiosPostStub);
     });
 
-    it("posts correct request for insertItems", async function () {
-    // Call the insertItems function with desired arguments
-        const request = { result: { data: { posts: [] } } };
-        const response = {};
-  
-        await freeItemController.insertItems(request, response);
-  
-        // Allow some time for asynchronous operations to complete
-        await new Promise(resolve => setTimeout(resolve, 1000));
-  
-        // Assert that axios.post was called at least once
-        sinon.assert.called(axiosPostStub);
+    it("should insert items correctly", async function () {
+        const request = {
+            result: {
+                data: {
+                    posts: [
+                        { latitude: 39.798770010686965, longitude: -105.07207748323874, title: "Title1", content: "Content1", reselling: null },
+                        { latitude: 40.712776, longitude: -74.005974, title: "Title2", content: "Content2", reselling: null }
+                    ]
+                }
+            }
+        };
+
+        // Stub fetch to resolve with a location
+        sandbox.stub(global, "fetch").resolves({ json: () => ({ lat:100, long:100 }) });
+
+        // Stub db.oneOrNone to resolve with null (no existing record)
+        const poolQueryStub = sandbox.stub(db, "oneOrNone").resolves(null);
+    
+        // Stub console.log to capture log messages
+        const consoleLogStub = sandbox.stub(console, "log");
+
+        await freeItemController.insertItems(request, {});
+
+        // Assert that fetch was called for each post
+        sinon.assert.calledTwice(global.fetch);
+
+        // Assert that axios.post was called for each post
+        sinon.assert.calledTwice(axiosPostStub);
+
+        // Assert that db.oneOrNone was called for each post
+        sinon.assert.calledTwice(poolQueryStub);
+
+        // Assert that console.log was called for each successful
+        sinon.assert.calledWithExactly(consoleLogStub, "TrashNothing Post Created");
     });
-  
 });

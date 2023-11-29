@@ -26,6 +26,19 @@
         <!-- Bootstrap Icons -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
+        <!-- MapBox GL JS library -->
+        <script src='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js'></script>
+        <link href='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css' rel='stylesheet' />
+        <!-- Include Mapbox GL JS Geocoder -->
+        <link
+        rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css"
+        type="text/css"
+        />
+        <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js"></script>
+
+
+
     </head>
 
     <body>
@@ -195,6 +208,7 @@
                                             <label for="post-location" class="form-label">Location of Request/Event</label>
                                             <input type="text" class="form-control bg-light rounded-0" id="post-location"
                                                 placeholder="Address or approximate location" required>
+                                                <div id="autocompleteDropdown" class="autocomplete-dropdown"></div>
                                         </div>
                                         <div class="col col-lg-8 col-sm-12">
                                             <label for="form-file-multiple" class="form-label">Upload image</label>
@@ -279,6 +293,7 @@
                                                 Requested Date(s): <span id="from-date">From Date</span>
                                                 - <span id="to-date">To
                                                     Date</span></p>
+                                            <p class="fw-bold">Location: <span id="location">Location</span></p>
   
                                             <p1 class="mb-0" id="post-card-body">Body Content</p1>
                                             <div class="d-flex justify-content-end mt-auto">
@@ -332,6 +347,9 @@
         <!-- Custom JS -->
         <script type="module" src="/scripts/script.js"></script>
 
+        <!-- Initialize Mapbox GL JS -->
+        <script type="module" src="/scripts/geolocation.js"></script>
+       
 
     </body>
 

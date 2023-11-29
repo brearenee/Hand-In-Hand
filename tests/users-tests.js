@@ -36,6 +36,9 @@ describe("Tests user routes Integration", function() {
     afterEach(async function() {
         await db.none("DELETE FROM users WHERE id = $1", [fakeUserId]);
     });
+    after( async function() { 
+        await db.none("DELETE FROM users WHERE id = $1", [fakeUserId]);
+    });
 
 
     // Test to create a new user
