@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const data = await response.json();
             console.log("Success:", data);
             // Redirect to sign-in after successful registration
-            window.location.href = "sign-in";
+            window.location.href = "/sign-in";
 
         } catch (error) {
             // Handle the authentication error
@@ -82,7 +82,12 @@ async function getTempLocation() {
     try {
         const lat = 39.7452242;
         const long = -105.0088767;
-        const response = await fetch(`https://localhost:3000/locations/lat/${lat}/long/${long}`);
+        const response = await fetch(`/locations/lat/${lat}/long/${long}`, {
+          method: "GET",
+          headers: {
+              "Content-Type": "application/json",
+          }
+      });
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -93,34 +98,3 @@ async function getTempLocation() {
         console.error("Fetch error:", error);
     }
 }
-//capture the id from the returned location object
-/*//get temporary location_id
-
-	
-	
-//create new user via User Api Route
-//create the object you want to send to the api
-  const requestBody = {
-    username: postSignUpUsername,
-    last_location: location_id,
-  email: postSignUpEmail
-  firebase_id: //TODO figure out how to grab this
-	
-  };
-  try {
-    const response = await fetch(`https://localhost:3000/users`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify(requestBody),
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    const data = await response.json();
-  } catch (error) {
-    console.error('Fetch error:', error);
-  }
-}*/
