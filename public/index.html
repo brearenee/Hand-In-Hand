@@ -1,358 +1,349 @@
 <!DOCTYPE html>
 <html lang="en">
-    <!-- SOME OF THESE ITEMS WILL HAVE TO BE EDITED ONCE WE GET USER PROFILES SET UP AND MORE INFO IN THE DB-->
+<!-- SOME OF THESE ITEMS WILL HAVE TO BE EDITED ONCE WE GET USER PROFILES SET UP AND MORE INFO IN THE DB-->
 
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <title>HandInHand | Dashboard</title>
+    <title>HandInHand | Dashboard</title>
 
-        <!-- Bootstrap CSS -->
-        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    <!-- Bootstrap CSS -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
 
-        <!-- Custom Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/custom.css">
-        <link rel="stylesheet" href="/css/styles.css">
-        <link rel="stylesheet" href="/css/sidebar.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
 
 
-        <!-- Bootstrap Icons -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
-        <!-- MapBox GL JS library -->
-        <script src='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js'></script>
-        <link href='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css' rel='stylesheet' />
-        <!-- Include Mapbox GL JS Geocoder -->
-        <link
-        rel="stylesheet"
+    <!-- MapBox GL JS library -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css' rel='stylesheet' />
+    <!-- Include Mapbox GL JS Geocoder -->
+    <link rel="stylesheet"
         href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css"
-        type="text/css"
-        />
-        <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js"></script>
+        type="text/css" />
+    <script
+        src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js"></script>
 
 
 
-    </head>
+</head>
 
-    <body>
-        <header>
-            <nav class="navbar bg-primary">
-                <div class="container">
-                    <!-- Brand and Toggle Button -->
-                    <a class="navbar-brand" href="#">Welcome to HandInHand</a>
-                    <!-- User Image-->
-                    <div class="d-flex ml-auto align-items-center">
-                        <img src="./assets/img/profile.png" alt="User Image" class="user-image rounded-circle me-2"
-                            width="30" height="30">
-                        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
-                            aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
+<body>
+    <header>
+        <nav class="navbar bg-primary">
+            <div class="container">
+                <!-- Brand and Toggle Button -->
+                <a class="navbar-brand" href="#">Welcome to HandInHand</a>
+                <!-- User Image-->
+                <div class="d-flex ml-auto align-items-center">
+                    <img src="./assets/img/profile.png" alt="User Image" class="user-image rounded-circle me-2"
+                        width="30" height="30">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Offcanvas Menu -->
+                <div class="offcanvas offcanvas-end bg-primary" tabindex="-1" id="offcanvasNavbar"
+                    aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Navigation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
 
-                    <!-- Offcanvas Menu -->
-                    <div class="offcanvas offcanvas-end bg-primary" tabindex="-1" id="offcanvasNavbar"
-                        aria-labelledby="offcanvasNavbarLabel">
-                        <div class="offcanvas-header">
-                            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Navigation</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                        </div>
-                        
-                        <div class="offcanvas-body">
-                            <button class="btn btn-secondary mb-3" id="sign-out-btn">Sign Out</button>
-                            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Link</a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        Dropdown
-                                    </a>
-                                    <ul class="dropdown-menu bg-secondary">
-                                        <li>
-                                            <a class="dropdown-item" href="#">Calendar</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                        </li>
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <!-- Search function for later on if you wish to implement it -->
-                            <!--
+                    <div class="offcanvas-body">
+                        <button class="btn btn-secondary mb-3" id="sign-out-btn">Sign Out</button>
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Link</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    Dropdown
+                                </a>
+                                <ul class="dropdown-menu bg-secondary">
+                                    <li>
+                                        <a class="dropdown-item" href="#">Calendar</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Another action</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Something else here</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- Search function for later on if you wish to implement it -->
+                        <!--
                                 <form class="d-flex mt-3" role="search">
                                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                                 <button class="btn btn-secondary" type="submit">Search</button>
                                 </form>
                             -->
-                        </div>
                     </div>
                 </div>
-            </nav>
-        </header>
-        <!-- Main Page Content -->
-        <main>
-            <!-- Community Feed, sidebar, etc -->
-            <div class="container mt-5 mb-3">
-                <div class="row">
-                    <!-- Sidebar -->
-                    <!-- Sidebar (hidden on smaller screens (md, sm, xs) and displayed as a 3-column-wide block on lg and xl screens) -->
-                    <div class="d-none d-lg-block col col-lg-3">
-                        <nav id="sidebar">
-                            <div class="guidelines-container">
-                                <p class="guidelines-title">Community Guidelines</p>
-                                <p class="custom-text"> Be respectful to all those with whom you interact within our
-                                    community.</p>
-                                <p class="custom-text">Share comments and ideas thoughtfully, with the consideration you
-                                    would expect to
-                                    be afforded.</p>
-                                <p class="custom-text">Refrain from inappropriate, off-topic, abusive, harassing, or profane
-                                    comments.</p>
-                                <p class="custom-text">Do not post information that would be considered spam.</p>
-                                <p class="custom-text">We reserve the right to reject or remove comments that are not in
-                                    keeping with
-                                    our policy, values, and principles; and to block or ban users/followers who do not
-                                    follow these
-                                    guidelines.</p>
-                                <p class="custom-text">Original posts are to be auto-deleted one week after the requested
-                                    date on the
-                                    form.</p>
+            </div>
+        </nav>
+    </header>
+    <!-- Main Page Content -->
+    <main>
+        <!-- Community Feed, sidebar, etc -->
+        <div class="container mt-5 mb-3">
+            <div class="row">
+                <!-- Sidebar -->
+                <!-- Sidebar (hidden on smaller screens (md, sm, xs) and displayed as a 3-column-wide block on lg and xl screens) -->
+                <div class="h-75 d-none d-lg-inline-block col col-lg-3" id="sidebar">
 
-                                <!-- "Report Misuse" Button -->
-                                <div>
-                                    <a href="mailto:communityfirst.handinhand@gmail.com" class="btn btn-danger"
-                                        id="report-button"> Report Misuse
-                                    </a>
+                    <div class="guidelines-container">
+                        <div class="row">
+                            <p class="fs-5">Community Guidelines</p>
+                            <p class="custom-text"> Be respectful to all those with whom you interact within our
+                                community.</p>
+                            <p class="custom-text">Share comments and ideas thoughtfully, with the consideration you
+                                would expect to
+                                be afforded.</p>
+                            <p class="custom-text">Refrain from inappropriate, off-topic, abusive, harassing, or profane
+                                comments.</p>
+                            <p class="custom-text">Do not post information that would be considered spam.</p>
+                            <p class="custom-text">We reserve the right to reject or remove comments that are not in
+                                keeping with
+                                our policy, values, and principles; and to block or ban users/followers who do not
+                                follow these
+                                guidelines.</p>
+                            <p class="custom-text">Original posts are to be auto-deleted one week after the requested
+                                date on the
+                                form.</p>
+
+                        </div>
+                        <!-- "Report Misuse" Button -->
+                        <div class="row d-flex justify-content-center m-4">
+                            <a href="mailto:communityfirst.handinhand@gmail.com" class="btn btn-danger"
+                                id="report-button">
+                                Report Misuse
+                            </a>
+
+                        </div>
+                       
+                            <div class="mission-container">
+                                <!-- HandInHand Mission Section -->
+                                <p class="fs-5">HandInHand Mission</p>
+                                <p>
+                                    <em>"HandInHand is a web-based application that allows communities to come
+                                        together to
+                                        engage in acts of service, volunteer-based opportunities, and community
+                                        events."</em>
+                                </p>
+                                <p>
+                                    <em>"We're committed to promoting positivity, mental well-being, and
+                                        meaningful
+                                        connections in the digital world."</em>
+                                </p>
+                            </div>
+                        
+                    </div>
+
+
+
+                </div>
+
+
+                <!--Form and Community Feed -->
+                <!-- Main Content (full width on all screens) -->
+                <div class="col-12 col-xs-12 col-lg-9">
+                    <!-- FORM - Community Feed Post -->
+                    <div class="container mt-3">
+                        <form class=" containter g-3" id="helpFormSubmit">
+                            <fieldset class="row g-3">
+                                <legend>Submit new Help Opportunity, Free Item, or Community Event</legend>
+                                <div class="col col-lg-6 col-sm-12">
+                                    <div class="mb-2">
+                                        <label for="post-summary" class="form-label">Summary of
+                                            Request/Event/Item</label>
+                                        <input type="text" class="form-control bg-light rounded-0" id="post-summary"
+                                            required>
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <label for="post-description" class="form-label">Detailed Description</label>
+                                        <textarea class="form-control bg-light rounded-0" id="post-description" rows="6"
+                                            required></textarea>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label for="post-location" class="form-label">Location of Request/Event</label>
+                                        <input type="text" class="form-control bg-light rounded-0" id="post-location"
+                                            placeholder="Address or approximate location" required>
+                                        <div id="autocompleteDropdown" class="autocomplete-dropdown"></div>
+                                    </div>
+                                    <div class="col col-lg-8 col-sm-12">
+                                        <label for="form-file-multiple" class="form-label">Upload image</label>
+                                        <input class="form-control bg-light rounded-0" type="file"
+                                            id="form-file-multiple" multiple>
+                                    </div>
+                                </div>
+                                <div class="col col-lg-6 col-sm-12 d-flex flex-column">
+
+                                    <div class="mb-2">
+                                        <label for="post-type-select" class="form-label">Type of Request</label>
+                                        <select class="form-select bg-light rounded-0"
+                                            aria-label="Default select example" id="post-type-select" required>
+                                            <option value="1">Community Help</option>
+                                            <option value="2">Free Marketplace Item</option>
+                                            <option value="3">Community Event</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="post-date-range" class="form-label">Request Date(s)</label>
+                                        <div id="post-date-range">
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text w-25 rounded-0">From</span>
+                                                <input type="date" class="form-control bg-light rounded-0"
+                                                    aria-label="Beginning date" id="post-from-date" required>
+                                            </div>
+
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text w-25 rounded-0">To</span>
+                                                <input type="date" class="form-control bg-light rounded-0"
+                                                    aria-label="Ending date" id="post-to-date" required>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mt-auto justify-content-end">
+                                        <button type="submit" class="btn btn-primary text-uppercase">Submit</button>
+                                    </div>
+                                    <div id="on-submit-message" class="mt-3"></div>
                                 </div>
 
-
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <div class="space-between-sections">
-
-                                        </div>
-
-                                        <!-- HandInHand Mission Section -->
-                                        <div class="col mission-container">
-                                            <p class="mission-title">HandInHand Mission</p>
-                                            <p class="custom-text">
-                                                <em>"HandInHand is a web-based application that allows communities to come
-                                                    together to
-                                                    engage in acts of service, volunteer-based opportunities, and community
-                                                    events."</em>
-                                            </p>
-                                            <p class="custom-text">
-                                                <em>"We're committed to promoting positivity, mental well-being, and
-                                                    meaningful
-                                                    connections in the digital world."</em>
-                                            </p>
-
-                                        </div>
-                                    </li>
-                                    <!-- Additional Sidebar Features (Placeholder) -->
-                                    <!-- <li class="nav-item">
-                                        <a class="nav-link" href="#additionalFeature1">
-                                        Additional Feature 1
-                                        </a>
-                                        </li>
-                                        <li class="nav-item">
-                                        <a class="nav-link" href="#additionalFeature2">
-                                        Additional Feature 2
-                                        </a>
-                                        </li> -->
-                                    <!-- Add more features here (as needed) -->
-                                </ul>
-                            </div>
-                        </nav>
+                            </fieldset>
+                        </form>
                     </div>
 
-                    <!--Form and Community Feed -->
-                    <!-- Main Content (full width on all screens) -->
-                    <div class="col-12 col-lg-9">
-                        <!-- FORM - Community Feed Post -->
-                        <div class="container mt-3">
-                            <form class=" containter g-3" id="helpFormSubmit">
-                                <fieldset class="row g-3">
-                                    <legend>Submit new Help Opportunity, Free Item, or Community Event</legend>
-                                    <div class="col col-lg-6 col-sm-12">
-                                        <div class="mb-2">
-                                            <label for="post-summary" class="form-label">Summary of
-                                                Request/Event/Item</label>
-                                            <input type="text" class="form-control bg-light rounded-0" id="post-summary"
-                                                required>
-                                        </div>
+                    <br>
+                    <hr>
+                    <br>
 
-                                        <div class="mb-2">
-                                            <label for="post-description" class="form-label">Detailed Description</label>
-                                            <textarea class="form-control bg-light rounded-0" id="post-description" rows="6"
-                                                required></textarea>
-                                        </div>
-                                        <div class="mb-2">
-                                            <label for="post-location" class="form-label">Location of Request/Event</label>
-                                            <input type="text" class="form-control bg-light rounded-0" id="post-location"
-                                                placeholder="Address or approximate location" required>
-                                                <div id="autocompleteDropdown" class="autocomplete-dropdown"></div>
-                                        </div>
-                                        <div class="col col-lg-8 col-sm-12">
-                                            <label for="form-file-multiple" class="form-label">Upload image</label>
-                                            <input class="form-control bg-light rounded-0" type="file"
-                                                id="form-file-multiple" multiple>
+                    <!-- Updated Community Feed Block with Larger Container and Scrollbar -->
+                    <div class="container g-3 mt-4">
+                        <h2 class="h2 text-center">Community Feed</h2>
+                        <!-- Navbar for feed-->
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item text-uppercase" role="presentation">
+                                <a class="nav-link active text-dark feed-tab" id="all-posts-tab" data-bs-toggle="tab"
+                                    data-post-type="All Posts" href="#all-posts" role="tab" aria-controls="all-posts"
+                                    aria-selected="true">All Posts</a>
+                            </li>
+                            <li class="nav-item text-uppercase" role="presentation">
+                                <a class="nav-link text-uppercase text-dark feed-tab" id="help-opportunities-tab"
+                                    data-bs-toggle="tab" data-post-type="Community Help" href="#help-opportunities"
+                                    role="tab" aria-controls="help-opportunities" aria-selected="false">Help
+                                    Opportunities</a>
+                            </li>
+                            <li class="nav-item text-uppercase" role="presentation">
+                                <a class="nav-link text-dark feed-tab" id="marketplace-items-tab" data-bs-toggle="tab"
+                                    data-post-type="Free Marketplace Item" href="#marketplace-items" role="tab"
+                                    aria-controls="marketplace-items" aria-selected="false">Marketplace Items</a>
+                            </li>
+                            <li class="nav-item text-uppercase" role="presentation">
+                                <a class="nav-link text-dark feed-tab" id="community-events-tab" data-bs-toggle="tab"
+                                    data-post-type="Community Event" href="#community-events" role="tab"
+                                    aria-controls="community-events" aria-selected="false">Community Events</a>
+                            </li>
+                        </ul>
+                        <div class="row px-4" id="feed-content">
+                            <!-- Example feed item template -->
+                            <template>
+                                <div class="card h-100 bg-grey" id="post-card">
+                                    <div class="container">
+                                        <p2 class="fw-bold text-uppercase" id="post-card-type">Request Type</p2>
+                                        <h4 class="text-uppercase" id="post-card-title">Title</h4>
+                                        <p class="fw-bold">
+                                            Requested Date(s): <span id="from-date">From Date</span>
+                                            - <span id="to-date">To
+                                                Date</span></p>
+                                        <p class="fw-bold">Location: <span id="location">Location</span></p>
+
+                                        <p1 class="mb-0" id="post-card-body">Body Content</p1>
+                                        <div class="d-flex justify-content-end mt-auto">
+                                            <button class="btn btn-secondary text-uppercase">Respond</button>
                                         </div>
                                     </div>
-                                    <div class="col col-lg-6 col-sm-12 d-flex flex-column">
-
-                                        <div class="mb-2">
-                                            <label for="post-type-select" class="form-label">Type of Request</label>
-                                            <select class="form-select bg-light rounded-0"
-                                                aria-label="Default select example" id="post-type-select" required>
-                                                <option value="1">Community Help</option>
-                                                <option value="2">Free Marketplace Item</option>
-                                                <option value="3">Community Event</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label for="post-date-range" class="form-label">Request Date(s)</label>
-                                            <div id="post-date-range">
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text w-25 rounded-0">From</span>
-                                                    <input type="date" class="form-control bg-light rounded-0"
-                                                        aria-label="Beginning date" id="post-from-date" required>
-                                                </div>
-
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text w-25 rounded-0">To</span>
-                                                    <input type="date" class="form-control bg-light rounded-0"
-                                                        aria-label="Ending date" id="post-to-date" required>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="d-flex mt-auto justify-content-end">
-                                            <button type="submit" class="btn btn-primary text-uppercase">Submit</button>
-                                        </div>
-                                        <div id="on-submit-message" class="mt-3"></div>
-                                    </div>
-
-                                </fieldset>
-                            </form>
+                                </div>
+                            </template>
                         </div>
+                    </div>
 
-                        <br>
-                        <hr>
-                        <br>
+                </div>
+            </div>
+        </div>
 
-                        <!-- Updated Community Feed Block with Larger Container and Scrollbar -->
-                        <div class="container g-3 mt-4">
-                            <h2 class="h2 text-center">Community Feed</h2>
-                            <!-- Navbar for feed-->
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item text-uppercase" role="presentation">
-                                    <a class="nav-link active text-dark feed-tab" id="all-posts-tab" data-bs-toggle="tab" data-post-type="All Posts" href="#all-posts"
-                                        role="tab" aria-controls="all-posts" aria-selected="true">All Posts</a>
-                                </li>
-                                <li class="nav-item text-uppercase" role="presentation">
-                                    <a class="nav-link text-uppercase text-dark feed-tab" id="help-opportunities-tab" data-bs-toggle="tab" data-post-type="Community Help"
-                                        href="#help-opportunities" role="tab" aria-controls="help-opportunities" aria-selected="false">Help
-                                        Opportunities</a>
-                                </li>
-                                <li class="nav-item text-uppercase" role="presentation">
-                                    <a class="nav-link text-dark feed-tab" id="marketplace-items-tab" data-bs-toggle="tab" data-post-type="Free Marketplace Item" href="#marketplace-items"
-                                        role="tab" aria-controls="marketplace-items" aria-selected="false">Marketplace Items</a>
-                                </li>
-                                <li class="nav-item text-uppercase" role="presentation">
-                                    <a class="nav-link text-dark feed-tab" id="community-events-tab" data-bs-toggle="tab" data-post-type="Community Event" href="#community-events"
-                                        role="tab" aria-controls="community-events" aria-selected="false">Community Events</a>
-                                </li>
-                            </ul>
-                            <div class="row" id="feed-content">
-                                <!-- Example feed item template -->
-                                <template>
-                                    <div class="card h-100 bg-grey" id="post-card">
-                                        <div class="container">
-                                            <p2 class="fw-bold text-uppercase" id="post-card-type">Request Type</p2>
-                                            <h4 class="text-uppercase" id="post-card-title">Title</h4>
-                                            <p class="fw-bold">
-                                                Requested Date(s): <span id="from-date">From Date</span>
-                                                - <span id="to-date">To
-                                                    Date</span></p>
-                                            <p class="fw-bold">Location: <span id="location">Location</span></p>
-  
-                                            <p1 class="mb-0" id="post-card-body">Body Content</p1>
-                                            <div class="d-flex justify-content-end mt-auto">
-                                                <button class="btn btn-secondary text-uppercase">Respond</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </template>
-                            </div>
-                        </div>
-          
+
+    </main>
+    <!-- Footer -->
+    <footer class="bg-primary mt-5 text-black">
+        <div class="container">
+            <div class="row pt-2">
+                <div class="col col-md-6 d-flex align-items-center">
+                    <p class="mb-0">HandInHand &copy; 2023</p>
+                </div>
+                <div class="col col-md-6 d-flex flex-column align-items-end">
+                    <p class="text-center mb-0">Contact Us!</p>
+                    <div class="d-flex justify-content-end">
+                        <a href="mailto:communityfirst.handinhand@gmail.com" class="btn link"
+                            aria-label="Email HandInHand">
+                            <i class="bi bi-envelope"></i>
+                        </a>
+                        <a href="https://github.com/msu-denver/senior-experience-group-project-community-first"
+                            class="btn link" target="_blank" aria-label="HandInHand GitHub Repository">
+                            <i class="bi bi-github"></i>
+                        </a>
                     </div>
                 </div>
             </div>
-    </div>
-        </main>
-        <!-- Footer -->
-        <footer class="bg-primary mt-5 text-black">
-            <div class="container">
-                <div class="row pt-2">
-                    <div class="col col-md-6 d-flex align-items-center">
-                        <p class="mb-0">HandInHand &copy; 2023</p>
-                    </div>
-                    <div class="col col-md-6 d-flex flex-column align-items-end">
-                        <p class="text-center mb-0">Contact Us!</p>
-                        <div class="d-flex justify-content-end">
-                            <a href="mailto:communityfirst.handinhand@gmail.com" class="btn link" aria-label="Email HandInHand">
-                                <i class="bi bi-envelope"></i>
-                            </a>
-                            <a href="https://github.com/msu-denver/senior-experience-group-project-community-first"
-                                class="btn link" target="_blank" aria-label="HandInHand GitHub Repository">
-                                <i class="bi bi-github"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
+        </div>
+    </footer>
 
 
-        <!-- Bootstrap JQuery and Popper JS-->
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-            integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
-            crossorigin="anonymous"></script>
+    <!-- Bootstrap JQuery and Popper JS-->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-            integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
-            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
 
 
-        <!-- Custom JS -->
-        <script type="module" src="/scripts/script.js"></script>
-        <script type="module" src="/scripts/sign-out.js"></script>
+    <!-- Custom JS -->
+    <script type="module" src="/scripts/script.js"></script>
+    <script type="module" src="/scripts/sign-out.js"></script>
 
-        <!-- Initialize Mapbox GL JS -->
-        <script type="module" src="/scripts/geolocation.js"></script>
-               
+    <!-- Initialize Mapbox GL JS -->
+    <script type="module" src="/scripts/geolocation.js"></script>
 
-    </body>
+
+</body>
 
 </html>
