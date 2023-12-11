@@ -8,7 +8,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "lint": "npx eslint . --ignore-pattern 'dist/*' --fix",
+    "lint": "npx eslint . --ignore-pattern 'dist/*' --fix && npx stylelint public/css/sidebar.css --fix && npx stylelint public/css/styles.css --fix",
     "migrate": "node db/migration-script.js",
     "selenium": "npm run selenium-a11y & npm run selenium-ui",
     "selenium-a11y": "mocha tests_selenium/a11y-tests.js --exit",

@@ -83,11 +83,11 @@ async function getTempLocation() {
         const lat = 39.7452242;
         const long = -105.0088767;
         const response = await fetch(`/locations/lat/${lat}/long/${long}`, {
-          method: "GET",
-          headers: {
-              "Content-Type": "application/json",
-          }
-      });
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
