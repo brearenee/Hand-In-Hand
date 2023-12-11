@@ -84,10 +84,10 @@ async function initFeed() {
 }
 
 // run init feed based on html rendering for different browsers 
-if (document.readyState === 'interactive' || document.readyState === 'complete') {
+if (document.readyState === "interactive" || document.readyState === "complete") {
     initFeed();
 } else {
-    window.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener("DOMContentLoaded", () => {
         initFeed();
     });
 }
