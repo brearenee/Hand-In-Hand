@@ -6,7 +6,7 @@ import { respondButtonEmailHandler } from "./post-respond.js";
 
 
 // Check for user authentication before loading page content 
-window.addEventListener("DOMContentLoaded", () => {
+async function checkUserAuthentication() {
     const userData = localStorage.getItem("userData");
     const loadingContent = document.getElementById("loading");
     const authContent = document.getElementById("auth-content");
@@ -14,13 +14,10 @@ window.addEventListener("DOMContentLoaded", () => {
         // User data is cached, display relevant content immediately
         loadingContent.style.display = "none";
         authContent.style.display = "block";
-    } else { 
+    } else {
         window.location.href = "/sign-in";
     }
-
-
-});
-
+}
 
 let address;
 
@@ -75,6 +72,8 @@ async function fetchAndPopulateFeed() {
 }
 
 async function initFeed() {
+
+    await checkUserAuthentication();
     //calls our populate db function, forces a 4 second delay to allow for population of posts db
     //calls the fetchAndPopulateFeed function
     await populateDB();
@@ -84,8 +83,17 @@ async function initFeed() {
 
 }
 
+// run init feed based on html rendering for different browsers 
+if (document.readyState === 'interactive' || document.readyState === 'complete') {
+    initFeed();
+} else {
+    window.addEventListener('DOMContentLoaded', () => {
+        initFeed();
+    });
+}
 
-initFeed(); 
+
+
 
 
 
