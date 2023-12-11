@@ -2,7 +2,7 @@ import { getPostsAndPutIntoDB } from "./freeItems.js";
 import { getGeolocation, parseLocationInfo } from "./geolocation.js";
 import { auth } from "./auth.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js";
-import { respondButtonEmailHandler } from "../post-respond.js";
+import { respondButtonEmailHandler } from "./post-respond.js";
 
 
 // Check for user authentication before loading page content 
@@ -17,6 +17,7 @@ window.addEventListener("DOMContentLoaded", () => {
     } else { 
         window.location.href = "/sign-in";
     }
+
 
 });
 
@@ -79,12 +80,12 @@ async function initFeed() {
     await populateDB();
     await fetchAndPopulateFeed();
     //setTimeout(fetchAndPopulateFeed, 2000); //timeout to allow for posts to populate db
-    respondButtonEmailHandler();
+    await respondButtonEmailHandler();
 
 }
 
-initFeed();
 
+initFeed(); 
 
 
 

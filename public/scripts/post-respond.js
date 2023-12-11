@@ -1,4 +1,4 @@
-function respondButtonEmailHandler() {
+async function respondButtonEmailHandler() {
     document.querySelectorAll(".respond-button").forEach(button => {
         button.addEventListener("click", (event) => {
             // Prevent the default mailto link behavior
