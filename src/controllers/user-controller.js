@@ -54,7 +54,7 @@ const getUsersByUserName = async (request, response) => {
 
     } catch (error) {
         console.log("Error fetching that user:", error);
-        response.status(500).send("Internal Server Error");
+        response.status(500).json("Internal Server Error");
     }
 };
 
@@ -69,7 +69,7 @@ const getUserByID = async (request, response) => {
         response.status(200).json(result.rows);
 
     } catch (error) {
-        response.status(500).send("Internal Server Error");
+        response.status(500).json("Internal Server Error");
     }
 };
 
@@ -82,8 +82,7 @@ const createUser = async (request, response) => {
         response.status(200).json(result.rows);
     } catch (error) {
         console.log("Error creating user:", error);
-        console.log(request.body);
-        response.status(500).send("Internal Server Error");
+        response.status(500).json("Internal Server Error");
     }
 };
 
@@ -164,8 +163,6 @@ const updateUser = async (request, response) =>{
 
     } catch (error) {
         // Log errors
-        console.log("Error creating user:", error);
-        console.log(request.body);
         response.status(500).json("Internal Server Error");
     }
 };

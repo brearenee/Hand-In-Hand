@@ -7,11 +7,14 @@ require("dotenv").config();
 const { db, pool } = require("../src/utils/db");
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const sinon = require("sinon");
+const chai = require("chai");
+
 const {
     editPost,
     getDefaultUserId,
     getPostById,
     getPosts,
+    getPostsByType,
     getPostsByUserId,
     deletePostById,
     createPost,
@@ -175,7 +178,7 @@ describe("Post Routes Tests ", function () {
         postData.title = "Test to delete3";
         const sqlParamz = Object.values(postData);
         try {
-            let delPostId = await db.one(`
+            await db.one(`
             INSERT INTO posts
                 (user_id, location_id, title, body, type) 
             VALUES
@@ -242,6 +245,44 @@ describe("Post Unit Tests", function() {
         sandbox.restore();
     });
 
+    it("should getPostsByType", async function () {
+
+        // Stub the pool.query method within the sandbox to simulate a successful database update
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [{ id: 1, username: "TestUser", email: "test@gmail.com" }] });
+        const response = await getPostsByType(req, res);
+
+        sinon.assert.calledOnceWithExactly(res.json, [{ id: 1, username: "TestUser", email: "test@gmail.com" }] );
+    });
+    it("getPostsByType no type found", async function() {
+    
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [] });
+        const response = await getPostsByType(req, res);
+        sinon.assert.calledOnceWithExactly(res.status, 404);
+    });
+    it("getPostsByType throw error", async function() {
+    
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.rejects("Fake Error");
+        const response = await getPostsByType(req, res);
+        sinon.assert.calledOnceWithExactly(res.status, 500);
+    });
+
+    it("getDefaultLocation should throw error", async function () {
+       
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.throws("Fake Error");   
+        try {
+            await getDefaultLocation(postData.location.lat, postData.location.long);
+            // If the function did not throw an error, fail the test
+            sinon.assert.fail("Expected an error, but the function did not throw.");
+        } catch (error) {
+            // Assert that the error message matches the expected error message
+            chai.assert.instanceOf(error, Error);
+        }
+    }); 
+    
     it("editPost should update post and return the updated post", async function () {
         // Stub the pool.query method within the sandbox to simulate a successful database update
         const poolQueryStub = sandbox.stub(pool, "query");
@@ -251,6 +292,18 @@ describe("Post Unit Tests", function() {
         // Assert the response status and JSON payload
         sinon.assert.calledOnceWithExactly(res.status, 200);
         sinon.assert.calledOnceWithExactly(res.json, { id: 1, title: "Updated Title", body: "Updated Body", location_id: 2, type: "updated" });
+
+    });
+
+    it("editPost - post not found", async function () {
+        // Stub the pool.query method within the sandbox to simulate a successful database update
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [] });
+        // Call the editPost function with the provided request and response objects
+        await editPost(req, res);
+        // Assert the response status and JSON payload
+        sinon.assert.calledOnceWithExactly(res.status, 404);
+
 
     });
 
@@ -284,6 +337,12 @@ describe("Post Unit Tests", function() {
 
         sinon.assert.calledOnceWithExactly(res.status, 200);
     });
+    it("getPosts returns error ", async function () {
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.rejects();
+        await getPosts(req, res);
+        sinon.assert.calledOnceWithExactly(res.status, 500);
+    });
 
     it("should getPostById", async function () {
 
@@ -302,6 +361,23 @@ describe("Post Unit Tests", function() {
         const response = await getPostsByUserId(req, res);
 
         sinon.assert.calledOnceWithExactly(res.status, 200);
+    });
+
+    it("getPostsByUserId no id found", async function() {
+        // Stub the pool.query method within the sandbox to simulate a successful database update
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [] });
+        const response = await getPostsByUserId(req, res);
+
+        sinon.assert.calledOnceWithExactly(res.status, 404);
+    });
+    it("should getPostsByUserId throws error", async function() {
+        // Stub the pool.query method within the sandbox to simulate a successful database update
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.rejects();
+        const response = await getPostsByUserId(req, res);
+
+        sinon.assert.calledOnceWithExactly(res.status, 500);
     });
 
     it("should delete post by ID", async function() {
@@ -380,6 +456,8 @@ describe("Post Unit Tests", function() {
         sinon.assert.calledOnceWithExactly(res.status, 201);
     });
 
+
+
     it("should getDefaultuserI", async function() {
         const poolQueryStub = sandbox.stub(pool, "query");
         poolQueryStub.resolves({ rows: [{ id: 1, username: "TestUser", email: "test@gmail.com" }] });
@@ -406,4 +484,20 @@ describe("Post Unit Tests", function() {
         assert.equal(response, null);
     });
 
+    it("getDefault Location throws error", async function() {
+    
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.rejects("Fake Error");
+        await assert.rejects(async () => {
+            await getDefaultLocation();
+        }, Error);
+    });
+    it("getDefaultLocation no location found", async function() {
+    
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({rows: []});
+        
+        let test =  await getDefaultLocation();
+        assert.equal(test, null);
+    });
 });

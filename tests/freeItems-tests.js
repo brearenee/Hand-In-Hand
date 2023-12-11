@@ -1,4 +1,3 @@
-const assert = require("assert");
 const sinon = require("sinon");
 const axios = require("axios");
 const proxyquire = require("proxyquire");
