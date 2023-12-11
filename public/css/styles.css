@@ -1,4 +1,6 @@
-
+body{
+  margin-bottom: 5em;
+}
 
 .card {
   box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
@@ -9,10 +11,6 @@
 
 .card:hover {
   transform: scale(1.03);
-}
-
-.container {
-  padding: 0 12px;
 }
 
 img {

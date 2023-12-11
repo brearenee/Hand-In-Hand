@@ -26,7 +26,7 @@ jobs:
       run: npm install
 
     - name: Run ESLint with fix option 
-      run: npx eslint . --fix
+      run: npx eslint . --ignore-pattern 'dist/*' --fix
 
     # Step to annotate ESLint warnings/errors - OPTIONAL - look into later
     # - name: Annotate linting errors
