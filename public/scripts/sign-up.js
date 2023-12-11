@@ -1,4 +1,5 @@
-import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js";
+import { auth } from "./auth.js"; 
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js";
 
 document.addEventListener("DOMContentLoaded", function () {
     //HTML button with id="sign-up-submit"
@@ -24,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
         //let postSignUpBio = document.getElementById("signup-about-me").value;
 
         try {
-            const auth = getAuth();
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
             // User signed up successfully
