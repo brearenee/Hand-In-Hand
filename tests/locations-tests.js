@@ -4,7 +4,7 @@ const apiUrl = "https://localhost:3000/locations";
 const assert = require("assert");
 require("dotenv").config();
 const {db}= require("../src/utils/db");
-const { reverseGeocode, doesLocationExist, getLocationByCoor, createLocation } = require("../src/controllers/location-controller");
+const { reverseGeocode, doesLocationExist } = require("../src/controllers/location-controller");
 const locationController = require("../src/controllers/location-controller");
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
@@ -108,14 +108,41 @@ describe("Location Unit Tests", function() {
 
     it("doesLocationExist throws error if more than one response", async function(){
         const poolQueryStub = sandbox.stub(db, "oneOrNone");
-        poolQueryStub.throws(new Error("Fake error message"));  
+        poolQueryStub.rejects("Fake Error Message");  
         const result = await doesLocationExist(111,111);        
         assert.strictEqual(result, null, "Expected the result to be null");
         
     });
 
-    it("getLocationByCoor should return 200", async function() {
+    it("getLocationByCoor should return 200 with real location", async function() {
+        req.params.lat = lat;
+        req.params.long = long;
+        await locationController.getLocationByCoor(req,res);
+        sinon.assert.calledWith(res.status, 200);
+    });
 
+    it("createsLoaction", async function() {
+        const dbQ = { id: 1, lat: "Updated Title", long: "Updated Body"};
+        const poolQueryStub = sandbox.stub(db, "one");
+        poolQueryStub.resolves(dbQ);   
+        let test = await locationController.createLocation(lat,long);
+        assert.equal(test, dbQ);
+    });
+ 
+    it("getLocationbyId", async function() {
+        const dbQ = { id: 1, lat: "Updated Title", long: "Updated Body"};
+        const poolQueryStub = sandbox.stub(db, "one");
+        poolQueryStub.resolves(dbQ);   
+        await locationController.getLocationById(req,res);
+        sinon.assert.calledWith(res.status, 200);
+    });
+
+    it("getLocationbyId error getting id ", async function() {
+        const poolQueryStub = sandbox.stub(db, "one");
+        poolQueryStub.throws("Fake Error");   
+        await locationController.getLocationById(req,res);
+        sinon.assert.calledWith(res.status, 500);
+        
     });
 
 });

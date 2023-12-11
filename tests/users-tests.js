@@ -7,7 +7,7 @@ const {db, pool}= require("../src/utils/db");
 const {getDefaultLocation}= require("../src/controllers/post-controller");
 const {
     getAll, getUsersByLocation, getUsersByEmail, getUserByID, createUser,
-    deleteUserByID, updateUser
+    deleteUserByID, updateUser, getUsersByUserName
 } = require("../src/controllers/user-controller"); 
 
 const users = require("../src/controllers/user-controller");
@@ -197,7 +197,8 @@ describe("User Unit Tests", function() {
         req = {
             params: {
                 userId: 1, // Specify the post ID to edit
-                lastLocation:1
+                lastLocation:1,
+                username:"TestUser"
             },
             query: {
                 username: "TestUser",
@@ -234,10 +235,29 @@ describe("User Unit Tests", function() {
         sinon.assert.calledOnceWithExactly(res.status, 200);
     });
 
+    it("get users by Username throws Error", async function(){     
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.rejects("Fake Error: Database query failed");
+        await getUsersByUserName(req, res);
+        sinon.assert.calledOnceWithExactly(res.status, 500);
+    });
+
+    it("updateUser throws error", async function(){     
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.rejects("Fake Error");
+        await updateUser(req, res);
+        sinon.assert.calledOnceWithExactly(res.status, 500);
+    });
+    it("get users by Username", async function(){     
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.resolves({ rows: [{ id: 1, username: "TestUser", email: "a@b.com" }] });
+        await getUsersByUserName(req, res);
+        sinon.assert.calledOnceWithExactly(res.status, 200);
+    });
+
     it("gets all users returns 500", async function(){
         const poolQueryStub = sandbox.stub(pool, "query");
-        const error = new Error("Database query failed");
-        poolQueryStub.rejects(error);
+        poolQueryStub.rejects("Database query failed");
         await getAll(req, res);
         sinon.assert.calledOnceWithExactly(res.status, 500);
     });
@@ -250,8 +270,7 @@ describe("User Unit Tests", function() {
     });
     it("gets users by location returns 500", async function(){
         const poolQueryStub = sandbox.stub(pool, "query");
-        const error = new Error("Database query failed");
-        poolQueryStub.rejects(error);
+        poolQueryStub.rejects("Database query failed");
         await getUsersByLocation(req, res);
         sinon.assert.calledOnceWithExactly(res.status, 500);
     });
@@ -269,12 +288,25 @@ describe("User Unit Tests", function() {
         await getUserByID(req, res);
         sinon.assert.calledOnceWithExactly(res.status, 200);
     });
+    it("getUserById returns 500", async function(){
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.rejects("Fake: Database query failed");
+        await getUserByID(req, res);
+        sinon.assert.calledOnceWithExactly(res.status, 500);
+    });
     it("creates user", async function(){
     
         const poolQueryStub = sandbox.stub(pool, "query");
         poolQueryStub.resolves({ rows: [{ id: 1, username: "TestUser", email: "a@b.com" }] });
         await createUser(req, res);
         sinon.assert.calledOnceWithExactly(res.status, 200);
+    });
+
+    it("createUser returns 500", async function(){
+        const poolQueryStub = sandbox.stub(pool, "query");
+        poolQueryStub.rejects("Fake: Database query failed");
+        await createUser(req, res);
+        sinon.assert.calledOnceWithExactly(res.status, 500);
     });
 
     it("deletes user", async function(){

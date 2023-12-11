@@ -139,10 +139,7 @@ async function deletePostById(req, res) {
     const postId = req.params.postId;
     try {
         const result = await pool.query("DELETE FROM posts WHERE id = $1", [postId]);
-        if (result.rowCount === 0) {
-            return res.status(404).json({ error: "Post not found" });
-        }
-        else {return res.status(204).json();}
+        return res.status(204).json();
     } catch (error) {
         return res.status(500).json({ error: "Internal Server Error" });
     }
