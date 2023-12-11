@@ -14,7 +14,6 @@ window.addEventListener("DOMContentLoaded", () => {
         // User data is cached, display relevant content immediately
         loadingContent.style.display = "none";
         authContent.style.display = "block";
-        initFeed();
     } else { 
         window.location.href = "/sign-in";
     }
@@ -81,9 +80,10 @@ async function initFeed() {
     await fetchAndPopulateFeed();
     //setTimeout(fetchAndPopulateFeed, 2000); //timeout to allow for posts to populate db
     respondButtonEmailHandler();
+
 }
 
-
+initFeed();
 
 
 
