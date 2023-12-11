@@ -8,13 +8,13 @@ function signInUser(email, password) {
             // Signed in
             const user = userCredential.user;
             console.log("User signed in:", user);
-             // Cache non-sensitive user data
-             const userData = {
+            // Cache non-sensitive user data
+            const userData = {
                 token: user.getIdToken(), 
                 email: user.email,
                 // Add any other non-sensitive fields you need
             };
-            localStorage.setItem('userData', JSON.stringify(userData));
+            localStorage.setItem("userData", JSON.stringify(userData));
 
             window.location.href = "/"; // Redirect upon successful sign-in
         })

@@ -6,14 +6,14 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.4.0/fir
 
 
 // Check for user authentication before loading page content 
-window.addEventListener('DOMContentLoaded', () => {
-    const userData = localStorage.getItem('userData');
-    const loadingContent = document.getElementById('loading');
-    const authContent = document.getElementById('auth-content');
+window.addEventListener("DOMContentLoaded", () => {
+    const userData = localStorage.getItem("userData");
+    const loadingContent = document.getElementById("loading");
+    const authContent = document.getElementById("auth-content");
     if (userData) {
         // User data is cached, display relevant content immediately
-        loadingContent.style.display = 'none';
-        authContent.style.display = 'block';
+        loadingContent.style.display = "none";
+        authContent.style.display = "block";
     } else { 
         window.location.href = "/sign-in";
     }

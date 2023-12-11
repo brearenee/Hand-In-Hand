@@ -10,7 +10,7 @@ signOutBtn.addEventListener("click", () => {
     signOut(auth).then(() => {
         // Sign-out successful, redirect to sign-in page
         console.log("User signed out.");
-        localStorage.removeItem('userData');
+        localStorage.removeItem("userData");
         window.location.href = "/sign-in";
     }).catch((error) => {
         // Handle any errors here
