@@ -11,7 +11,7 @@ Web Application created as a project for MSU Denver's Fall 2023 Senior Experienc
 
 ## To Run: 
 
->you must have Docker Compose installed **AND** running. 
+>you must have Docker Compose installed and running. 
 
 >run the command:   
 ```
@@ -20,19 +20,6 @@ docker compose up
 
 head to https://localhost:3000/ in your browser. That's it! 
 
-
-
-#### **Useful Commands**
-If any changes to the Dockerfile or Compose file are pulled in/made, you will need to rebuild the containers. This is done with   
-```
-docker compose up --build
-```  
-
-To stop the containers: (ctrl+C also works)
-
-```
-docker compose down
-```
 
 
 ## PG-ADMIN TOOL ##
@@ -50,19 +37,10 @@ http://localhost:16543/
 
 ## ESLint and StyleLint
 ### Linter Purpose and Instructions
-
 >A linter ensures that code conforms to best coding practices. This project supports linting for JavaScript, HTML, CSS and SCSS.   
-
-_**PLEASE LINT YOUR CODE BEFORE EVERY PULL REQUEST!**_
-
 ### To Run
-In a new terminal, access the container command-line by running:
-    
-```
-docker exec -it senior-experience-group-project-community-first-app-1 sh
-```
-#### ESLint 
-Then while inside the container, run the linter for either **.js** files or **.html** files: 
+
+Then while inside the application container, run the linter for either **.js** files or **.html** files: 
  
 ```
 npx eslint yourfile.js/html
@@ -71,9 +49,6 @@ npx eslint yourfile.js/html
 ```
 npx eslint .
 ```
-You should then see the linter's response to your code in the terminal. It will tell you about problematic portions of code or that your code is good to go.
-
-If running into issues with "sh" being unavailble, please see documentation in Teams on how to install npm locally. 
 
 ##### To auto-fix via ESLint
  
@@ -86,7 +61,7 @@ npx eslint . --fix
 ```
 
 #### StyleLint 
-From inside the same app container, run the following command to lint either **.css** or **.scss** files:  
+From inside the container, run the following command to lint either **.css** or **.scss** files:  
 ```
 npx stylelint path/myFile.css/scss
 ```
@@ -96,29 +71,17 @@ npx stylelint path/myFile.css/scss
 npx stylelint path/myFile.css/scss --fix
 ```
 
-### *Current code standards:*
-- JavaScript Standards: 
-   - Indentation must be 4 spaces, not tabs
-   - We are using unix linebreak style
-   - Strings must be in double quotes
-   - There must always be an ending semicolon. 
-- HTML Standards 
-   - All errors are reported/fixed based off of the Best Practice Rules from [HTML ESLint Docs](https://yeonjuan.github.io/html-eslint/docs/rules/)
-
-
 ## Swagger Documentation ##
 You may need to run following command inside the app-1 Docker container.
 ```
 npm install swagger-ui-express swagger-jsdoc
 ```
 
-Inside app-1 Docker container, run
+Inside app docker container, run
 ```
 npm run start
 ```
-
 Go to Swagger API docs in https://localhost:3000/api-docs/ 
-
 
 ### coverage report
 `npm run coverage`
