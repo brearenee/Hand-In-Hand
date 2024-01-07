@@ -2,7 +2,7 @@
 # Hand In Hand
 Web Application created as a project for MSU Denver's Fall 2023 Senior Experience Course.  Authors are Sarah Barnes, Brea Chaney, Erika Sadsad, Jessica Gardner, Alyssa Williams 
 
->TEAM: Please see our Teams channel documentation for more detailed instructions about each section. 
+>TEAM: Please see our Teams channel documentation for more detailed instructions about each section.
 
 
 **Environment Variables Needed**:  
