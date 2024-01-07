@@ -1,18 +1,5 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js";
-
-// Firebase config. Only need once plus it's more protected this way
-const firebaseConfig = {
-    apiKey: "AIzaSyC0oWPskVb62ZSrP_0HXMtvHzeAju3hKKM",
-    authDomain: "handinhand-d834c.firebaseapp.com",
-    projectId: "handinhand-d834c"
-};
-
-// Initialize the Firebase app
-const app = initializeApp(firebaseConfig);
-
-// Get the authentication instance
-const auth = getAuth(app);
+import { auth } from "./auth.js";
+import {  signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js";
 
 // Function to sign in a user
 function signInUser(email, password) {
@@ -21,6 +8,13 @@ function signInUser(email, password) {
             // Signed in
             const user = userCredential.user;
             console.log("User signed in:", user);
+            // Cache non-sensitive user data
+            const userData = {
+                token: user.getIdToken(), 
+                email: user.email,
+                // Add any other non-sensitive fields you need
+            };
+            localStorage.setItem("userData", JSON.stringify(userData));
 
             window.location.href = "/"; // Redirect upon successful sign-in
         })

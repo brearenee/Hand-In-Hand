@@ -1,19 +1,36 @@
 import { getPostsAndPutIntoDB } from "./freeItems.js";
 import { getGeolocation, parseLocationInfo } from "./geolocation.js";
+import { auth } from "./auth.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js";
+import { respondButtonEmailHandler } from "./post-respond.js";
 
+
+// Check for user authentication before loading page content 
+async function checkUserAuthentication() {
+    const userData = localStorage.getItem("userData");
+    const loadingContent = document.getElementById("loading");
+    const authContent = document.getElementById("auth-content");
+    if (userData) {
+        // User data is cached, display relevant content immediately
+        loadingContent.style.display = "none";
+        authContent.style.display = "block";
+    } else {
+        window.location.href = "/sign-in";
+    }
+}
 
 let address;
 
 async function autofillLocation() {
     address = await getGeolocation();
-    if (address.neighborhood != null){
+    if (address.neighborhood != null) {
         document.getElementById("post-location").value = `${address.neighborhood} neighborhood in ${address.city}  `;
     } else if (address.full_address != null) {
         document.getElementById("post-location").value = `${address.full_address}`;
-    } else if (address.street_number  != null) {
+    } else if (address.street_number != null) {
         document.getElementById("post-location").value = `${address.street_number} ${address.street_name}, ${address.city}, ${address.state_short}`;
     }
-    else{
+    else {
         document.getElementById("post-location").value = "Type Address Here";
     }
 }
@@ -54,16 +71,28 @@ async function fetchAndPopulateFeed() {
     }
 }
 
-async function initFeed(){
+async function initFeed() {
+
+    await checkUserAuthentication();
     //calls our populate db function, forces a 4 second delay to allow for population of posts db
     //calls the fetchAndPopulateFeed function
     await populateDB();
     await fetchAndPopulateFeed();
     //setTimeout(fetchAndPopulateFeed, 2000); //timeout to allow for posts to populate db
+    await respondButtonEmailHandler();
 
 }
 
-initFeed();
+// run init feed based on html rendering for different browsers 
+if (document.readyState === "interactive" || document.readyState === "complete") {
+    initFeed();
+} else {
+    window.addEventListener("DOMContentLoaded", () => {
+        initFeed();
+    });
+}
+
+
 
 
 
